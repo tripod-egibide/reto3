@@ -23,4 +23,3 @@ if (isset($_GET["a"])) {
 } else {
     $controller->run();
 }
-
