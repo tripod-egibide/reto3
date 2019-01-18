@@ -1,7 +1,9 @@
 <?php
 function connection()
 {
-    if (__DIR__ == '/vagrant/code/public/AppEventos/core') {
+    // esto es temporal, para facilitar la produccion
+    // no estará en el producto final
+    if (__DIR__ == '/vagrant/code/public/reto3/core') {
         $host = "localhost";
         $port = "33060";
         $user = "homestead";
@@ -10,8 +12,8 @@ function connection()
     } else {
         $host = "localhost";
         $port = "3306";
-        $user = "root";
-        $pass = "";
+        $user = "reto3";
+        $pass = "reto3";
         $database = "reto3";
     }
 
