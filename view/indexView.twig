@@ -7,25 +7,61 @@
 {% block cuerpo %}
     {# página principal, estará compuesta de una estructura básica y muchos bloques enlazando a otras vistas #}
     {# prototipo, no funciona nada #}
-    {% block navbar %}
-    {% endblock navbar %}
-    Hola!
+    
+    {# navbar #}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+        <a class="navbar-brand" href="#"><img src="/reto3/img/logo-restaurant.png" alt="Egibide Hostelería" height=32px></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://www.egibide.org/campus-mendizorrotza/">Contacto</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://www.egibide.org/">Egibide</a>
+                </li>
+                {% if administrador %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        Administración
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#" id="nuevo-plato">Nuevo plato</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#" id="nuevo-administrador">Nuevo administrador</a>
+                    </div>
+                </li>
+                {% endif %}
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+    {# cuerpo #}
     <ul class="list-group list-group-flush container-fluid">
         {% for plato in platos %}
-            <li class="list-group-item list-group-item-action row">
-                <img src="{{ plato.imagen }}" class="imagen-plato col-3">
-                <div class="col-6">
-                    <h3 class="mb-1">{{ plato.nombre }}</h3>
-                    <p class="mb-1">{{ plato.notas }}</p>
-                    {# habrá que ajustar la siguiente línea cuando manejemos el tipo de unidad #}
-                    <small class="text-muted">{{ plato.unidadesMinimas }} unidades.</small> 
-                </div>
-                {# lo siguiente deberá estar controlado por un if que verifique si el usuario actual es el administrador, y dependiendo de eso mostrar controles diferentes #}
-                <div class="col-3 d-flex align-items-center justify-content-end">
-                    <strong>{{ plato.precio }}€</strong>
-                    <button class="btn btn-primary annadir"><i class="material-icons">add</i></button>
-                </div>
-            </li>
+        <li class="list-group-item list-group-item-action row d-flex align-items-center p-0">
+            <img src="{{ plato.imagen }}" class="imagen-plato col-3">
+            <div class="col-6">
+                <h3 class="mb-1">{{ plato.nombre }}</h3>
+                <p class="mb-1">{{ plato.notas }}</p>
+                {# habrá que ajustar la siguiente línea cuando manejemos el tipo de unidad #}
+                <small class="text-muted">Mínimo {{ plato.unidadesMinimas }} unidades.</small> 
+            </div>
+            {# lo siguiente deberá estar controlado por un if que verifique si el usuario actual es el administrador, y dependiendo de eso mostrar controles diferentes #}
+            <div class="col-3 d-flex align-items-center justify-content-end">
+                <strong>{{ plato.precio }}€</strong>
+                <button class="btn btn-primary annadir"><i class="material-icons">add</i></button>
+            </div>
+        </li>
         {% endfor %}
     </ul>
         
