@@ -9,8 +9,8 @@ Catálogo
 {# prototipo, no funciona nada #}
 
 {# navbar #}
-<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top mb-1 border-bottom">
-    <a class="navbar-brand" href="#"><img src="/reto3/img/logo-restaurant.png" alt="Egibide Hostelería" height=32px></a>
+<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top mb-2 border-bottom">
+    <a class="navbar-brand" href="/reto3/"><img src="/reto3/img/logo-restaurant.png" alt="Egibide Hostelería" height=32px></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
         aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -26,14 +26,17 @@ Catálogo
             </li>
             {% if administrador %}
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                <a class="nav-link dropdown-toggle btn btn-outline-secondary" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                     Administración
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#" id="ver-pedidos">Ver pedidos</a>
                     <a class="dropdown-item" href="#" id="nuevo-plato">Nuevo plato</a>
-                    <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#" id="nuevo-administrador">Nuevo administrador</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#" id="cerrar-sesion">Cerrar sesión</a>
+
                 </div>
             </li>
             {% endif %}
@@ -49,11 +52,9 @@ Catálogo
 
 <main class="container">
     <div class="row">
-
-        {# cuerpo #}
+        {# catalogo #}
         <div class="card">
             {% for categoria in categorias %}
-
             <div class="card-body bg-light">
                 <h1 class="card-title text-center">{{ categoria.nombre }}</h5>
             </div>
@@ -68,13 +69,21 @@ Catálogo
                         {# habrá que ajustar la siguiente línea cuando manejemos el tipo de unidad #}
                         <small class="text-muted">Mínimo {{ plato.unidadesMinimas }} unidades.</small>
                     </div>
-                    {# lo siguiente deberá estar controlado por un if que verifique si el usuario actual es el
-                    administrador, y dependiendo de eso mostrar controles diferentes #}
+                    
                     <div class="col-3 d-flex align-items-center justify-content-end">
+                        {% if administrador %}
+                        <form class="mr-1 editar-plato" method="post">
+                            <input type="hidden" name="idPlato" value={{ plato.idPlato }}>
+                            <button class="btn btn-primary" type="submit"><i class="material-icons align-bottom">edit</i></button>
+                        </form>
+                        <form class="eliminar-plato" method="post">
+                            <input type="hidden" name="idPlato" value={{ plato.idPlato }}>
+                            <button class="btn btn-danger" type="submit"><i class="material-icons align-bottom">delete</i></button>
+                        </form>
+                        {% else %}
                         <form class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" style="min-width: 50px"><strong class="mx-auto">{{
-                                        plato.precio }}€</strong></span>
+                                <span class="input-group-text" style="min-width: 50px"><strong class="mx-auto">{{plato.precio }}€</strong></span>
                             </div>
                             <input type="number" class="form-control" min={{ plato.unidadesMinimas }} value={{ plato.unidadesMinimas }}
                                 aria-describedby="inputGroup-sizing-lg">
@@ -83,15 +92,24 @@ Catálogo
                                 <button class="btn btn-primary py-0 px-1" type="submit"><i class="material-icons align-bottom">add</i></button>
                             </div>
                         </form>
+                        {% endif %}
                     </div>
+
                 </li>
                 {% endfor %}
             </ul>
-
             {% endfor %}
         </div>
-
-
     </div>
 </main>
+
+<footer class="d-flex text-muted border-top mt-2">
+    <p class="col d-flex justify-content-center align-items-center px-0 my-auto"><i class="material-icons">copyright</i> 2019 Tripod, Inc.</p>
+    <div class="col d-flex justify-content-center align-items-center px-0 my-auto">
+        <a href="https://github.com/tripod-egibide/reto3" target="_blank" class="text-muted"><i class="material-icons align-middle">code</i></a>
+        <a href="/Documentacion/Manual%20del%20Usuario.pdf" id="ayuda" target="_blank" class="text-muted"><i class="material-icons align-middle">help_outline</i></a>
+        <a id="email" href="mailto:tripod@tripod.com" class="text-muted"><i class="material-icons align-middle">email</i></a>
+    </div>
+</footer>
+
 {% endblock cuerpo %}
