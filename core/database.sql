@@ -38,6 +38,7 @@ DROP TABLE IF EXISTS `Categoria` ;
 
 CREATE TABLE IF NOT EXISTS `Categoria` (
   `idCategoria` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(255) NOT NULL,
   `emailDepartamento` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`idCategoria`))
 ENGINE = InnoDB;
@@ -68,17 +69,17 @@ CREATE TABLE IF NOT EXISTS `Plato` (
   `notas` VARCHAR(255) NULL,
   `imagen` VARCHAR(45) NULL,
   `idCategoria` INT NOT NULL,
-  `idtipoVenta` INT NOT NULL,
+  `idTipoVenta` INT NOT NULL,
   PRIMARY KEY (`idPlato`),
   INDEX `fk_Plato_Categoria_idx` (`idCategoria` ASC),
-  INDEX `fk_Plato_tipoVenta_idx` (`idtipoVenta` ASC),
+  INDEX `fk_Plato_tipoVenta_idx` (`idTipoVenta` ASC),
   CONSTRAINT `fk_Plato_Categoria`
     FOREIGN KEY (`idCategoria`)
     REFERENCES `Categoria` (`idCategoria`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Plato_tipoVenta`
-    FOREIGN KEY (`idtipoVenta`)
+    FOREIGN KEY (`idTipoVenta`)
     REFERENCES `TipoVenta` (`idTipoVenta`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
