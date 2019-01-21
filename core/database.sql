@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `Plato` (
   `precio` INT NOT NULL,
   `unidadesMinimas` INT NOT NULL DEFAULT 1,
   `notas` VARCHAR(255) NULL,
-  `imagen` VARCHAR(45) NULL,
+  `imagen` VARCHAR(255) NULL,
   `idCategoria` INT NOT NULL,
   `idTipoVenta` INT NOT NULL,
   PRIMARY KEY (`idPlato`),
