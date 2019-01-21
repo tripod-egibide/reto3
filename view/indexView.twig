@@ -9,11 +9,22 @@
     {# prototipo, no funciona nada #}
     {% block navbar %}
     {% endblock navbar %}
-    
-    <ul class="list-group list-group-flush">
+    Hola!
+    <ul class="list-group list-group-flush container-fluid">
         {% for plato in platos %}
-            <li class="list-group-item list-group-item-action">
-                
+            <li class="list-group-item list-group-item-action row">
+                <img src="{{ plato.imagen }}" class="imagen-plato col-3">
+                <div class="col-6">
+                    <h3 class="mb-1">{{ plato.nombre }}</h3>
+                    <p class="mb-1">{{ plato.notas }}</p>
+                    {# habrá que ajustar la siguiente línea cuando manejemos el tipo de unidad #}
+                    <small class="text-muted">{{ plato.unidadesMinimas }} unidades.</small> 
+                </div>
+                {# lo siguiente deberá estar controlado por un if que verifique si el usuario actual es el administrador, y dependiendo de eso mostrar controles diferentes #}
+                <div class="col-3 d-flex align-items-center justify-content-end">
+                    <strong>{{ plato.precio }}€</strong>
+                    <button class="btn btn-primary annadir"><i class="material-icons">add</i></button>
+                </div>
             </li>
         {% endfor %}
     </ul>
