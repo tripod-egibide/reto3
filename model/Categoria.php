@@ -3,7 +3,6 @@ require_once __DIR__ . "/../core/database.php";
 
 class Categoria
 {
-    private $conexion, $bbdd;
     private $idCategoria,$nombre, $emailDepartamento;
 
     /**
@@ -17,39 +16,6 @@ class Categoria
         $this->idCategoria = $idCategoria;
         $this->nombre = $nombre;
         $this->emailDepartamento = $emailDepartamento;
-    }
-
-
-    /**
-     * @return mixed
-     */
-    public function getConexion()
-    {
-        return $this->conexion;
-    }
-
-    /**
-     * @param mixed $conexion
-     */
-    public function setConexion($conexion): void
-    {
-        $this->conexion = $conexion;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getBbdd()
-    {
-        return $this->bbdd;
-    }
-
-    /**
-     * @param mixed $bbdd
-     */
-    public function setBbdd($bbdd): void
-    {
-        $this->bbdd = $bbdd;
     }
 
     /**

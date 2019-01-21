@@ -6,9 +6,8 @@
  * Time: 8:59
  */
 
-class tipoventa
+class TipoVenta
 {
-    private $conexion, $bbdd;
     private $idTipoVenta, $tipoVenta;
 
     /**
@@ -20,38 +19,6 @@ class tipoventa
     {
         $this->idTipoVenta = $idTipoVenta;
         $this->tipoVenta = $tipoVenta;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getConexion()
-    {
-        return $this->conexion;
-    }
-
-    /**
-     * @param mixed $conexion
-     */
-    public function setConexion($conexion): void
-    {
-        $this->conexion = $conexion;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getBbdd()
-    {
-        return $this->bbdd;
-    }
-
-    /**
-     * @param mixed $bbdd
-     */
-    public function setBbdd($bbdd): void
-    {
-        $this->bbdd = $bbdd;
     }
 
     /**
