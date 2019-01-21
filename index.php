@@ -1,4 +1,7 @@
 <?php
+
+session_start();
+
 # en principio esto ya está terminado, no habría que tocarlo más
 $controller;
 
