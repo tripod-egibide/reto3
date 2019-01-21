@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: v6222
- * Date: 21/01/2019
- * Time: 8:40
- */
+require_once __DIR__ . "/../core/database.php";
 
 class Categoria
 {
