@@ -22,7 +22,7 @@ class PlatoController
 
     private function index()
     {
-        echo twig()->render("indexView.twig");
+        echo twig()->render("indexView.twig", ["platos" => Plato::getAll()]);
     }
 
     private function nuevo()

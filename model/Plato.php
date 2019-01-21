@@ -1,10 +1,8 @@
 <?php
+require_once __DIR__ . "/../core/database.php";
 
-class Plato{
-
-    private $conexion, $bbdd;
-    private $idPlato, $nombre, $precio, $unidadesMinimas, $notas, $imagen, $idCategoria, $idTipoVenta;
-
+class Plato
+{
     /**
      * Plato constructor.
      * @param $idPlato
@@ -28,36 +26,63 @@ class Plato{
         $this->idTipoVenta = $idTipoVenta;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getConexion()
+    public function toArray()
     {
-        return $this->conexion;
+        $data = [
+            "nombre" => $this->nombre,
+            "precio" => $this->precio,
+            "unidadesMinimas" => $this->unidadesMinimas,
+            "notas" => $this->notas,
+            "imagen" => $this->imagen,
+            "idCategoria" => $this->idCategoria,
+            "idTipoVenta" => $this->idTipoVenta
+        ];
+
+        if (isset($this->idPlato)) {
+            $data["idPlato"] = $this->idPlato;
+        }
+
+        return $data;
     }
 
-    /**
-     * @param mixed $conexion
-     */
-    public function setConexion($conexion): void
+    public function insert()
     {
-        $this->conexion = $conexion;
+        preparedStatement("INSERT INTO Plato (nombre, precio, unidadesMinimas, notas, imagen, idCategoria, idTipoventa) 
+            VALUES (:nombre, :precio, :unidadesMinimas, :notas, :imagen, :idCategoria, :idTipoventa)", $this->toArray());
     }
 
-    /**
-     * @return mixed
-     */
-    public function getBbdd()
+    public static function delete($id)
     {
-        return $this->bbdd;
+        preparedStatement("DELETE FROM Plato WHERE idPlato = :idPlato", ["idPlato" => $id]);
     }
 
-    /**
-     * @param mixed $bbdd
-     */
-    public function setBbdd($bbdd): void
+    public function update($id)
     {
-        $this->bbdd = $bbdd;
+        $data = $this->toArray();
+        $data['idPlato'] = $id;
+
+        preparedStatement("UPDATE Plato
+            SET nombre = :nombre,
+                precio = :precio,
+                unidadesMinimas = :unidadesMinimas,
+                notas = :notas,
+                imagen = :imagen,
+                idCategoria = :idCategoria,
+                idTipoVenta = :idTipoVenta
+            WHERE idPlato = :idPlato", $data);
+    }
+
+    public static function getAll()
+    {
+        // esta función, como las otras get, seguramente tendrán que ser modificadas luego para paginar
+        // si no, podríamos estar cargando cientos de platos a la vez
+        // (aunque realísticamente el restaurante querría tener todos sus platos visibles, y no tendrían tantos en primer lugar)
+        return connection()->query("SELECT * FROM Plato")->fetchAll();
+    }
+
+    public static function getByString($string)
+    {
+        return preparedStatement("SELECT * FROM Plato WHERE nombre like :string or notas like :string", ["string" => $string])->fetchAll();
     }
 
     /**
@@ -71,7 +96,7 @@ class Plato{
     /**
      * @param mixed $idPlato
      */
-    public function setIdPlato($idPlato): void
+    public function setIdPlato($idPlato) : void
     {
         $this->idPlato = $idPlato;
     }
@@ -87,7 +112,7 @@ class Plato{
     /**
      * @param mixed $nombre
      */
-    public function setNombre($nombre): void
+    public function setNombre($nombre) : void
     {
         $this->nombre = $nombre;
     }
@@ -103,7 +128,7 @@ class Plato{
     /**
      * @param mixed $precio
      */
-    public function setPrecio($precio): void
+    public function setPrecio($precio) : void
     {
         $this->precio = $precio;
     }
@@ -119,7 +144,7 @@ class Plato{
     /**
      * @param mixed $unidadesMinimas
      */
-    public function setUnidadesMinimas($unidadesMinimas): void
+    public function setUnidadesMinimas($unidadesMinimas) : void
     {
         $this->unidadesMinimas = $unidadesMinimas;
     }
@@ -135,7 +160,7 @@ class Plato{
     /**
      * @param mixed $notas
      */
-    public function setNotas($notas): void
+    public function setNotas($notas) : void
     {
         $this->notas = $notas;
     }
@@ -151,7 +176,7 @@ class Plato{
     /**
      * @param mixed $imagen
      */
-    public function setImagen($imagen): void
+    public function setImagen($imagen) : void
     {
         $this->imagen = $imagen;
     }
@@ -167,7 +192,7 @@ class Plato{
     /**
      * @param mixed $idCategoria
      */
-    public function setIdCategoria($idCategoria): void
+    public function setIdCategoria($idCategoria) : void
     {
         $this->idCategoria = $idCategoria;
     }
@@ -183,7 +208,7 @@ class Plato{
     /**
      * @param mixed $idTipoVenta
      */
-    public function setIdTipoVenta($idTipoVenta): void
+    public function setIdTipoVenta($idTipoVenta) : void
     {
         $this->idTipoVenta = $idTipoVenta;
     }

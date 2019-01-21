@@ -1,5 +1,8 @@
 <?php
-class Pedido{
+require_once __DIR__ . "/../core/database.php";
+
+class Pedido
+{
 
     private $conexion, $bbdd;
     private $idPedido, $nombre, $apellidos, $email, $telefono, $fechaEntrega;
@@ -21,6 +24,23 @@ class Pedido{
         $this->email = $email;
         $this->telefono = $telefono;
         $this->fechaEntrega = $fechaEntrega;
+    }
+
+    public function toArray()
+    {
+        $data = [
+            "nombre" => $this->nombre,
+            "apellidos" => $this->apellidos,
+            "email" => $this->email,
+            "telefono" => $this->telefono,
+            "fechaEntrega" => $this->fechaEntrega
+        ];
+
+        if (isset($this->idPedido)) {
+            $data["idPedido"] = $this->idPedido;
+        }
+
+        return $data;
     }
 
     /**
@@ -150,8 +170,6 @@ class Pedido{
     {
         $this->fechaEntrega = $fechaEntrega;
     }
-
-
 
 }
 ?>

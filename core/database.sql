@@ -38,6 +38,7 @@ DROP TABLE IF EXISTS `Categoria` ;
 
 CREATE TABLE IF NOT EXISTS `Categoria` (
   `idCategoria` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(255) NOT NULL,
   `emailDepartamento` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`idCategoria`))
 ENGINE = InnoDB;
@@ -66,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `Plato` (
   `precio` INT NOT NULL,
   `unidadesMinimas` INT NOT NULL DEFAULT 1,
   `notas` VARCHAR(255) NULL,
-  `imagen` VARCHAR(45) NULL,
+  `imagen` VARCHAR(255) NULL,
   `idCategoria` INT NOT NULL,
   `idTipoVenta` INT NOT NULL,
   PRIMARY KEY (`idPlato`),
@@ -93,6 +94,7 @@ DROP TABLE IF EXISTS `DetallePedido` ;
 CREATE TABLE IF NOT EXISTS `DetallePedido` (
   `idPedido` INT NOT NULL,
   `idPlato` INT NOT NULL,
+  `cantidad` INT NOT NULL,
   PRIMARY KEY (`idPedido`, `idPlato`),
   INDEX `fk_DetallePedido_Plato_idx` (`idPlato` ASC),
   INDEX `fk_DetallePedido_Pedido_idx` (`idPedido` ASC),
