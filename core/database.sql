@@ -94,6 +94,7 @@ DROP TABLE IF EXISTS `DetallePedido` ;
 CREATE TABLE IF NOT EXISTS `DetallePedido` (
   `idPedido` INT NOT NULL,
   `idPlato` INT NOT NULL,
+  `cantidad` INT NOT NULL,
   PRIMARY KEY (`idPedido`, `idPlato`),
   INDEX `fk_DetallePedido_Plato_idx` (`idPlato` ASC),
   INDEX `fk_DetallePedido_Pedido_idx` (`idPedido` ASC),
