@@ -52,14 +52,14 @@ Catálogo
 
         {# cuerpo #}
         <div class="card">
-            {# {% for categoria in categorias %} #}
+            {% for categoria in categorias %}
 
             <div class="card-body bg-light">
-                <h1 class="card-title text-center">Categoría</h5>
+                <h1 class="card-title text-center">{{ categoria.nombre }}</h5>
             </div>
 
             <ul class="list-group list-group-flush container-fluid px-0">
-                {% for plato in platos %}
+                {% for plato in categoria.platos %}
                 <li class="list-group-item list-group-item-action row d-flex align-items-center p-0 mx-0">
                     <img src="{{ plato.imagen }}" class="imagen-plato col-3 border-right px-0">
                     <div class="col-6">
@@ -88,7 +88,7 @@ Catálogo
                 {% endfor %}
             </ul>
 
-            {# {% endfor %} #}
+            {% endfor %}
         </div>
 
 
