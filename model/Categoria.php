@@ -4,26 +4,20 @@ require_once __DIR__ . "/../core/database.php";
 class Categoria
 {
     private $conexion, $bbdd;
-    private $idCategoria, $emailDepartamento;
+    private $idCategoria,$nombre, $emailDepartamento;
 
     /**
      * Categoria constructor.
      * @param $idCategoria
+     * @param $nombre
      * @param $emailDepartamento
      */
-    public function __construct($idCategoria, $emailDepartamento)
+    public function __construct($idCategoria, $nombre, $emailDepartamento)
     {
         $this->idCategoria = $idCategoria;
+        $this->nombre = $nombre;
         $this->emailDepartamento = $emailDepartamento;
     }
-
-    /**
-     * Pedido constructor.
-     * @param $conexion
-     * @param $bbdd
-     * @param $idCategoria
-     * @param $emailDepartamento
-     */
 
 
     /**
@@ -89,4 +83,21 @@ class Categoria
     {
         $this->emailDepartamento = $emailDepartamento;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * @param mixed $nombre
+     */
+    public function setNombre($nombre): void
+    {
+        $this->nombre = $nombre;
+    }
+    
 }
