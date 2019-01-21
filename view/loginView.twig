@@ -1,0 +1,32 @@
+{% extends "base.twig" %}
+
+{% block titulo %}
+    Iniciar sesi&oacute;n
+{% endblock titulo %}
+
+{% block cuerpo %}
+    <div class="d-flex justify-content-center align-items-center card">
+        <div class="card-body">
+            {% if error %}
+            <div class="alert alert-danger" role="alert">
+                Datos err&oacute;neos. Por favor, int&eacute;ntelo otra vez.
+            </div>
+            {% endif %}
+            <form action="index.php?c=admin&a=login" method="post">
+                <div class="input-group input-group-lg">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="usuario">Usuario:</span>
+                    </div>
+                    <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" name="usuario" value="{% if error %}{{ usuario }}{% endif %}">
+                </div>
+                <div class="input-group input-group-lg">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="contrasenna">Contrase&ntilde;a:</span>
+                    </div>
+                    <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" name="contrasenna" value="{% if error %}{{ contrasenna }}{% endif %}">
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar sesi&oacute;n</button>
+            </form>
+        </div>
+    </div>
+{% endblock cuerpo %}
