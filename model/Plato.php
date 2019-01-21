@@ -3,10 +3,6 @@ require_once __DIR__ . "/../core/database.php";
 
 class Plato
 {
-
-    private $conexion, $bbdd;
-    private $idPlato, $nombre, $precio, $unidadesMinimas, $notas, $imagen, $idCategoria, $idTipoVenta;
-
     /**
      * Plato constructor.
      * @param $idPlato
@@ -67,8 +63,8 @@ class Plato
 
         preparedStatement("UPDATE Plato
             SET nombre = :nombre,
-                precio = precio,
-                unidadesMinimas = unidadesMinimas,
+                precio = :precio,
+                unidadesMinimas = :unidadesMinimas,
                 notas = :notas,
                 imagen = :imagen,
                 idCategoria = :idCategoria,
@@ -87,38 +83,6 @@ class Plato
     public static function getByString($string)
     {
         return preparedStatement("SELECT * FROM Plato WHERE nombre like :string or notas like :string", ["string" => $string])->fetchAll();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getConexion()
-    {
-        return $this->conexion;
-    }
-
-    /**
-     * @param mixed $conexion
-     */
-    public function setConexion($conexion) : void
-    {
-        $this->conexion = $conexion;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getBbdd()
-    {
-        return $this->bbdd;
-    }
-
-    /**
-     * @param mixed $bbdd
-     */
-    public function setBbdd($bbdd) : void
-    {
-        $this->bbdd = $bbdd;
     }
 
     /**
