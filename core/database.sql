@@ -38,6 +38,7 @@ DROP TABLE IF EXISTS `Categoria` ;
 
 CREATE TABLE IF NOT EXISTS `Categoria` (
   `idCategoria` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(255) NOT NULL,
   `emailDepartamento` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`idCategoria`))
 ENGINE = InnoDB;
