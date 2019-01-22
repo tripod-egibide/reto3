@@ -10,6 +10,10 @@ class PlatoController
                 $this->nuevo();
                 break;
 
+            case 'editar':
+                $this->editar();
+                break;
+
             case 'insert':
                 $this->insert();
                 break;
@@ -33,6 +37,11 @@ class PlatoController
             ];            
         }
         echo twig()->render("indexView.twig", ["categorias" => $data]);
+    }
+
+    private function editar()
+    {
+        echo json_encode(Plato::getById($_POST["idPlato"]));
     }
 
     private function nuevo()

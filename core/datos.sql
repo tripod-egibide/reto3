@@ -2,7 +2,7 @@ INSERT INTO `Administrador` (`idAdministrador`, `usuario`, `contrasenna`) VALUES
 
 INSERT INTO `Categoria` (`idCategoria`, `nombre`, `emailDepartamento`) VALUES (NULL, 'Entrantes', 'entrante@ikasle.com'), (NULL, 'Pescados', 'pescados@ikasle.com'), (NULL, 'Postres', 'postres@ikasle.com'), (NULL, 'Ensaladas', 'postres@ikasle.com');
 
-INSERT INTO `TipoVenta` (`idTipoVenta`, `tipoVenta`) VALUES (NULL, 'Kilo'), (NULL, 'Raciones');
+INSERT INTO `TipoVenta` (`idTipoVenta`, `tipoVenta`) VALUES (NULL, 'kilos'), (NULL, 'raciones');
 
 INSERT INTO `Plato` (`idPlato`, `nombre`, `precio`, `unidadesMinimas`, `notas`, `imagen`, `idCategoria`, `idTipoVenta`) VALUES (NULL, 'Setas a la plancha', '5', '1', 'Alérgenos Hongos', 'http://4.bp.blogspot.com/_iQCEs3lfzVQ/SOEa1YmXjoI/AAAAAAAAAF8/CvcPgjfz1a4/w1200-h630-p-k-no-nu/setasplancha+(2).JPG', '4', '2'), (NULL, 'Entrecot con patatas', '15', '1', 'No apto para vegetarianos', 'https://www.hogarmania.com/archivos/201105/0692-entrecote-de-bistrot-xl-668x400x80xX.jpg', '1', '2'), (NULL, 'Merluza al vapor', '10', '2', 'Alto omega3', 'https://www.hogarmania.com/archivos/201404/1443-merluza-al-vapor-con-vinagreta-de-tomate-y-aceite-de-trufa-blanca-627-xl-668x400x80xX.jpg', '2', '1'), (NULL, 'Tarta de queso', '3', '4', 'Alto contenido de lactosa', 'https://unareceta.com/wp-content/uploads/2017/02/tarta-de-queso-sin-horno-facil-640x428.jpg', '3', '2'), (NULL, 'Salmón con especias', '15', '2', 'No apto para alérgicos a los pescados', 'https://www.canalcocina.es/medias/images/1605CocinaDeFamiliaT4SalmonMarinadoSalsaMostaza2.jpg', '2', '1'), (NULL, 'Paella tradicional', '5', '5', 'Contiene crustacios', 'http://recetaspaella.es/img/paella-mixta-665.jpg', '1', '1');
 

@@ -16,6 +16,9 @@ class AdminController
             case 'login':
                 $this->login();
                 break;
+            case 'salir':
+                $this->salir();
+                break;
             default:
                 $this->principal();
                 break;
@@ -24,7 +27,7 @@ class AdminController
 
     private function principal()
     {
-        if(isset($_SESSION["administrador"]))
+        if(isset($_SESSION["administrador"]) && $_SESSION["administrador"])
         {
             header("Location: /reto3/");
         }
@@ -34,7 +37,8 @@ class AdminController
         }
     }
 
-    private function login(){
+    private function login()
+    {
         $usuario=$_POST["usuario"];
         $contrasenna=$_POST["contrasenna"];
 
@@ -43,7 +47,7 @@ class AdminController
         // Ejercutar la sentencia
         $resultado=$admin->validar($usuario, $contrasenna);
 
-        // Si el usuario es correcto, inicia sesión, Sino, vuelve a la pantalla de inicio de sesión.
+        // Si el usuario es correcto, inicia sesión, si no, vuelve a la pantalla de inicio de sesión.
 
         if($resultado)
         {
@@ -56,4 +60,9 @@ class AdminController
         }
     }
 
+    private function salir()
+    {
+        $_SESSION["administrador"] = false;
+        header("Location: /reto3/");
+    }
 }
