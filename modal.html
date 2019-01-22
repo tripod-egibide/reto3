@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+
+<!--- Modal resumen del pedido--->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalResumenPedido">
+    Resumen
+</button>
+<div id="modalResumenPedido" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Detalles de su pedido</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!--- cuerpo del modal--->
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">L&iacute;nea</th>
+                        <th scope="col">Plato</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Subtotal</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!--- for en lo que se ha pedido--->
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                        <td>10E</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>@fat</td>
+                        <td>10E</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>@twitter</td>
+                        <td>10E</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>@twitter</td>
+                        <td>10E</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>@twitter</td>
+                        <td>10E</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>@twitter</td>
+                        <td>10E</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>@twitter</td>
+                        <td>10E</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>@twitter</td>
+                        <td>10E</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>@twitter</td>
+                        <td>10E</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>@twitter</td>
+                        <td>10E</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>@twitter</td>
+                        <td>10E</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>@twitter</td>
+                        <td>10E</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>@twitter</td>
+                        <td>10E</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>@twitter</td>
+                        <td>10E</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>@twitter</td>
+                        <td>10E</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>@twitter</td>
+                        <td>10E</td>
+                    </tr>
+                    <!--- fin del for en lo que se ha pedido--->
+                    </tbody>
+                </table>
+                <div class="row">
+                    <p class="col-8">Total del pedido</p>
+                    <!--- calcular lo que se ha pedido--->
+                    <p class="col-4">Total del pedido</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="finResumenPedido"     data-dismiss="modal"   >Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--- modal datos del cliente--->
+<style type="text/css">
+    input[type="text"], input[type="email"], input[type="date"], input[type="tel"]  {
+        margin-bottom: 5px;
+    }
+</style>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalDatosCliente">
+    Cliente
+</button>
+<div id="modalDatosCliente" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Datos del cliente</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!--- cuerpo del modal--->
+                <div class="row">
+                    <label class="col-4" for="nombre">Nombre:</label>
+                    <input type="text" id="nombre">
+                    <label class="col-4" for="apellidos">Apellidos:</label>
+                    <input type="text" id="apellidos">
+                    <label class="col-4" for="telf">Tel&eacute;fono:</label>
+                    <input type="tel" id="telf">
+                    <label class="col-4" for="email">E-mail:</label>
+                    <input type="email" id="email">
+                    <label class="col-4" for="fecha">Fecha de recogida:</label>
+                    <input type="date" id="fecha">
+                    <label class="col-12" for="observaciones">Observaciones:</label>
+                    <textarea class="offset-1 col-10" id="observaciones" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="checkbox" value="acepto"><a href="https://egibide.org">Acepto los términos y condiciones de la venta</a><br>
+                <input type="button" class="btn btn-primary" id="finDatosCliente"     data-dismiss="modal"    value="Confirmar">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--- modal agradecimiento--->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalGracias">
+    Agradecimiento
+</button>
+<div id="modalGracias" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Gracias por su pedido</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!--- cuerpo del modal--->
+                <p>Recuerde que podrá pasar a recoger su pedido en la cafetería de la escuela entre los días BLABLABLA y blablabla, desde las 11:30 hasta las 20:00.<br><br>Gracias.</p>
+            </div>
+            <div class="modal-footer">
+                <input type="button" class="btn btn-primary" id="finalizarGracias"     data-dismiss="modal"    value="Cerrar">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+</body>
+</html>
