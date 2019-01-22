@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: v6222
- * Date: 21/01/2019
- * Time: 8:59
- */
 
 class TipoVenta
 {
@@ -19,7 +13,7 @@ class TipoVenta
     {
         $this->idTipoVenta = $idTipoVenta;
         $this->tipoVenta = $tipoVenta;
-    }
+    } 
 
     /**
      * @return mixed

@@ -18,6 +18,11 @@ class Categoria
         $this->emailDepartamento = $emailDepartamento;
     }
 
+    public static function getAll()
+    {
+        return connection()->query("SELECT * FROM Categoria ")->fetchAll();
+    }
+
     /**
      * @return mixed
      */
