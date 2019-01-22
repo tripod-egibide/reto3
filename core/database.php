@@ -18,7 +18,7 @@ function connection()
     }
 
 
-    $con = new PDO("mysql:$host;port=$port;dbname=$database", $user, $pass);
+    $con = new PDO("mysql:$host;port=$port;dbname=$database;charset=UTF8", $user, $pass);
     $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $con->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     return $con;
