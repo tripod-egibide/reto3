@@ -3,8 +3,6 @@ require_once __DIR__ . "/../core/database.php";
 
 class Pedido
 {
-
-    private $conexion, $bbdd;
     private $idPedido, $nombre, $apellidos, $email, $telefono, $fechaEntrega;
 
     /**
@@ -43,36 +41,52 @@ class Pedido
         return $data;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getConexion()
+    public function insert()
     {
-        return $this->conexion;
+        preparedStatement("INSERT INTO Pedido (nombre, apellidos, email, telefono, fechaEntrega) 
+            VALUES (:nombre, :apellidos, :email, :telefono, :fechaEntrega)", $this->toArray());
     }
 
-    /**
-     * @param mixed $conexion
-     */
-    public function setConexion($conexion): void
+    public static function delete($id)
     {
-        $this->conexion = $conexion;
+        preparedStatement("DELETE FROM Pedido WHERE idPlato = :idPedido", ["idPedido" => $id]);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getBbdd()
+    public function update($id)
     {
-        return $this->bbdd;
+        $data = $this->toArray();
+        $data['idPedido'] = $id;
+
+        preparedStatement("UPDATE Pedido
+            SET nombre = :nombre,
+                apellidos = :apellidos,
+                email = :email,
+                telefono = :telefono,
+                fechaEntrega = :fechaEntrega
+            WHERE idPedido = :idPedido", $data);
     }
 
-    /**
-     * @param mixed $bbdd
-     */
-    public function setBbdd($bbdd): void
+    public static function getAll()
     {
-        $this->bbdd = $bbdd;
+        // esta función, como las otras get, seguramente tendrán que ser modificadas luego para paginar
+        // si no, podríamos estar cargando cientos de platos a la vez
+        // (aunque realísticamente el restaurante querría tener todos sus platos visibles, y no tendrían tantos en primer lugar)
+        return connection()->query("SELECT * FROM Pedido")->fetchAll();
+    }
+
+    public static function getByString($string)
+    {
+        return preparedStatement("SELECT * FROM Pedido WHERE nombre like :string or apellidos like :string", ["string" => $string])->fetchAll();
+    }
+
+    public static function getByTelf($telf)
+    {
+        return preparedStatement("SELECT * FROM Pedido WHERE telefono like :telf ", ["telf" => $telf])->fetchAll();
+    }
+
+    public static function getByDate($fechaI, $fechaF)
+    {
+        return preparedStatement("SELECT * FROM Pedido WHERE fechaEntrega between fechaI and fechaF ", ["fechaI" => $fechaI, "fechaF" => $fechaF])->fetchAll();
     }
 
     /**
