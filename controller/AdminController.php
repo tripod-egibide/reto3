@@ -16,6 +16,17 @@ class AdminController
             case 'login':
                 $this->login();
                 break;
+            case 'insertar':
+                $this->insertar();
+                break;
+            case 'eliminar':
+                $this->eliminar();
+                break;
+            case 'actualizar':
+                $this->actualizar();
+                break;
+            case 'ver':
+                $this->ver();
             case 'salir':
                 $this->salir();
                 break;
@@ -57,6 +68,59 @@ class AdminController
         else
         {
             echo twig()->render('loginView.twig', array("error"=>1,"usuario"=>$usuario, "contrasenna"=>$contrasenna));
+        }
+    }
+
+    private function insertar()
+    {
+        if(isset($_SESSION["administrador"]))
+        {
+            $usuario = $_POST["usuario"];
+            $contrasenna = $_POST["contrasenna"];
+
+            $admin = new Admin("", $usuario, $contrasenna);
+            $admin->insert();
+
+            header("Location: /reto3/");
+        }
+    }
+
+    private function eliminar()
+    {
+        if(isset($_SESSION["administrador"]))
+        {
+            $idAdministrador = $_GET["administrador"];
+
+            $admin = new Admin("", "", "");
+            $admin->delete($idAdministrador);
+
+            header("Location: /reto3/");
+        }
+    }
+
+    private function actualizar()
+    {
+        if(isset($_SESSION["administrador"]))
+        {
+            $idAdministrador=$_POST["idAdministrador"];
+            $usuario=$_POST["usuario"];
+            $contrasenna=$_POST["contrasenna"];
+
+            $admin=new Admin("", $usuario, $contrasenna);
+            $admin->update($idAdministrador);
+
+            header("Location: /reto3/");
+        }
+    }
+
+    private function ver()
+    {
+        if(isset($_SESSION["administrador"]))
+        {
+            $admin = new Admin("", "", "");
+            $administradores = $admin->getAll();
+
+            echo twig()->render('adminView.twig', array("administradores" => $administradores));
         }
     }
 
