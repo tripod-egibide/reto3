@@ -24,13 +24,13 @@ class AdminController
 
     private function principal()
     {
-        if(!isset($_SESSION["administrador"]))
+        if(isset($_SESSION["administrador"]))
         {
-            echo twig()->render("loginView.twig");
+            header("Location: /reto3/");
         }
         else
         {
-            echo twig()->render("indexView.twig");
+            echo twig()->render("loginView.twig");
         }
     }
 
@@ -48,8 +48,7 @@ class AdminController
         if($resultado)
         {
             $_SESSION["administrador"]=$resultado["idAdministrador"];
-
-            echo twig()->render("indexView.twig");
+            header("Location: /reto3/");
         }
         else
         {

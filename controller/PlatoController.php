@@ -22,7 +22,17 @@ class PlatoController
 
     private function index()
     {
-        echo twig()->render("indexView.twig", ["platos" => Plato::getAll()]);
+        require_once __DIR__ . "/../model/Categoria.php";;
+        $categorias = Categoria::getAll();
+
+        $data = [];
+        foreach ($categorias as $categoria) {
+            $data[$categoria["idCategoria"]] = [
+                "nombre" => $categoria["nombre"], 
+                "platos" => Plato::getByCategoria($categoria["idCategoria"])
+            ];            
+        }
+        echo twig()->render("indexView.twig", ["categorias" => $data]);
     }
 
     private function nuevo()
