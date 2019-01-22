@@ -94,9 +94,9 @@ class Plato
     public static function getById($idPlato)
     {
         return preparedStatement("SELECT *, 
-            (SELECT tipoVenta from TipoVenta where idTipoVenta = p.idTipoVenta) as 'tipoVenta' 
-            (SELECT categoria from Categoria where idCategoria = p.Categoria) as 'categoria' 
-            FROM Plato as p WHERE idPlato = :idPlato", ["idCategoria" => $idCategoria])->fetch(0);
+            (SELECT tipoVenta from TipoVenta where idTipoVenta = p.idTipoVenta) as 'tipoVenta', 
+            (SELECT nombre from Categoria where idCategoria = p.idCategoria) as 'categoria' 
+            FROM Plato as p WHERE idPlato = :idPlato", ["idPlato" => $idPlato])->fetchAll();
     }
 
     /**
