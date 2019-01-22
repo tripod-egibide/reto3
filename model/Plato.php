@@ -85,6 +85,11 @@ class Plato
         return preparedStatement("SELECT * FROM Plato WHERE nombre like :string or notas like :string", ["string" => $string])->fetchAll();
     }
 
+    public static function getByCategoria($idCategoria)
+    {
+        return preparedStatement("SELECT * FROM Plato WHERE idCategoria = :idCategoria", ["idCategoria" => $idCategoria])->fetchAll();
+    }
+
     /**
      * @return mixed
      */
