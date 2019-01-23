@@ -24,7 +24,6 @@ Catálogo
                 <div class="card-body bg-light">
                     <h1 class="card-title text-center">{{ categoria.nombre }}</h1>
                 </div>
-
                 <ul class="list-group list-group-flush container-fluid px-0">
                     {% for plato in categoria.platos %}
                     <li class="list-group-item list-group-item-action row d-flex align-items-center p-0 mx-0">
@@ -34,18 +33,11 @@ Catálogo
                             <p class="mb-1">{{ plato.notas }}</p>
                             <small class="text-muted">Mínimo {{ plato.unidadesMinimas }} {{ plato.tipoVenta }}.</small>
                         </div>
-
                         <div class="col-6 col-md-3 d-flex align-items-center justify-content-end">
-                            {% if administrador %}
-                            <form class="mr-1 editar-plato" method="post">
-                                <input type="hidden" name="idPlato" value={{ plato.idPlato }}>
-                                <button class="btn btn-primary" type="submit"><i class="material-icons align-bottom">edit</i></button>
-                            </form>
-                            <form class="eliminar-plato" method="post">
-                                <input type="hidden" name="idPlato" value={{ plato.idPlato }}>
-                                <button class="btn btn-danger" type="submit"><i class="material-icons align-bottom">delete</i></button>
-                            </form>
-                            {% else %}
+                        {% if administrador %}
+                            <button class="btn btn-primary botonEditar" type="button" value={{ plato.idPlato }}><i class="material-icons align-bottom">edit</i></button>
+                            <button class="btn btn-danger botonEliminar ml-1" type="button" value={{ plato.idPlato }}><i class="material-icons align-bottom">delete</i></button>
+                        {% else %}
                             <form class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text prepend-min"><strong class="mx-auto">{{plato.precio
@@ -82,4 +74,8 @@ Catálogo
         <a id="email" href="mailto:tripod@tripod.com" class="text-muted"><i class="material-icons align-middle">email</i></a>
     </div>
 </footer>
+{% if administrador %}
+    {% include "adminModal.twig" %}
+{% endif%}
+
 {% endblock cuerpo %}
