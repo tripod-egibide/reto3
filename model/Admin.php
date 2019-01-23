@@ -19,9 +19,55 @@ class Admin
         $this->contrasenna = $contrasenna;
     }
 
+    public function toArray()
+    {
+        $data = [
+            "usuario" => $this->usuario,
+            "contrasenna" => $this->contrasenna
+        ];
+
+        if (isset($this->idAdministrador)) {
+            $data["idAdministrador"] = $this->idAdministrador;
+        }
+
+        return $data;
+    }
+
     public function validar($usuario, $contrasenna) {
         return preparedStatement("SELECT idAdministrador FROM Administrador WHERE usuario = :usuario AND contrasenna = :contrasenna", 
             ["usuario" => $usuario, "contrasenna" => $contrasenna])->fetch(0);
+    }
+
+    public function insert()
+    {
+        preparedStatement("INSERT INTO Administrador (usuario, contrasenna) 
+            VALUES (:usuario, :contrasenna)", $this->toArray());
+    }
+
+    public static function delete($id)
+    {
+        preparedStatement("DELETE FROM Administrador WHERE idAdministrador = :idAdministrador", ["idAdministrador" => $id]);
+    }
+
+    public function update($id)
+    {
+        $data = $this->toArray();
+        $data['idAdministrador'] = $id;
+
+        preparedStatement("UPDATE Administrador
+            SET usuario = :usuario,
+                contrasenna = :contrasenna
+            WHERE idAdministrador = :idAdministrador", $data);
+    }
+
+    public function getAll()
+    {
+        return connection()->query("SELECT * FROM Administrador")->fetchAll();
+    }
+
+    public function getById($idAdministrador)
+    {
+        return preparedStatement("SELECT * FROM Administrador WHERE idAdministrador = :idAdministrador", ["idAdministrador" => $idAdministrador])->fetchAll();
     }
 
     /**
