@@ -12,54 +12,134 @@
 </head>
 <body>
     <!-- Botón modal Alta Plato -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#platoModal">
         Alta plato
     </button>
 
     <!-- Modal Alta Plato -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="platoModal" tabindex="-1" role="dialog" aria-labelledby="platoModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form action="" method="post">
+                <form action="" method="post" class="needs-validation" novalidate>
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Datos del plato</h5>
+                    <h5 class="modal-title" id="platoModalLabel">Datos del plato</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body container">
-                    <div class="row">
-                        <div class="col-6">
-                            <img src="https://via.placeholder.com/200" />
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="titulo">T&iacute;tulo:</label>
-                                <input type="text" class="form-control" id="titulo" name="titulo" placeholder="T&iacute;tulo">
-                            </div>
-                            <div class="form-group">
-                                <label for="precio">Precio:</label>
-                                <input type="text" class="form-control" id="precio" name="precio" placeholder="Precio">
-                            </div>
-                            <div class="form-group">
-                                <label for="cantidad">Pedido m&iacute;nimo:</label>
-                                <input type="text" class="form-control" id="cantidad" name="cantidad" placeholder="Cantidad">
-                            </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="titulo">T&iacute;tulo:</label>
+                        <input type="text" class="form-control" id="titulo" name="titulo" placeholder="T&iacute;tulo" required>
+                        <div class="invalid-feedback">
+                            Debes introducir el t&iacute;tulo del plato.
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="form-group">
-                                <label for="notas">Notas:</label>
-                                <textarea class="form-control" id="notas" rows="3">Notas</textarea>
-                            </div>
+                    <div class="form-group">
+                        <label for="precio">Precio:</label>
+                        <input type="number" class="form-control" id="precio" name="precio" placeholder="Precio" required>
+                        <div class="invalid-feedback">
+                            Debes introducir el precio del plato.
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cantidad">Pedido m&iacute;nimo:</label>
+                        <input type="number" class="form-control" id="cantidad" name="cantidad" placeholder="Cantidad" required>
+                        <div class="invalid-feedback">
+                            Debes introducir la cantidad del plato.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="notas">Notas:</label>
+                        <textarea class="form-control" id="notas" rows="3" placeholder="Notas"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="categoria">Categor&iacute;a:</label>
+                        <select class="form-control" id="categoria" name="categoria">
+                            {% for categoria in categorias %}
+                            <option value="{{ categoria.idCategoria }}">{{ categoria.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tipoVenta">Tipo de venta:</label>
+                        <select class="form-control" id="tipoVenta" name="tipoVenta">
+                            {% for tipoVenta in tipoVentas %}
+                            <option value="{{ tipoVenta.idTipoVenta }}">{{ tipoVenta.tipoVenta }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="archivo">Archivo:</label><br />
+                        <input type="file" id="archivo" name="archivo">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">A&ntilde;adir</button>
                 </div>
+                </form>
+                <script>
+                    // Para validar datos. Esta función es de la documentación de Bootstrap
+                    // Example starter JavaScript for disabling form submissions if there are invalid fields
+                    (function() {
+                        'use strict';
+                        window.addEventListener('load', function() {
+                            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                            var forms = document.getElementsByClassName('needs-validation');
+                            // Loop over them and prevent submission
+                            var validation = Array.prototype.filter.call(forms, function(form) {
+                                form.addEventListener('submit', function(event) {
+                                    if (form.checkValidity() === false) {
+                                        event.preventDefault();
+                                        event.stopPropagation();
+                                    }
+                                    form.classList.add('was-validated');
+                                }, false);
+                            });
+                        }, false);
+                    })();
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón modal Administradores -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#administradorModal">
+        Administradores
+    </button>
+
+    <!-- Modal Administradores -->
+    <div class="modal fade" id="administradorModal" tabindex="-1" role="dialog" aria-labelledby="administradorModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="index.php?c=admin&a=insertar" method="post" class="needs-validation" novalidate>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="administradorModalLabel">Datos del administrador</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="usuario">Usuario:</label>
+                            <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Usuario" required>
+                            <div class="invalid-feedback">
+                                Debes introducir el usuario.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="contrasenna">Contrase&ntilde;a:</label>
+                            <input type="password" class="form-control" id="contrasenna" name="contrasenna" placeholder="Contrase&ntilde;a" required>
+                            <div class="invalid-feedback">
+                                Debes introducir la contrase&ntilde;a.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">A&ntilde;adir</button>
+                    </div>
                 </form>
             </div>
         </div>
