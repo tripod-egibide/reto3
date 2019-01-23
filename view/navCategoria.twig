@@ -1,8 +1,8 @@
-<nav class="col-2 d-none d-lg-block align-self-start position-sticky sticky">
+<nav class="col-2 d-none d-lg-block align-self-start position-fixed sticky">
     <h4 class="text-center">Categorías</h4>
     <nav id="scrollspy" class="list-group">
         {% for categoria in categorias %}
-            <a class="list-group-item list-group-item-action test" href="#categoria-{{ categoria.nombre }}">{{ categoria.nombre }}</a>
+            <a class="list-group-item list-group-item-action" href="#categoria-{{ categoria.nombre }}">{{ categoria.nombre }}</a>
         {% endfor %} 
     </nav>
 </nav>
