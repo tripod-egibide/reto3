@@ -24,4 +24,19 @@ input[type="number"] {
   position: relative;
   top: -55px;
 }
+
+#categoria-collapse {
+  z-index: 2000;
+}
+
+#categoria-collapse .list-group-item {
+  border-left: 0 none;
+  border-right: 0 none;
+}
+
+#categoria-collapse .list-group-item:first-child {
+  border-top: 0 none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
 /*# sourceMappingURL=main.css.map */
