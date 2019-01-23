@@ -6,7 +6,6 @@ input[type=number]::-webkit-outer-spin-button
   -webkit-appearance: none; 
   margin: 0; 
 
-
 input[type="number"]
   -moz-appearance: textfield;
 
@@ -26,9 +25,16 @@ input[type="number"]
   .list-group-item
     border-left: 0 none
     border-right: 0 none
-    
 
   .list-group-item:first-child
     border-top: 0 none
     border-top-left-radius: 0
     border-top-right-radius: 0
+
+#navbar-collapse
+  form
+    flex-grow: 0
+
+
+$theme-colors: ("primary": #8B0066)
+@import "bootstrap/scss/bootstrap";
