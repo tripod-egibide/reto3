@@ -17,7 +17,9 @@ input[type="number"] {
 }
 
 .sticky {
-  top: 20%;
+  top: 50%;
+  -webkit-transform: translate(0, -50%);
+          transform: translate(0, -50%);
 }
 
 .categoria {
@@ -40,10 +42,8 @@ input[type="number"] {
   border-top-right-radius: 0;
 }
 
-#navbar-collapse form {
-  -webkit-box-flex: 0;
-      -ms-flex-positive: 0;
-          flex-grow: 0;
+footer .material-icons {
+  font-size: 125%;
 }
 
 /*!

@@ -13,7 +13,8 @@ input[type="number"]
   min-width: 50px
 
 .sticky
-  top: 20%
+  top: 50%;
+  transform: translate(0, -50%);
 
 .categoria
   position: relative
@@ -31,10 +32,10 @@ input[type="number"]
     border-top-left-radius: 0
     border-top-right-radius: 0
 
-#navbar-collapse
-  form
-    flex-grow: 0
-
+footer
+  .material-icons
+    font-size: 125%
 
 $theme-colors: ("primary": #8B0066)
+
 @import "bootstrap/scss/bootstrap";
