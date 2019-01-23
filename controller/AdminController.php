@@ -27,6 +27,7 @@ class AdminController
                 break;
             case 'ver':
                 $this->ver();
+                break;
             case 'salir':
                 $this->salir();
                 break;
@@ -38,7 +39,7 @@ class AdminController
 
     private function principal()
     {
-        if(isset($_SESSION["administrador"]) && $_SESSION["administrador"])
+        if(isset($_SESSION["administrador"]) /*&& $_SESSION["administrador"]*/)
         {
             header("Location: /reto3/");
         }
@@ -50,39 +51,41 @@ class AdminController
 
     private function login()
     {
-        $usuario=$_POST["usuario"];
-        $contrasenna=$_POST["contrasenna"];
-
-        // Crear el objeto Admin
-        $admin=new Admin("", $usuario, $contrasenna);
-        // Ejercutar la sentencia
-        $resultado=$admin->validar($usuario, $contrasenna);
-
-        // Si el usuario es correcto, inicia sesión, si no, vuelve a la pantalla de inicio de sesión.
-
-        if($resultado)
+        if(isset($_POST["usuario"]))
         {
-            $_SESSION["administrador"]=$resultado["idAdministrador"];
-            header("Location: /reto3/");
-        }
-        else
-        {
-            echo twig()->render('loginView.twig', array("error"=>1,"usuario"=>$usuario, "contrasenna"=>$contrasenna));
+            $usuario=$_POST["usuario"];
+            $contrasenna=$_POST["contrasenna"];
+
+            // Crear el objeto Admin
+            $admin=new Admin("", $usuario, $contrasenna);
+            // Ejercutar la sentencia
+            $resultado=$admin->validar($usuario, $contrasenna);
+
+            // Si el usuario es correcto, inicia sesión, si no, vuelve a la pantalla de inicio de sesión.
+
+            if($resultado)
+            {
+                $_SESSION["administrador"]=$resultado["idAdministrador"];
+                header("Location: /reto3/");
+            }
+            else
+            {
+                echo twig()->render('loginView.twig', array("error"=>1,"usuario"=>$usuario, "contrasenna"=>$contrasenna));
+            }
         }
     }
 
     private function insertar()
     {
-        if(isset($_SESSION["administrador"]))
+        if(isset($_SESSION["administrador"]) && isset($_POST["usuario"]))
         {
             $usuario = $_POST["usuario"];
             $contrasenna = $_POST["contrasenna"];
 
             $admin = new Admin("", $usuario, $contrasenna);
             $admin->insert();
-
-            header("Location: /reto3/");
         }
+        header("Location: /reto3/");
     }
 
     private function eliminar()
@@ -126,7 +129,8 @@ class AdminController
 
     private function salir()
     {
-        $_SESSION["administrador"] = false;
+        session_destroy();
+        /*$_SESSION["administrador"] = false;*/
         header("Location: /reto3/");
     }
 }
