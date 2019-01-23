@@ -1,0 +1,27 @@
+html {
+  scroll-behavior: smooth;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.prepend-min {
+  min-width: 50px;
+}
+
+.sticky {
+  top: 20%;
+}
+
+.categoria {
+  position: relative;
+  top: -55px;
+}
+/*# sourceMappingURL=main.css.map */

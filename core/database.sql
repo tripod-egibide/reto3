@@ -40,7 +40,9 @@ CREATE TABLE IF NOT EXISTS `Categoria` (
   `idCategoria` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(255) NOT NULL,
   `emailDepartamento` VARCHAR(255) NOT NULL,
-  PRIMARY KEY (`idCategoria`))
+  PRIMARY KEY (`idCategoria`),
+  CONSTRAINT `uk_nombre_Categoria`
+    UNIQUE KEY (`nombre`))
 ENGINE = InnoDB;
 
 
@@ -82,7 +84,9 @@ CREATE TABLE IF NOT EXISTS `Plato` (
     FOREIGN KEY (`idTipoVenta`)
     REFERENCES `TipoVenta` (`idTipoVenta`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON UPDATE NO ACTION,
+  CONSTRAINT `uk_nombre_Plato`
+    UNIQUE KEY (`nombre`))
 ENGINE = InnoDB;
 
 
