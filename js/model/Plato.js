@@ -1,13 +1,14 @@
 class Plato{
-    constructor(idPlato, nombre, precio, unidadesMinimas, notas, imagen){
+    constructor(idPlato, nombre, precio, unidadesMinimas, notas, imagen, categoria, tipoVenta){
         this._idPlato = idPlato;
         this._nombre = nombre;
         this._precio = precio;
         this._unidadesMinimas = unidadesMinimas;
         this._notas = notas;
         this._imagen = imagen;
+        this._categoria = categoria;
+        this._tipoVenta = tipoVenta;
     }
-
 
     get idPlato() {
         return this._idPlato;
@@ -55,5 +56,21 @@ class Plato{
 
     set imagen(value) {
         this._imagen = value;
+    }
+
+    get categoria() {
+        return this._categoria;
+    }
+
+    set categoria(value) {
+        this._categoria = value;
+    }
+
+    get tipoVenta() {
+        return this._tipoVenta;
+    }
+
+    set tipoVenta(value) {
+        this._tipoVenta = value;
     }
 }

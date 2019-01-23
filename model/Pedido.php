@@ -47,7 +47,7 @@ class Pedido
             VALUES (:nombre, :apellidos, :email, :telefono, :fechaEntrega)", $this->toArray());
     }
 
-    public static function delete($id)
+    public function delete($id)
     {
         preparedStatement("DELETE FROM Pedido WHERE idPlato = :idPedido", ["idPedido" => $id]);
     }
