@@ -10,54 +10,64 @@ Catálogo
 
 {% include "navbar.twig" %}
 
-<main class="container">
-    <div class="row">
-        {# catalogo #}
-        <div class="card">
-            {% for categoria in categorias %}
-            <div class="card-body bg-light">
-                <h1 class="card-title text-center">{{ categoria.nombre }}</h1>
-            </div>
 
-            <ul class="list-group list-group-flush container-fluid px-0">
-                {% for plato in categoria.platos %}
-                <li class="list-group-item list-group-item-action row d-flex align-items-center p-0 mx-0">
-                    <img src="{{ plato.imagen }}" class="imagen-plato col-3 border-right px-0">
-                    <div class="col-6">
-                        <h3 class="mb-1" id="nom{{ plato.idPlato }}">{{ plato.nombre }}</h3>
-                        <p class="mb-1">{{ plato.notas }}</p>
-                        <small class="text-muted">Mínimo {{ plato.unidadesMinimas }} {{ plato.tipoVenta }}.</small>
-                    </div>
-                    
-                    <div class="col-3 d-flex align-items-center justify-content-end">
+<main class="container-fluid">
+    <div class="row">
+
+        {% include "navCategoria.twig" %}
+
+        {# catalogo #}
+        <div class="col col-lg-7">
+            <div class="card">
+                {% for categoria in categorias %}
+                <span id="categoria-{{ categoria.nombre }}" class="categoria"></span>
+                <div class="card-body bg-light">
+                    <h1 class="card-title text-center">{{ categoria.nombre }}</h1>
+                </div>
+                <ul class="list-group list-group-flush container-fluid px-0">
+                    {% for plato in categoria.platos %}
+                    <li class="list-group-item list-group-item-action row d-flex align-items-center p-0 mx-0">
+                        <img src="{{ plato.imagen }}" class="imagen-plato col-3 border-right px-0 d-none d-md-block">
+                        <div class="col-6">
+                            <h3 class="mb-1">{{ plato.nombre }}</h3>
+                            <p class="mb-1">{{ plato.notas }}</p>
+                            <small class="text-muted">Mínimo {{ plato.unidadesMinimas }} {{ plato.tipoVenta }}.</small>
+                        </div>
+                        <div class="col-6 col-md-3 d-flex align-items-center justify-content-end">
                         {% if administrador %}
                             <button class="btn btn-primary botonEditar" type="button" value={{ plato.idPlato }}><i class="material-icons align-bottom">edit</i></button>
                             <button class="btn btn-danger botonEliminar ml-1" type="button" value={{ plato.idPlato }}><i class="material-icons align-bottom">delete</i></button>
                         {% else %}
-                        <form class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" style="min-width: 50px"><strong class="mx-auto">{{plato.precio }}€</strong></span>
-                            </div>
-                            <input type="number" class="form-control" min={{ plato.unidadesMinimas }} value={{ plato.unidadesMinimas }}
-                                aria-describedby="inputGroup-sizing-lg">
-                            <input type="hidden" value={{ plato.idPlato }}>
-                            <div class="input-group-append">
-                                <button class="btn btn-primary py-0 px-1" type="submit"><i class="material-icons align-bottom">add</i></button>
-                            </div>
-                        </form>
-                        {% endif %}
-                    </div>
+                            <form class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text prepend-min"><strong class="mx-auto">{{plato.precio
+                                            }}€</strong></span>
+                                </div>
+                                <input type="number" class="form-control text-right" min={{ plato.unidadesMinimas }} value={{ plato.unidadesMinimas }}
+                                    aria-describedby="inputGroup-sizing-lg">
+                                <input type="hidden" value={{ plato.idPlato }}>
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary py-0 px-1" type="submit"><i class="material-icons align-bottom">add</i></button>
+                                </div>
+                            </form>
+                            {% endif %}
+                        </div>
 
-                </li>
+                    </li>
+                    {% endfor %}
+                </ul>
                 {% endfor %}
-            </ul>
-            {% endfor %}
+            </div>
         </div>
+
+        {% include "carrito.twig" %}
+
     </div>
 </main>
 
 <footer class="d-flex text-muted border-top mt-2">
-    <p class="col d-flex justify-content-center align-items-center px-0 my-auto"><i class="material-icons">copyright</i> 2019 Tripod, Inc.</p>
+    <p class="col d-flex justify-content-center align-items-center px-0 my-auto"><i class="material-icons">copyright</i>
+        2019 Tripod, Inc.</p>
     <div class="col d-flex justify-content-center align-items-center px-0 my-auto">
         <a href="https://github.com/tripod-egibide/reto3" target="_blank" class="text-muted"><i class="material-icons align-middle">code</i></a>
         <a href="/Documentacion/Manual%20del%20Usuario.pdf" id="ayuda" target="_blank" class="text-muted"><i class="material-icons align-middle">help_outline</i></a>
