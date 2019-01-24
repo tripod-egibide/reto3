@@ -77,3 +77,143 @@
         </div>
     </div>
 </div>
+
+{# Modal para insertar un plato #}
+<div class="modal fade" id="altaPlatoModal" tabindex="-1" role="dialog" aria-labelledby="altaPlatoModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="" method="post" class="needs-validation" novalidate>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="altaPlatoModalLabel">Datos del plato</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="titulo">T&iacute;tulo:</label>
+                        <input type="text" class="form-control" id="titulo" name="titulo" placeholder="T&iacute;tulo" required>
+                        <div class="invalid-feedback">
+                            Debes introducir el t&iacute;tulo del plato.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="precio">Precio:</label>
+                        <input type="number" class="form-control" id="precio" name="precio" placeholder="Precio" required>
+                        <div class="invalid-feedback">
+                            Debes introducir el precio del plato.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cantidad">Pedido m&iacute;nimo:</label>
+                        <input type="number" class="form-control" id="cantidad" name="cantidad" placeholder="Cantidad" required>
+                        <div class="invalid-feedback">
+                            Debes introducir la cantidad del plato.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="notas">Notas:</label>
+                        <textarea class="form-control" id="notas" rows="3" placeholder="Notas"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="categoria">Categor&iacute;a:</label>
+                        <select class="form-control" id="categoria" name="categoria">
+                            {% for categoria in categorias %}
+                                <option value="{{ categoria.idCategoria }}">{{ categoria.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tipoVenta">Tipo de venta:</label>
+                        <select class="form-control" id="tipoVenta" name="tipoVenta">
+                            {% for tipoVenta in tipoVentas %}
+                                <option value="{{ tipoVenta.idTipoVenta }}">{{ tipoVenta.tipoVenta }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="archivo">Archivo:</label><br />
+                        <input type="file" id="archivo" name="archivo">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">A&ntilde;adir</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{# Modal para insertar un administrador #}
+<div class="modal fade" id="altaAdministradorModal" tabindex="-1" role="dialog" aria-labelledby="altaAdministradorModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="index.php?c=admin&a=insertar" method="post" class="needs-validation" novalidate>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="altaAdministradorModalLabel">Datos del administrador</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="usuarioAdmin">Usuario:</label>
+                        <input type="text" class="form-control" id="usuarioAdmin" name="usuario" placeholder="Usuario" required>
+                        <div class="invalid-feedback">
+                            Debes introducir el usuario.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="contrasennaAdmin">Contrase&ntilde;a:</label>
+                        <input type="password" class="form-control" id="contrasennaAdmin" name="contrasenna" placeholder="Contrase&ntilde;a" required>
+                        <div class="invalid-feedback">
+                            Debes introducir la contrase&ntilde;a.
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">A&ntilde;adir</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{# Modal para modificar datos de un administrador #}
+<div class="modal fade" id="editarAdministradorModal" tabindex="-1" role="dialog" aria-labelledby="editaAdministradorModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="index.php?c=admin&a=modificar" method="post" class="needs-validation" novalidate>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editarAdministradorModalLabel">Datos del administrador</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="eusuarioAdmin">Usuario:</label>
+                        <input type="text" class="form-control" id="eusuarioAdmin" name="usuario" placeholder="Usuario" required>
+                        <div class="invalid-feedback">
+                            Debes introducir el usuario.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="econtrasennaAdmin">Contrase&ntilde;a:</label>
+                        <input type="password" class="form-control" id="econtrasennaAdmin" name="contrasenna" placeholder="Contrase&ntilde;a" required>
+                        <div class="invalid-feedback">
+                            Debes introducir la contrase&ntilde;a.
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <input type="hidden" name="eidAdmin" name="idAdministrador" />
+                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
