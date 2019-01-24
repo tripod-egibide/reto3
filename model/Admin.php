@@ -26,10 +26,6 @@ class Admin
             "contrasenna" => $this->contrasenna
         ];
 
-        if (isset($this->idAdministrador)) {
-            $data["idAdministrador"] = $this->idAdministrador;
-        }
-
         return $data;
     }
 
@@ -63,11 +59,6 @@ class Admin
     public function getAll()
     {
         return connection()->query("SELECT * FROM Administrador")->fetchAll();
-    }
-
-    public function getById($idAdministrador)
-    {
-        return preparedStatement("SELECT * FROM Administrador WHERE idAdministrador = :idAdministrador", ["idAdministrador" => $idAdministrador])->fetchAll();
     }
 
     /**

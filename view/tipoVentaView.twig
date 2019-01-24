@@ -1,7 +1,7 @@
 {% extends "base.twig" %}
 
 {% block titulo %}
-    Administrador
+    Tipos de ventas
 {% endblock titulo %}
 
 {% block cuerpo %}
@@ -10,26 +10,24 @@
 
     <main class="container">
         <br />
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#altaAdminModal">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#altaTipoVentaModal">
             <i class="material-icons">add_circle</i>
         </button>
-        {% if administradores|length > 0 %}
+        {% if tiposVenta|length > 0 %}
             <div class="table-responsive-md">
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">Usuario</th>
-                        <th scope="col">Contrase&ntilde;a</th>
+                        <th scope="col">Tipo de venta</th>
                         <th scope="col">Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {% for administrador in administradores %}
+                    {% for tipoVenta in tiposVenta %}
                         <tr>
-                            <th scope="row"><span id="usuario{{ administrador.idAdministrador }}">{{ administrador.usuario }}</span></th>
-                            <td><span id="contrasenna{{ administrador.idAdministrador }}">{{ administrador.contrasenna }}</span></td>
-                            <td><button class="btn btn-primary editarAdmin" type="button" value="{{ administrador.idAdministrador }}" data-toggle="modal" data-target="#editarAdminModal"><i class="material-icons align-bottom">edit</i></button>
-                                <a href="index.php?c=admin&a=eliminar&administrador={{ administrador.idAdministrador }}" class="btn btn-danger ml-1" role="button"><i class="material-icons align-bottom">delete</i></a></td>
+                            <th scope="row"><span id="tipoVenta{{ tipoVenta.idTipoVenta }}">{{ tipoVenta.tipoVenta }}</span></th>
+                            <td><button class="btn btn-primary editarTipoVenta" type="button" value="{{ tipoVenta.idTipoVenta }}" data-toggle="modal" data-target="#editarTipoVentaModal"><i class="material-icons align-bottom">edit</i></button>
+                                <a href="index.php?c=tipoVenta&a=eliminar&tipoVenta={{ tipoVenta.idTipoVenta }}" class="btn btn-danger ml-1" role="button"><i class="material-icons align-bottom">delete</i></a></td>
                         </tr>
                     {% endfor %}
                     </tbody>

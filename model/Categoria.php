@@ -18,9 +18,41 @@ class Categoria
         $this->emailDepartamento = $emailDepartamento;
     }
 
+    public function toArray()
+    {
+        $data = [
+            "nombre" => $this->nombre,
+            "emailDepartamento" => $this->emailDepartamento
+        ];
+
+        return $data;
+    }
+
+    public function insert()
+    {
+        preparedStatement("INSERT INTO Categoria (nombre, emailDepartamento) 
+            VALUES (:nombre, :emailDepartamento)", $this->toArray());
+    }
+
+    public static function delete($id)
+    {
+        preparedStatement("DELETE FROM Categoria WHERE idCategoria = :idCategoria", ["idCategoria" => $id]);
+    }
+
+    public function update($id)
+    {
+        $data = $this->toArray();
+        $data['idCategoria'] = $id;
+
+        preparedStatement("UPDATE Categoria
+            SET nombre = :nombre,
+                emailDepartamento = :emailDepartamento
+            WHERE idCategoria = :idCategoria", $data);
+    }
+
     public static function getAll()
     {
-        return connection()->query("SELECT * FROM Categoria ")->fetchAll();
+        return connection()->query("SELECT * FROM Categoria")->fetchAll();
     }
 
     /**

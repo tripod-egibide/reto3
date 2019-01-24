@@ -73,6 +73,10 @@ class AdminController
                 echo twig()->render('loginView.twig', array("error"=>1,"usuario"=>$usuario, "contrasenna"=>$contrasenna));
             }
         }
+        else
+        {
+            header("Location: /reto3/");
+        }
     }
 
     private function insertar()
@@ -84,8 +88,12 @@ class AdminController
 
             $admin = new Admin("", $usuario, $contrasenna);
             $admin->insert();
+            header("Location: /reto3/index.php?c=admin&a=ver");
         }
-        header("Location: /reto3/");
+        else
+        {
+            header("Location: /reto3/");
+        }
     }
 
     private function eliminar()
@@ -97,6 +105,10 @@ class AdminController
             $admin = new Admin("", "", "");
             $admin->delete($idAdministrador);
 
+            header("Location: /reto3/index.php?c=admin&a=ver");
+        }
+        else
+        {
             header("Location: /reto3/");
         }
     }
@@ -112,6 +124,10 @@ class AdminController
             $admin=new Admin("", $usuario, $contrasenna);
             $admin->update($idAdministrador);
 
+            header("Location: /reto3/index.php?c=admin&a=ver");
+        }
+        else
+        {
             header("Location: /reto3/");
         }
     }
@@ -124,6 +140,10 @@ class AdminController
             $administradores = $admin->getAll();
 
             echo twig()->render('adminView.twig', array("administradores" => $administradores));
+        }
+        else
+        {
+            header("Location: /reto3/");
         }
     }
 
