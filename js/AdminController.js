@@ -113,5 +113,40 @@ function readFile(input) {
 
 // FIN relacionado con PLATO <------------------------------------------------------------------------------------------
 
+$(document).ready(function(){
+    // CRUD Admin - Modificar usuario
+    $(document).on('click', '.editarAdmin', function(){
+        let id=$(this).val();
+        let usuario=$('#usuario'+id).text();
+        let contrasenna=$('#contrasenna'+id).text();
 
+        $('#editarAdmin').modal('show');
+        $('#editarAdminId').val(id);
+        $('#editarAdminUsuario').val(usuario);
+        $('#editarAdminContrasenna').val(contrasenna);
+
+    });
+    // CRUD Categoria - Modificar categoria
+    $(document).on('click', '.editarCategoria', function(){
+        let id=$(this).val();
+        let nombre=$('#nombre'+id).text();
+        let emailDepartamento=$('#emailDepartamento'+id).text();
+
+        $('#editarCategoria').modal('show');
+        $('#editarCategoriaId').val(id);
+        $('#editarCategoriaNombre').val(nombre);
+        $('#editarCategoriaEmail').val(emailDepartamento);
+
+    });
+    // CRUD Tipo de Venta - Modificar tipo de venta
+    $(document).on('click', '.editarTipoVenta', function(){
+        let id=$(this).val();
+        let tipoVenta=$('#tipoVenta'+id).text();
+
+        $('#editarTipoVenta').modal('show');
+        $('#editarTipoVentaId').val(id);
+        $('#editarTipoVentaNombre').val(tipoVenta);
+
+    });
+});
 

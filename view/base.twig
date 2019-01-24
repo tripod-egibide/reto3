@@ -19,44 +19,6 @@
 <script src="/reto3/js/botones.js"></script>
 {% if administrador %}
     <script type="text/javascript" src="js/AdminController.js"></script>
-    <script>
-        // Este fragmento de código es temporal, después ira en un archivo del directorio /js
-
-        // Validación de datos de los formularios con Bootstrap.
-        // Example starter JavaScript for disabling form submissions if there are invalid fields
-        (function() {
-            'use strict';
-            window.addEventListener('load', function() {
-                // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                var forms = document.getElementsByClassName('needs-validation');
-                // Loop over them and prevent submission
-                var validation = Array.prototype.filter.call(forms, function(form) {
-                    form.addEventListener('submit', function(event) {
-                        if (form.checkValidity() === false) {
-                            event.preventDefault();
-                            event.stopPropagation();
-                        }
-                        form.classList.add('was-validated');
-                    }, false);
-                });
-            }, false);
-        })();
-
-        // CRUD Admin - Modificar usuario
-        // http://facturacionweb.site/blog/enviar-valores-una-ventana-modal-usando-jquery/
-        $(document).ready(function(){
-            $(document).on('click', '.editarAdmin', function(){
-                let id=$(this).val();
-                let usuario=$('#usuario'+id).text();
-                let contrasenna=$('#contrasenna'+id).text();
-
-                $('#editarAdmin').modal('show');
-                $('#eidAdmin').val(id);
-                $('#eusuarioAdmin').val(usuario);
-                $('#econtrasennaAdmin').val(contrasenna);
-
-            });
-        });
-    </script>
+    <script type="text/javascript" src="js/forms.js"></script>
 {% endif %}
 </html>

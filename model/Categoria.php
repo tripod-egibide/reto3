@@ -3,7 +3,7 @@ require_once __DIR__ . "/../core/database.php";
 
 class Categoria
 {
-    private $idCategoria,$nombre, $emailDepartamento, $orden;
+    private $idCategoria,$nombre, $emailDepartamento;
 
     /**
      * Categoria constructor.
@@ -11,12 +11,11 @@ class Categoria
      * @param $nombre
      * @param $emailDepartamento
      */
-    public function __construct($idCategoria, $nombre, $emailDepartamento, $orden)
+    public function __construct($idCategoria, $nombre, $emailDepartamento)
     {
         $this->idCategoria = $idCategoria;
         $this->nombre = $nombre;
         $this->emailDepartamento = $emailDepartamento;
-        $this->orden = $orden;
     }
 
     public function toArray()
@@ -24,8 +23,7 @@ class Categoria
         $data = [
             "idCategoria" => $this->idCategoria,
             "nombre" => $this->nombre,
-            "emailDepartamento" => $this->emailDepartamento,
-            "orden" => $this->orden
+            "emailDepartamento" => $this->emailDepartamento
         ];
 
         if (isset($this->idCategoria)) {
@@ -37,7 +35,7 @@ class Categoria
 
     public function insert()
     {
-        return connection()->query("INSERT INTO Categoria (nombre, emailDepartamento, orden) VALUES(:nombre, :emailDepartamento, :orden)", $this->toArray());
+        return connection()->query("INSERT INTO Categoria (nombre, emailDepartamento) VALUES(:nombre, :emailDepartamento)", $this->toArray());
     }
 
     public function delete($id)
@@ -52,8 +50,7 @@ class Categoria
 
         preparedStatement("UPDATE Categoria
             SET nombre = :nombre,
-                emailDepartamento = :emailDepartamento,
-                orden = :orden
+                emailDepartamento = :emailDepartamento
             WHERE idCategoria = :idCategoria", $data);
     }
 
@@ -61,38 +58,6 @@ class Categoria
     {
         $data = ["idCategoria" => $id];
         return connection()->query("SELECT * FROM Categoria WHERE idCategoria = :idCategoria", $data)->fetchAll();
-    }
-
-    public function toArray()
-    {
-        $data = [
-            "nombre" => $this->nombre,
-            "emailDepartamento" => $this->emailDepartamento
-        ];
-
-        return $data;
-    }
-
-    public function insert()
-    {
-        preparedStatement("INSERT INTO Categoria (nombre, emailDepartamento) 
-            VALUES (:nombre, :emailDepartamento)", $this->toArray());
-    }
-
-    public static function delete($id)
-    {
-        preparedStatement("DELETE FROM Categoria WHERE idCategoria = :idCategoria", ["idCategoria" => $id]);
-    }
-
-    public function update($id)
-    {
-        $data = $this->toArray();
-        $data['idCategoria'] = $id;
-
-        preparedStatement("UPDATE Categoria
-            SET nombre = :nombre,
-                emailDepartamento = :emailDepartamento
-            WHERE idCategoria = :idCategoria", $data);
     }
 
     public static function getAll()
@@ -146,22 +111,6 @@ class Categoria
     public function setNombre($nombre): void
     {
         $this->nombre = $nombre;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getOrden()
-    {
-        return $this->orden;
-    }
-
-    /**
-     * @param mixed $orden
-     */
-    public function setOrden($orden): void
-    {
-        $this->orden = $orden;
     }
     
 }

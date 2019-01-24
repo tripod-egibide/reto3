@@ -27,7 +27,7 @@
                         <tr>
                             <th scope="row"><span id="tipoVenta{{ tipoVenta.idTipoVenta }}">{{ tipoVenta.tipoVenta }}</span></th>
                             <td><button class="btn btn-primary editarTipoVenta" type="button" value="{{ tipoVenta.idTipoVenta }}" data-toggle="modal" data-target="#editarTipoVentaModal"><i class="material-icons align-bottom">edit</i></button>
-                                <a href="index.php?c=tipoVenta&a=eliminar&tipoVenta={{ tipoVenta.idTipoVenta }}" class="btn btn-danger ml-1" role="button"><i class="material-icons align-bottom">delete</i></a></td>
+                                <a href="index.php?c=tipoventa&a=remove&tipoVenta={{ tipoVenta.idTipoVenta }}" class="btn btn-danger ml-1" role="button"><i class="material-icons align-bottom">delete</i></a></td>
                         </tr>
                     {% endfor %}
                     </tbody>

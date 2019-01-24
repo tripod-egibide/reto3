@@ -1,4 +1,9 @@
 <?php
+
+if(session_id()==''){
+    session_start();
+}
+
 class TipoVentaController{
     public function run($action = "")
     {
@@ -17,6 +22,10 @@ class TipoVentaController{
                 $this->edit();
                 break;
 
+            case 'view':
+                $this->view();
+                break;
+
             case 'findById':
                 $this->findById();
                 break;
@@ -29,17 +38,68 @@ class TipoVentaController{
 
     private function add()
     {
-        // temp
+        if(isset($_SESSION["administrador"]))
+        {
+            $tipoVenta = $_POST["tipoVenta"];
+
+            $tipoVenta = new TipoVenta("", $tipoVenta);
+            $tipoVenta->insert();
+            header("Location: /reto3/index.php?c=tipoventa&a=view");
+        }
+        else
+        {
+            header("Location: /reto3/");
+        }
     }
 
     private function remove()
     {
-        // temp
+        if(isset($_SESSION["administrador"]))
+        {
+            $idTipoVenta = $_GET["tipoVenta"];
+
+            $tipoVenta = new TipoVenta("", "");
+            $tipoVenta->delete($idTipoVenta);
+
+            header("Location: /reto3/index.php?c=tipoventa&a=view");
+        }
+        else
+        {
+            header("Location: /reto3/");
+        }
     }
 
     private function edit()
     {
-        // temp
+        if(isset($_SESSION["administrador"]))
+        {
+            $idTipoVenta=$_POST["idTipoVenta"];
+            $tipoVenta = $_POST["tipoVenta"];
+
+            $tipoVenta=new TipoVenta("", $tipoVenta);
+            $tipoVenta->update($idTipoVenta);
+
+            header("Location: /reto3/index.php?c=tipoventa&a=view");
+        }
+        else
+        {
+            header("Location: /reto3/");
+        }
+    }
+
+    private function view()
+    {
+        if(isset($_SESSION["administrador"]))
+        {
+            $tipoVenta = new TipoVenta("", "");
+            $tiposVenta = $tipoVenta->getAll();
+
+            echo twig()->render('tipoVentaView.twig', array("tiposVenta" => $tiposVenta));
+        }
+        else
+        {
+            echo twig()->render("loginView.twig");
+        }
     }
 
     private function findById()

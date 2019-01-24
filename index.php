@@ -23,7 +23,6 @@ if (isset($_GET["c"])) {
             break;
 
         case 'tipoventa':
-
             require_once __DIR__ . "/controller/TipoVentaController.php";
             $controller = new TipoVentaController;
             break;

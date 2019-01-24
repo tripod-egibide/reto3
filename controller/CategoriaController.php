@@ -1,4 +1,9 @@
 <?php
+
+if(session_id()==''){
+    session_start();
+}
+
 class CategoriaController{
     public function run($action = "")
     {
@@ -17,6 +22,10 @@ class CategoriaController{
                 $this->edit();
                 break;
 
+            case 'view':
+                $this->view();
+                break;
+
             case 'findById':
                 $this->findById();
                 break;
@@ -29,17 +38,70 @@ class CategoriaController{
 
     private function add()
     {
-        // temp
+        if(isset($_SESSION["administrador"]))
+        {
+            $nombre = $_POST["nombre"];
+            $emailDepartamento = $_POST["emailDepartamento"];
+
+            $categoria = new Categoria("", $nombre, $emailDepartamento);
+            $categoria->insert();
+            header("Location: /reto3/index.php?c=categoria&a=view");
+        }
+        else
+        {
+            header("Location: /reto3/");
+        }
     }
 
     private function remove()
     {
-        // temp
+        if(isset($_SESSION["administrador"]))
+        {
+            $idCategoria = $_GET["categoria"];
+
+            $categoria = new Categoria("", "", "");
+            $categoria->delete($idCategoria);
+
+            header("Location: /reto3/index.php?c=categoria&a=view");
+        }
+        else
+        {
+            header("Location: /reto3/");
+        }
     }
 
     private function edit()
     {
-        // temp
+        if(isset($_SESSION["administrador"]))
+        {
+            $idCategoria=$_POST["idCategoria"];
+            $nombre = $_POST["nombre"];
+            $emailDepartamento = $_POST["emailDepartamento"];
+
+            $categoria=new Categoria("", $nombre, $emailDepartamento);
+            $categoria->edit($idCategoria);
+
+            header("Location: /reto3/index.php?c=categoria&a=view");
+        }
+        else
+        {
+            header("Location: /reto3/");
+        }
+    }
+
+    private function view()
+    {
+        if(isset($_SESSION["administrador"]))
+        {
+            $categoria = new Categoria("", "", "");
+            $categorias = $categoria->getAll();
+
+            echo twig()->render('categoriaView.twig', array("categorias" => $categorias));
+        }
+        else
+        {
+            echo twig()->render("loginView.twig");
+        }
     }
 
     private function findById()
@@ -49,8 +111,7 @@ class CategoriaController{
         foreach ($categorias as $categoria) {
             $data[$categoria["idCategoria"]] = [
                 "nombre" => $categoria["nombre"],
-                "emailDepartamento" => $categoria["emailDepartamento"],
-                "orden" => $categoria["orden"]
+                "emailDepartamento" => $categoria["emailDepartamento"]
             ];
         }
         return $data;
@@ -63,8 +124,7 @@ class CategoriaController{
         foreach ($categorias as $categoria) {
             $data[$categoria["idCategoria"]] = [
                 "nombre" => $categoria["nombre"],
-                "emailDepartamento" => $categoria["emailDepartamento"],
-                "orden" => $categoria["orden"]
+                "emailDepartamento" => $categoria["emailDepartamento"]
             ];
         }
         return $data;

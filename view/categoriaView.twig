@@ -29,7 +29,7 @@
                             <th scope="row"><span id="nombre{{ categoria.idCategoria }}">{{ categoria.nombre }}</span></th>
                             <td><span id="emailDepartamento{{ categoria.idCategoria }}">{{ categoria.emailDepartamento }}</span></td>
                             <td><button class="btn btn-primary editarCategoria" type="button" value="{{ categoria.idCategoria }}" data-toggle="modal" data-target="#editarCategoriaModal"><i class="material-icons align-bottom">edit</i></button>
-                                <a href="index.php?c=categoria&a=eliminar&categoria={{ categoria.idCategoria }}" class="btn btn-danger ml-1" role="button"><i class="material-icons align-bottom">delete</i></a></td>
+                                <a href="index.php?c=categoria&a=remove&categoria={{ categoria.idCategoria }}" class="btn btn-danger ml-1" role="button"><i class="material-icons align-bottom">delete</i></a></td>
                         </tr>
                     {% endfor %}
                     </tbody>
