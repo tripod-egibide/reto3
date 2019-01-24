@@ -1,6 +1,6 @@
 
 <div id="modalModificarPlato" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Datos del plato</h4>
@@ -10,23 +10,52 @@
             </div>
             <div class="modal-body">
                 <!--- cuerpo del modal--->
-                <div class="row">
-                    <img src="" class="img-fluid" alt="Responsive image" id="imagen">
-                    <label class="col-4" for="nombre">Nombre:</label>
-                    <input type="text" id="nombre">
-                    <label class="col-4" for="descripcion">Descripci&oacute;n:</label>
-                    <input type="text" id="descripcion">
-                    <label class="col-4" for="precio">Precio:</label>
-                    <input type="text" id="precio">
-                    <label class="col-4" for="cantidad">Pedido m&iacute;nimo:</label>
-                    <input type="text" id="cantidad">
-                    <label class="col-4" for="imagen">Imagen:</label>
-                    <input type="button" class="btn btn-primary" id="modificarImagen" value="Modificar Imagen">
-                </div>
+
+                    <form>
+                        <div class="form-group" id="zonaImagen">
+                            <img class="form-control" src="" class="d-none d-md-block" alt="Egibide" id="imagen">
+                        </div>
+                        <div class="form-group">
+                            <label for="modificarImagen">Modificar Imagen:</label>
+                            <input type="file" class="form-control-file" id="modificarImagen" accept="image/*" value="Modificar Imagen">
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Nombre:</label>
+                            <input class="form-control" type="text" id="nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="descripcion">Descripci&oacute;n:</label>
+                            <input class="form-control" type="text" id="descripcion" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="precio">Precio:</label>
+                            <input class="form-control" type="text" id="precio" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cantidad">Pedido m&iacute;nimo:</label>
+                            <input class="form-control" type="text" id="cantidad" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="medida">Formato de la medida</label>
+                            <select id="medida"  class="form-control" class="form-control" required>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="categoria">Categoria</label>
+                            <select id="categoria"  class="form-control" class="form-control" required>
+                                {% for key, categoria in categorias %}
+                                    <option id="cat{{ key }}">{{ categoria.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-primary" id="modificarPlato" value="Confirmar">
+                        </div>
+                    </form>
+
             </div>
-            <div class="modal-footer">
-                <input type="button" class="btn btn-primary" id="modificarPlato" value="Confirmar">
-            </div>
+
         </div>
     </div>
 </div>

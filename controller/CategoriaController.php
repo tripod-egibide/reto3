@@ -1,98 +1,72 @@
 <?php
-
-if(session_id()==''){
-    session_start();
-}
-
-class CategoriaController
-{
-
+class CategoriaController{
     public function run($action = "")
     {
         require_once __DIR__ . "/../model/Categoria.php";
         require_once __DIR__ . "/../core/twig.php";
-
         switch ($action) {
-            case 'insertar':
-                $this->insertar();
+            case 'add':
+                $this->add();
                 break;
-            case 'eliminar':
-                $this->eliminar();
+
+            case 'remove':
+                $this->remove();
                 break;
-            case 'actualizar':
-                $this->actualizar();
+
+            case 'edit':
+                $this->edit();
                 break;
+
+            case 'findById':
+                $this->findById();
+                break;
+
             default:
-                $this->principal();
+                $this->index();
                 break;
         }
     }
 
-    private function principal()
+    private function add()
     {
-        if(isset($_SESSION["administrador"]))
-        {
-            $categoria = new Categoria("", "", "");
-            $categorias = $categoria->getAll();
-
-            echo twig()->render('categoriaView.twig', array("categorias" => $categorias));
-        }
-        else
-        {
-            echo twig()->render("loginView.twig");
-        }
+        // temp
     }
 
-    private function insertar()
+    private function remove()
     {
-        if(isset($_SESSION["administrador"]))
-        {
-            $nombre = $_POST["nombre"];
-            $emailDepartamento = $_POST["emailDepartamento"];
-
-            $categoria = new Categoria("", $nombre, $emailDepartamento);
-            $categoria->insert();
-            header("Location: /reto3/index.php?c=categoria");
-        }
-        else
-        {
-            header("Location: /reto3/");
-        }
+        // temp
     }
 
-    private function eliminar()
+    private function edit()
     {
-        if(isset($_SESSION["administrador"]))
-        {
-            $idCategoria = $_GET["categoria"];
-
-            $categoria = new Categoria("", "", "");
-            $categoria->delete($idCategoria);
-
-            header("Location: /reto3/index.php?c=categoria");
-        }
-        else
-        {
-            header("Location: /reto3/");
-        }
+        // temp
     }
 
-    private function actualizar()
+    private function findById()
     {
-        if(isset($_SESSION["administrador"]))
-        {
-            $idCategoria=$_POST["idCategoria"];
-            $nombre = $_POST["nombre"];
-            $emailDepartamento = $_POST["emailDepartamento"];
-
-            $categoria=new Categoria("", $nombre, $emailDepartamento);
-            $categoria->update($idCategoria);
-
-            header("Location: /reto3/index.php?c=categoria");
+        $categorias = Categoria::getAll();
+        $data = [];
+        foreach ($categorias as $categoria) {
+            $data[$categoria["idCategoria"]] = [
+                "nombre" => $categoria["nombre"],
+                "emailDepartamento" => $categoria["emailDepartamento"],
+                "orden" => $categoria["orden"]
+            ];
         }
-        else
-        {
-            header("Location: /reto3/");
+        return $data;
+    }
+
+    private function index()
+    {
+        $categorias = Categoria::getAll();
+        $data = [];
+        foreach ($categorias as $categoria) {
+            $data[$categoria["idCategoria"]] = [
+                "nombre" => $categoria["nombre"],
+                "emailDepartamento" => $categoria["emailDepartamento"],
+                "orden" => $categoria["orden"]
+            ];
         }
+        return $data;
     }
 }

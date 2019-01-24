@@ -22,7 +22,8 @@ if (isset($_GET["c"])) {
             $controller = new CategoriaController;
             break;
 
-        case 'tipoVenta':
+        case 'tipoventa':
+
             require_once __DIR__ . "/controller/TipoVentaController.php";
             $controller = new TipoVentaController;
             break;

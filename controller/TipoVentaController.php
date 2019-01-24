@@ -1,96 +1,61 @@
 <?php
-
-if(session_id()==''){
-    session_start();
-}
-
-class TipoVentaController
-{
-
+class TipoVentaController{
     public function run($action = "")
     {
         require_once __DIR__ . "/../model/TipoVenta.php";
         require_once __DIR__ . "/../core/twig.php";
-
         switch ($action) {
-            case 'insertar':
-                $this->insertar();
+            case 'add':
+                $this->add();
                 break;
-            case 'eliminar':
-                $this->eliminar();
+
+            case 'remove':
+                $this->remove();
                 break;
-            case 'actualizar':
-                $this->actualizar();
+
+            case 'edit':
+                $this->edit();
                 break;
+
+            case 'findById':
+                $this->findById();
+                break;
+
             default:
-                $this->principal();
+                $this->getAll();
                 break;
         }
     }
 
-    private function principal()
+    private function add()
     {
-        if(isset($_SESSION["administrador"]))
-        {
-            $tipoVenta = new TipoVenta("", "");
-            $tiposVenta = $tipoVenta->getAll();
-
-            echo twig()->render('tipoVentaView.twig', array("tiposVenta" => $tiposVenta));
-        }
-        else
-        {
-            echo twig()->render("loginView.twig");
-        }
+        // temp
     }
 
-    private function insertar()
+    private function remove()
     {
-        if(isset($_SESSION["administrador"]))
-        {
-            $tipoVenta = $_POST["tipoVenta"];
-
-            $tipoVenta = new TipoVenta("", $tipoVenta);
-            $tipoVenta->insert();
-            header("Location: /reto3/index.php?c=tipoVenta");
-        }
-        else
-        {
-            header("Location: /reto3/");
-        }
+        // temp
     }
 
-    private function eliminar()
+    private function edit()
     {
-        if(isset($_SESSION["administrador"]))
-        {
-            $idTipoVenta = $_GET["tipoVenta"];
-
-            $tipoVenta = new TipoVenta("", "");
-            $tipoVenta->delete($idTipoVenta);
-
-            header("Location: /reto3/index.php?c=tipoVenta");
-        }
-        else
-        {
-            header("Location: /reto3/");
-        }
+        // temp
     }
 
-    private function actualizar()
+    private function findById()
     {
-        if(isset($_SESSION["administrador"]))
-        {
-            $idTipoVenta=$_POST["idTipoVenta"];
-            $tipoVenta = $_POST["tipoVenta"];
-
-            $tipoVenta=new TipoVenta("", $tipoVenta);
-            $tipoVenta->update($idTipoVenta);
-
-            header("Location: /reto3/index.php?c=tipoVenta");
+        $tipoVentas = TipoVenta::getAll();
+        $data = [];
+        foreach ($tipoVentas as $tipoVenta) {
+            $data[$tipoVenta["idTipoVenta"]] = [
+                "tipoVenta" => $tipoVenta["tipoVenta"]
+            ];
         }
-        else
-        {
-            header("Location: /reto3/");
-        }
+        return $data;
+    }
+
+    private function getAll()
+    {
+        echo json_encode(TipoVenta::getAll());
     }
 }
