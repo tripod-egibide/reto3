@@ -10,50 +10,52 @@
             </div>
             <div class="modal-body">
                 <!--- cuerpo del modal--->
-                <div class="row">
+
                     <form>
-                        <div class="form-group">
-                            <img src="" class="img-fluid" alt="Responsive image" id="imagen">
+                        <div class="form-group" id="zonaImagen">
+                            <img class="form-control" src="" class="d-none d-md-block" alt="Egibide" id="imagen">
                         </div>
                         <div class="form-group">
-                            <label class="col-4" for="nombre">Nombre:</label>
-                            <input type="text" id="nombre" required>
+                            <label for="modificarImagen">Modificar Imagen:</label>
+                            <input type="file" class="form-control-file" id="modificarImagen" accept="image/*" value="Modificar Imagen">
                         </div>
                         <div class="form-group">
-                            <label class="col-4" for="descripcion">Descripci&oacute;n:</label>
-                            <input type="text" id="descripcion" required>
+                            <label for="nombre">Nombre:</label>
+                            <input class="form-control" type="text" id="nombre" required>
                         </div>
                         <div class="form-group">
-                            <label class="col-4" for="precio">Precio:</label>
-                            <input type="text" id="precio" required>
+                            <label for="descripcion">Descripci&oacute;n:</label>
+                            <input class="form-control" type="text" id="descripcion" required>
                         </div>
                         <div class="form-group">
-                            <label class="col-4" for="cantidad">Pedido m&iacute;nimo:</label>
-                            <input type="text" id="cantidad" required>
+                            <label for="precio">Precio:</label>
+                            <input class="form-control" type="text" id="precio" required>
                         </div>
                         <div class="form-group">
-                            <label class="col-4" for="imagen">Imagen:</label>
-                            <input type="button" class="btn btn-primary" id="modificarImagen" value="Modificar Imagen">
+                            <label for="cantidad">Pedido m&iacute;nimo:</label>
+                            <input class="form-control" type="text" id="cantidad" required>
                         </div>
+
                         <div class="form-group">
                             <label for="medida">Formato de la medida</label>
-                            <select id="medida" class="form-control" required>
+                            <select id="medida"  class="form-control" class="form-control" required>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="categoria">Categoria</label>
-                            <select id="categoria" class="form-control" required>
-                                {% for categoria in categorias %}
-                                    <option id="cat{{ categoria }}">{{ categoria.nombre }}</option>
+                            <select id="categoria"  class="form-control" class="form-control" required>
+                                {% for key, categoria in categorias %}
+                                    <option id="cat{{ key }}">{{ categoria.nombre }}</option>
                                 {% endfor %}
                             </select>
                         </div>
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-primary" id="modificarPlato" value="Confirmar">
+                        </div>
                     </form>
-                </div>
+
             </div>
-            <div class="modal-footer">
-                <input type="button" class="btn btn-primary" id="modificarPlato" value="Confirmar">
-            </div>
+
         </div>
     </div>
 </div>

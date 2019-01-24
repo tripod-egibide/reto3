@@ -22,6 +22,10 @@ class PlatoController
                 $this->findById();
                 break;
 
+            case 'delete':
+                $this->delete();
+                break;
+
             default:
                 $this->index();
                 break;
@@ -65,9 +69,9 @@ class PlatoController
         echo json_encode(Plato::getById($_POST["idPlato"]));
     }
 
-    private function findAllTipoVenta()
-    {
-
+    private function delete(){
+        Plato::delete($_POST["idPlato"]);
+        header("Refresh:0");
     }
 
 }
