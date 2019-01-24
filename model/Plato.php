@@ -51,10 +51,11 @@ class Plato
             VALUES (:nombre, :precio, :unidadesMinimas, :notas, :imagen, :idCategoria, :idTipoventa)", $this->toArray());
     }
 
+    // realmente no existe un delete, simplemente cambia su estado para mostrar u ocultar.
+    // por motivos de integridad de datos.
     public static function delete($id)
     {
-
-        preparedStatement("DELETE FROM Plato WHERE idPlato = :idPlato", ["idPlato" => $id]);
+        preparedStatement("UPDATE plato SET estado = NOT estado WHERE idPlato = :idPlato;", ["idPlato" => $id]);
     }
 
     public function update($id)
@@ -78,7 +79,7 @@ class Plato
         // esta función, como las otras get, seguramente tendrán que ser modificadas luego para paginar
         // si no, podríamos estar cargando cientos de platos a la vez
         // (aunque realísticamente el restaurante querría tener todos sus platos visibles, y no tendrían tantos en primer lugar)
-        return connection()->query("SELECT * FROM Plato as p")->fetchAll();
+        return connection()->query("SELECT * FROM Plato as p " . ((isset($_SESSION["administrador"]) ? " WHERE estado = 1" : "")))->fetchAll();
     }
 
     public static function getByString($string)
@@ -89,7 +90,7 @@ class Plato
     public static function getByCategoria($idCategoria)
     {
         return preparedStatement("SELECT *, (SELECT tipoVenta from TipoVenta where idTipoVenta = p.idTipoVenta) as 'tipoVenta' 
-            FROM Plato as p WHERE idCategoria = :idCategoria", ["idCategoria" => $idCategoria])->fetchAll();
+            FROM Plato as p WHERE idCategoria = :idCategoria " . (isset($_SESSION["administrador"]) ? "" : " and estado = 1 ") , ["idCategoria" => $idCategoria])->fetchAll();
     }
 
     public static function getById($idPlato)

@@ -36,7 +36,7 @@ Catálogo
                         <div class="col-6 col-md-3 d-flex align-items-center justify-content-end">
                         {% if administrador %}
                             <button class="btn btn-primary botonEditar" type="button" value={{ plato.idPlato }}><i class="material-icons align-bottom">edit</i></button>
-                            <button class="btn btn-danger botonEliminar ml-1" type="button" value={{ plato.idPlato }}><i class="material-icons align-bottom">delete</i></button>
+                            <button class="btn {% if plato.estado == 1 %} btn-success {% else %} btn-danger {% endif %} botonEliminar ml-1" type="button" value={{ plato.idPlato }}><i class="material-icons align-bottom">{% if plato.estado == 1 %} visibility {% else %} visibility_off {% endif %}</i></button>
                         {% else %}
                             <form class="input-group">
                                 <div class="input-group-prepend">

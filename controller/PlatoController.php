@@ -71,7 +71,6 @@ class PlatoController
 
     private function delete(){
         Plato::delete($_POST["idPlato"]);
-        header("Refresh:0");
     }
 
 }
