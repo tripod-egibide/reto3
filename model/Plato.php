@@ -53,6 +53,7 @@ class Plato
 
     public static function delete($id)
     {
+
         preparedStatement("DELETE FROM Plato WHERE idPlato = :idPlato", ["idPlato" => $id]);
     }
 

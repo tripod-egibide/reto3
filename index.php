@@ -17,6 +17,15 @@ if (isset($_GET["c"])) {
             $controller = new AdminController;
             break;
 
+        case 'categoria':
+            require_once __DIR__ . "/controller/CategoriaController.php";
+            $controller = new CategoriaController;
+            break;
+
+        case 'tipoventa':
+            require_once __DIR__ . "/controller/TipoVentaController.php";
+            $controller = new TipoVentaController;
+            break;
 
         default:
             require_once __DIR__ . "/controller/PlatoController.php";
