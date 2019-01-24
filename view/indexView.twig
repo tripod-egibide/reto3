@@ -11,13 +11,13 @@ Catálogo
 {% include "navbar.twig" %}
 
 
-<main class="container-fluid">
+<main class="container-fluid my-2">
     <div class="row">
 
         {% include "navCategoria.twig" %}
 
         {# catalogo #}
-        <div class="col col-lg-7">
+        <div class="col col-lg-7 offset-lg-2">
             <div class="card">
                 {% for categoria in categorias %}
                 <span id="categoria-{{ categoria.nombre }}" class="categoria"></span>
@@ -40,8 +40,7 @@ Catálogo
                         {% else %}
                             <form class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text prepend-min"><strong class="mx-auto">{{plato.precio
-                                            }}€</strong></span>
+                                    <span class="input-group-text prepend-min"><strong class="mx-auto">{{ plato.precio }}€</strong></span>
                                 </div>
                                 <input type="number" class="form-control text-right" min={{ plato.unidadesMinimas }} value={{ plato.unidadesMinimas }}
                                     aria-describedby="inputGroup-sizing-lg">
@@ -65,7 +64,7 @@ Catálogo
     </div>
 </main>
 
-<footer class="d-flex text-muted border-top mt-2">
+<footer class="d-flex text-muted border-top">
     <p class="col d-flex justify-content-center align-items-center px-0 my-auto"><i class="material-icons">copyright</i>
         2019 Tripod, Inc.</p>
     <div class="col d-flex justify-content-center align-items-center px-0 my-auto">

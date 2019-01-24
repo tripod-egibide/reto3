@@ -1,20 +1,24 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top mb-2 border-bottom">
-    <a class="navbar-brand" href="/reto3/"><img src="/reto3/img/logo-restaurant.png" alt="Egibide Hostelería" height=32px></a>
+<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top border-bottom">
+    <a class="navbar-brand" href="#"><img src="/reto3/img/logo-restaurant.png" alt="Egibide Hostelería" height=32px></a>
+    <a class="d-lg-none ml-auto mr-1 btn btn-outline-light" data-toggle="collapse" href="#carrito-collapse" role="button">
+        <i class="material-icons align-middle text-primary">shopping_cart</i>
+    </a>
+    <a class="d-lg-none mr-4 btn btn-outline-light" data-toggle="collapse" href="#categoria-collapse" role="button">
+        <i class="material-icons align-middle text-primary">filter_list</i>
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
         aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
+
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="https://www.egibide.org/">Egibide</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="https://www.egibide.org/escuela-de-hosteleria/">Escuela de Hostelería</a>
-            </li>
-            <li class="nav-item">
+            <li class="nav-item text-center">
                 <a class="nav-link" href="https://www.egibide.org/campus-mendizorrotza/">Contacto</a>
+            </li>
+            <li class="nav-item text-center">
+                <a class="nav-link" href="https://www.egibide.org/">Egibide</a>
             </li>
             {% if administrador %}
             <li class="nav-item dropdown">
@@ -32,16 +36,23 @@
                     <a class="dropdown-item" href="#" id="modificar-tipoVenta">Modificar tipos de venta</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="/reto3/?c=admin&a=salir" id="cerrar-sesion">Cerrar sesión</a>
-
                 </div>
             </li>
             {% endif %}
         </ul>
-        <form class="form-inline my-2 my-lg-0 input-group w-auto ml-4">
+        <form class="nav-item form-inline my-2 my-lg-0 input-group w-25 mx-auto mx-lg-1">
             <input class="form-control" type="search" placeholder="Búsqueda" aria-label="Search" id="search">
             <div class="input-group-append">
                 <span class="input-group-text py-0"><i class="material-icons align-bottom">search</i></span>
             </div>
         </form>
     </div>
+
+    
 </nav>
+<div class="collapse position-fixed w-100 d-lg-none" id="categoria-collapse">
+    {% for categoria in categorias %}
+        {# añadir funcionalidad de JS para contraer el collapse al hacer click en uno de estos #}
+        <a class="list-group-item list-group-item-action navbar-scrollspy text-center" href="#categoria-{{ categoria.nombre }}">{{ categoria.nombre }}</a>        
+    {% endfor %}
+</div>
