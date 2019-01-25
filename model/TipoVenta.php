@@ -19,13 +19,8 @@ class TipoVenta
     public function toArray()
     {
         $data = [
-            "idTipoVenta" => $this->idTipoVenta,
             "tipoVenta" => $this->tipoVenta
         ];
-
-        if (isset($this->idPedido)) {
-            $data["idTipoVenta"] = $this->idTipoVenta;
-        }
 
         return $data;
     }
@@ -33,10 +28,10 @@ class TipoVenta
     public function insert()
     {
         preparedStatement("INSERT INTO tipoventa (tipoVenta) 
-            VALUES (:idTipoVenta)", $this->toArray());
+            VALUES (:tipoVenta)", $this->toArray());
     }
 
-    public function delete($id)
+    public static function delete($id)
     {
         preparedStatement("DELETE FROM tipoventa WHERE idTipoVenta = :idTipoVenta", ["idTipoVenta" => $id]);
     }

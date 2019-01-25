@@ -11,7 +11,7 @@
     <main class="container">
         <br />
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#altaCategoriaModal">
-            <i class="material-icons">add_circle</i>
+            <i class="material-icons align-bottom">add</i>
         </button>
         {% if categorias|length > 0 %}
             <div class="table-responsive-md">
@@ -26,7 +26,7 @@
                     <tbody>
                     {% for categoria in categorias %}
                         <tr>
-                            <th scope="row"><span id="nombre{{ categoria.idCategoria }}">{{ categoria.nombre }}</span></th>
+                            <td scope="row"><span id="nombre{{ categoria.idCategoria }}">{{ categoria.nombre }}</span></td>
                             <td><span id="emailDepartamento{{ categoria.idCategoria }}">{{ categoria.emailDepartamento }}</span></td>
                             <td><button class="btn btn-primary editarCategoria" type="button" value="{{ categoria.idCategoria }}" data-toggle="modal" data-target="#editarCategoriaModal"><i class="material-icons align-bottom">edit</i></button>
                                 <a href="index.php?c=categoria&a=remove&categoria={{ categoria.idCategoria }}" class="btn btn-danger ml-1" role="button"><i class="material-icons align-bottom">delete</i></a></td>
@@ -47,7 +47,5 @@
             <a id="email" href="mailto:tripod@tripod.com" class="text-muted"><i class="material-icons align-middle">email</i></a>
         </div>
     </footer>
-    {% if administrador %}
-        {% include "adminModal.twig" %}
-    {% endif%}
+    {% include "categoriaModal.twig" %}
 {% endblock cuerpo %}

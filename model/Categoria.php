@@ -21,24 +21,19 @@ class Categoria
     public function toArray()
     {
         $data = [
-            "idCategoria" => $this->idCategoria,
             "nombre" => $this->nombre,
             "emailDepartamento" => $this->emailDepartamento
         ];
-
-        if (isset($this->idCategoria)) {
-            $data["idCategoria"] = $this->idCategoria;
-        }
 
         return $data;
     }
 
     public function insert()
     {
-        return connection()->query("INSERT INTO Categoria (nombre, emailDepartamento) VALUES(:nombre, :emailDepartamento)", $this->toArray());
+        preparedStatement("INSERT INTO Categoria (nombre, emailDepartamento) VALUES(:nombre, :emailDepartamento)", $this->toArray());
     }
 
-    public function delete($id)
+    public static function delete($id)
     {
         preparedStatement("DELETE FROM Categoria WHERE idCategoria = :idCategoria", ["idCategoria" => $id]);
     }
@@ -54,7 +49,7 @@ class Categoria
             WHERE idCategoria = :idCategoria", $data);
     }
 
-    public function findById($id)
+    public static function findById($id)
     {
         $data = ["idCategoria" => $id];
         return connection()->query("SELECT * FROM Categoria WHERE idCategoria = :idCategoria", $data)->fetchAll();

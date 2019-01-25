@@ -81,12 +81,12 @@
 </div>
 
 {# Modal para insertar un plato #}
-<div class="modal fade" id="altaPlatoModal" tabindex="-1" role="dialog" aria-labelledby="altaPlatoModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" id="altaPlatoModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <form action="" method="post" class="needs-validation" novalidate>
                 <div class="modal-header">
-                    <h5 class="modal-title" id="altaPlatoModalLabel">Datos del plato</h5>
+                    <h5 class="modal-title">Datos del plato</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -148,12 +148,12 @@
 </div>
 
 {# Modal para insertar un administrador #}
-<div class="modal fade" id="altaAdminModal" tabindex="-1" role="dialog" aria-labelledby="altaAdminModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" id="altaAdminModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <form action="index.php?c=admin&a=insertar" method="post" class="needs-validation" novalidate>
+            <form action="index.php?c=admin&a=add" method="post" class="needs-validation" novalidate>
                 <div class="modal-header">
-                    <h5 class="modal-title" id="altaAdminModalLabel">Datos del administrador</h5>
+                    <h5 class="modal-title">Datos del administrador</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -184,12 +184,12 @@
 </div>
 
 {# Modal para modificar datos de un administrador #}
-<div class="modal fade" id="editarAdminModal" tabindex="-1" role="dialog" aria-labelledby="editaAdminModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" id="editarAdminModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <form action="index.php?c=admin&a=actualizar" method="post" class="needs-validation" novalidate>
+            <form action="index.php?c=admin&a=edit" method="post" class="needs-validation" novalidate>
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editarAdminModalLabel">Datos del administrador</h5>
+                    <h5 class="modal-title">Datos del administrador</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -213,138 +213,6 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     <input type="hidden" id="editarAdminId" name="idAdministrador" />
-                    <button type="submit" class="btn btn-primary">Actualizar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-{# Modal para insertar una categoría #}
-<div class="modal fade" id="altaCategoriaModal" tabindex="-1" role="dialog" aria-labelledby="altaCategoriaModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form action="index.php?c=categoria&a=add" method="post" class="needs-validation" novalidate>
-                <div class="modal-header">
-                    <h5 class="modal-title" id="altaCategoriaModalLabel">Datos de la categor&iacute;a</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="altaCategoriaNombre">Nombre:</label>
-                        <input type="text" class="form-control" id="altaCategoriaNombre" name="nombre" placeholder="Nombre" required>
-                        <div class="invalid-feedback">
-                            Debes introducir el nombre.
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="altaCategoriaEmail">Correo electr&oacute;nico del departamento:</label>
-                        <input type="email" class="form-control" id="altaCategoriaEmail" name="emailDepartamento" placeholder="Correo electr&oacute;nico del departamento" required>
-                        <div class="invalid-feedback">
-                            Debes introducir el correo electr&oacute;nico del departamento.
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary">A&ntilde;adir</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-{# Modal para modificar datos de una categoría #}
-<div class="modal fade" id="editarCategoriaModal" tabindex="-1" role="dialog" aria-labelledby="editarCategoriaModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form action="index.php?c=categoria&a=edit" method="post" class="needs-validation" novalidate>
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editarCategoriaModalLabel">Datos de la categor&iacute;a</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="editarCategoriaNombre">Nombre:</label>
-                        <input type="text" class="form-control" id="editarCategoriaNombre" name="nombre" placeholder="Nombre" required>
-                        <div class="invalid-feedback">
-                            Debes introducir el nombre.
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="editarCategoriaEmail">Correo electr&oacute;nico del departamento:</label>
-                        <input type="email" class="form-control" id="editarCategoriaEmail" name="emailDepartamento" placeholder="Correo electr&oacute;nico del departamento" required>
-                        <div class="invalid-feedback">
-                            Debes introducir el correo electr&oacute;nico del departamento.
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <input type="hidden" id="editarCategoriaId" name="idCategoria" />
-                    <button type="submit" class="btn btn-primary">Actualizar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-{# Modal para insertar un tipo de venta #}
-<div class="modal fade" id="altaTipoVentaModal" tabindex="-1" role="dialog" aria-labelledby="altaTipoVentaModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form action="index.php?c=tipoventa&a=add" method="post" class="needs-validation" novalidate>
-                <div class="modal-header">
-                    <h5 class="modal-title" id="altaTipoVentaModalLabel">Datos del tipo de venta</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="altaTipoVentaNombre">Tipo de venta:</label>
-                        <input type="text" class="form-control" id="altaTipoVentaNombre" name="tipoVenta" placeholder="Tipo de venta" required>
-                        <div class="invalid-feedback">
-                            Debes introducir el tipo de venta.
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary">A&ntilde;adir</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-{# Modal para modificar un tipo de venta #}
-<div class="modal fade" id="editarTipoVentaModal" tabindex="-1" role="dialog" aria-labelledby="editarTipoVentaModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form action="index.php?c=tipoventa&a=edit" method="post" class="needs-validation" novalidate>
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editarTipoVentaModalLabel">Datos del tipo de venta</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="editarTipoVentaNombre">Tipo de venta:</label>
-                        <input type="text" class="form-control" id="editarTipoVentaNombre" name="tipoVenta" placeholder="Tipo de venta" required>
-                        <div class="invalid-feedback">
-                            Debes introducir el tipo de venta.
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <input type="hidden" id="editarTipoVentaId" name="idTipoVenta" />
                     <button type="submit" class="btn btn-primary">Actualizar</button>
                 </div>
             </form>

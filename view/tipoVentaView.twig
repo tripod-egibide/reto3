@@ -11,7 +11,7 @@
     <main class="container">
         <br />
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#altaTipoVentaModal">
-            <i class="material-icons">add_circle</i>
+            <i class="material-icons align-bottom">add</i>
         </button>
         {% if tiposVenta|length > 0 %}
             <div class="table-responsive-md">
@@ -25,7 +25,7 @@
                     <tbody>
                     {% for tipoVenta in tiposVenta %}
                         <tr>
-                            <th scope="row"><span id="tipoVenta{{ tipoVenta.idTipoVenta }}">{{ tipoVenta.tipoVenta }}</span></th>
+                            <td scope="row"><span id="tipoVenta{{ tipoVenta.idTipoVenta }}">{{ tipoVenta.tipoVenta }}</span></td>
                             <td><button class="btn btn-primary editarTipoVenta" type="button" value="{{ tipoVenta.idTipoVenta }}" data-toggle="modal" data-target="#editarTipoVentaModal"><i class="material-icons align-bottom">edit</i></button>
                                 <a href="index.php?c=tipoventa&a=remove&tipoVenta={{ tipoVenta.idTipoVenta }}" class="btn btn-danger ml-1" role="button"><i class="material-icons align-bottom">delete</i></a></td>
                         </tr>
@@ -45,7 +45,5 @@
             <a id="email" href="mailto:tripod@tripod.com" class="text-muted"><i class="material-icons align-middle">email</i></a>
         </div>
     </footer>
-    {% if administrador %}
-        {% include "adminModal.twig" %}
-    {% endif%}
+    {% include "tipoVentaModal.twig" %}
 {% endblock cuerpo %}

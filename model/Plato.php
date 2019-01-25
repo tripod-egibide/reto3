@@ -100,6 +100,18 @@ class Plato
             FROM Plato as p WHERE idPlato = :idPlato", ["idPlato" => $idPlato])->fetchAll();
     }
 
+    public static function getByIdCategoria($idCategoria)
+    {
+        return preparedStatement("SELECT idPlato
+            FROM Plato WHERE idCategoria = :idCategoria", ["idCategoria" => $idCategoria])->fetchAll();
+    }
+
+    public static function getByIdTipoVenta($idTipoVenta)
+    {
+        return preparedStatement("SELECT idPlato
+            FROM Plato WHERE idTipoVenta = :idTipoVenta", ["idTipoVenta" => $idTipoVenta])->fetchAll();
+    }
+
     /**
      * @return mixed
      */

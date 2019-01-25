@@ -16,36 +16,24 @@ class AdminController
             case 'login':
                 $this->login();
                 break;
-            case 'insertar':
-                $this->insertar();
+            case 'logout':
+                $this->logout();
                 break;
-            case 'eliminar':
-                $this->eliminar();
+            case 'add':
+                $this->add();
                 break;
-            case 'actualizar':
-                $this->actualizar();
+            case 'remove':
+                $this->remove();
                 break;
-            case 'ver':
-                $this->ver();
+            case 'edit':
+                $this->edit();
                 break;
-            case 'salir':
-                $this->salir();
+            case 'view':
+                $this->view();
                 break;
             default:
-                $this->principal();
+                $this->index();
                 break;
-        }
-    }
-
-    private function principal()
-    {
-        if(isset($_SESSION["administrador"]) /*&& $_SESSION["administrador"]*/)
-        {
-            header("Location: /reto3/");
-        }
-        else
-        {
-            echo twig()->render("loginView.twig");
         }
     }
 
@@ -56,16 +44,11 @@ class AdminController
             $usuario=$_POST["usuario"];
             $contrasenna=$_POST["contrasenna"];
 
-            // Crear el objeto Admin
-            $admin=new Admin("", $usuario, $contrasenna);
-            // Ejercutar la sentencia
-            $resultado=$admin->validar($usuario, $contrasenna);
+            $validar=Admin::validar($usuario, $contrasenna);
 
-            // Si el usuario es correcto, inicia sesión, si no, vuelve a la pantalla de inicio de sesión.
-
-            if($resultado)
+            if($validar)
             {
-                $_SESSION["administrador"]=$resultado["idAdministrador"];
+                $_SESSION["administrador"]=$validar["idAdministrador"];
                 header("Location: /reto3/");
             }
             else
@@ -79,7 +62,13 @@ class AdminController
         }
     }
 
-    private function insertar()
+    private function logout()
+    {
+        session_destroy();
+        header("Location: /reto3/");
+    }
+
+    private function add()
     {
         if(isset($_SESSION["administrador"]) && isset($_POST["usuario"]))
         {
@@ -88,7 +77,7 @@ class AdminController
 
             $admin = new Admin("", $usuario, $contrasenna);
             $admin->insert();
-            header("Location: /reto3/index.php?c=admin&a=ver");
+            header("Location: /reto3/index.php?c=admin&a=view");
         }
         else
         {
@@ -96,16 +85,13 @@ class AdminController
         }
     }
 
-    private function eliminar()
+    private function remove()
     {
         if(isset($_SESSION["administrador"]))
         {
-            $idAdministrador = $_GET["administrador"];
+            Admin::delete($_GET["administrador"]);
 
-            $admin = new Admin("", "", "");
-            $admin->delete($idAdministrador);
-
-            header("Location: /reto3/index.php?c=admin&a=ver");
+            header("Location: /reto3/index.php?c=admin&a=view");
         }
         else
         {
@@ -113,7 +99,7 @@ class AdminController
         }
     }
 
-    private function actualizar()
+    private function edit()
     {
         if(isset($_SESSION["administrador"]))
         {
@@ -124,7 +110,7 @@ class AdminController
             $admin=new Admin("", $usuario, $contrasenna);
             $admin->update($idAdministrador);
 
-            header("Location: /reto3/index.php?c=admin&a=ver");
+            header("Location: /reto3/index.php?c=admin&a=view");
         }
         else
         {
@@ -132,12 +118,11 @@ class AdminController
         }
     }
 
-    private function ver()
+    private function view()
     {
         if(isset($_SESSION["administrador"]))
         {
-            $admin = new Admin("", "", "");
-            $administradores = $admin->getAll();
+            $administradores = Admin::getAll();
 
             echo twig()->render('adminView.twig', array("administradores" => $administradores));
         }
@@ -147,10 +132,15 @@ class AdminController
         }
     }
 
-    private function salir()
+    private function index()
     {
-        session_destroy();
-        /*$_SESSION["administrador"] = false;*/
-        header("Location: /reto3/");
+        if(isset($_SESSION["administrador"]))
+        {
+            header("Location: /reto3/");
+        }
+        else
+        {
+            echo twig()->render("loginView.twig");
+        }
     }
 }

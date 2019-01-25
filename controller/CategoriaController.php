@@ -8,6 +8,7 @@ class CategoriaController{
     public function run($action = "")
     {
         require_once __DIR__ . "/../model/Categoria.php";
+        require_once __DIR__ . "/../model/Plato.php";
         require_once __DIR__ . "/../core/twig.php";
         switch ($action) {
             case 'add':
@@ -59,8 +60,12 @@ class CategoriaController{
         {
             $idCategoria = $_GET["categoria"];
 
-            $categoria = new Categoria("", "", "");
-            $categoria->delete($idCategoria);
+            $platos=Plato::getByIdCategoria($idCategoria);
+
+            if($platos==NULL)
+            {
+                Categoria::delete($idCategoria);
+            }
 
             header("Location: /reto3/index.php?c=categoria&a=view");
         }
@@ -93,8 +98,7 @@ class CategoriaController{
     {
         if(isset($_SESSION["administrador"]))
         {
-            $categoria = new Categoria("", "", "");
-            $categorias = $categoria->getAll();
+            $categorias = Categoria::getAll();
 
             echo twig()->render('categoriaView.twig', array("categorias" => $categorias));
         }

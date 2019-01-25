@@ -8,6 +8,7 @@ class TipoVentaController{
     public function run($action = "")
     {
         require_once __DIR__ . "/../model/TipoVenta.php";
+        require_once __DIR__ . "/../model/Plato.php";
         require_once __DIR__ . "/../core/twig.php";
         switch ($action) {
             case 'add':
@@ -58,8 +59,13 @@ class TipoVentaController{
         {
             $idTipoVenta = $_GET["tipoVenta"];
 
-            $tipoVenta = new TipoVenta("", "");
-            $tipoVenta->delete($idTipoVenta);
+            $platos=Plato::getByIdTipoVenta($idTipoVenta);
+
+            if($platos==NULL)
+            {
+                $tipoVenta = new TipoVenta("", "");
+                $tipoVenta->delete($idTipoVenta);
+            }
 
             header("Location: /reto3/index.php?c=tipoventa&a=view");
         }
@@ -91,8 +97,7 @@ class TipoVentaController{
     {
         if(isset($_SESSION["administrador"]))
         {
-            $tipoVenta = new TipoVenta("", "");
-            $tiposVenta = $tipoVenta->getAll();
+            $tiposVenta = TipoVenta::getAll();
 
             echo twig()->render('tipoVentaView.twig', array("tiposVenta" => $tiposVenta));
         }
