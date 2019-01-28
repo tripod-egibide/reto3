@@ -69,7 +69,8 @@ $("#search").keyup(delay((evento)=> {
         $('#catalogo').addClass("col-lg-9");
         let resultados = JSON.parse(JSON.stringify(categorias));
         resultados.map((categoria) => {
-            categoria.platos = categoria.platos.filter((plato) => (plato.nombre.toLowerCase().includes(input.toLowerCase()) || plato.notas.toLowerCase().includes(input.toLowerCase())));
+            categoria.platos = categoria.platos.filter((plato) => 
+                (plato.nombre.toLowerCase().includes(input.toLowerCase()) || plato.notas.toLowerCase().includes(input.toLowerCase())));
             return resultados;
         });
         resultados = resultados.filter((categoria) => {
