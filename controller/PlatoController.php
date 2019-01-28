@@ -30,7 +30,18 @@ class PlatoController
 
     private function index()
     {
-        echo twig()->render("indexView.twig");
+        // estos datos solo se usan para el nav de categorias
+        // en práctica tal vez sería mejor cargar eso por el cliente también, pero debemos usar twig en el servidor en alguna parte
+        require_once __DIR__ . "/../model/Categoria.php";;
+        $categorias = Categoria::getAll();
+
+        $data = [];
+        foreach ($categorias as $categoria) {
+            $data[$categoria["idCategoria"]] = [
+                "nombre" => $categoria["nombre"], 
+            ];            
+        }
+        echo twig()->render("indexView.twig", ["categorias" => $data]);
     }
 
     private function editar()

@@ -1,18 +1,19 @@
 // lamentablemente no hay forma de hacer que este churro de código se vea bien en el editor de texto
 // pero funciona!
 let catalogoTwig = `
-    <div class="card">
-        {% for categoria in categorias %}
-        <span id="categoria-{{ categoria.nombre }}" class="categoria"></span>
-        <div class="card-body bg-light">
-            <h1 class="card-title text-center">{{ categoria.nombre }}</h1>
+<div class="card border-top-0">
+    {% for categoria in categorias if categoria.platos %}
+    <span class="categoria">
+        <span id="categoria-{{ categoria.nombre }}" class="categoria-anchor"></span>
+        <div class="card-body bg-light border-top">
+            <h1 class="card-title text-center text-primary">{{ categoria.nombre }}</h1>
         </div>
-        <ul class="list-group list-group-flush container-fluid px-0">
+        <ul class="platos list-group list-group-flush container-fluid px-0">
             {% for plato in categoria.platos %}
-            <li class="list-group-item list-group-item-action row d-flex align-items-center p-0 mx-0">
+            <li class="plato list-group-item list-group-item-action row d-flex align-items-center p-0 mx-0" id="plato{{ plato.idPlato }}">
                 <img src="{{ plato.imagen }}" class="imagen-plato col-3 border-right px-0 d-none d-md-block">
                 <div class="col-6">
-                    <h3 class="mb-1">{{ plato.nombre }}</h3>
+                    <h3 class="mb-1 text-dark">{{ plato.nombre }}</h3>
                     <p class="mb-1">{{ plato.notas }}</p>
                     <small class="text-muted">Mínimo {{ plato.unidadesMinimas }} {{ plato.tipoVenta }}.</small>
                 </div>
@@ -36,12 +37,12 @@ let catalogoTwig = `
                     </form>
                     {% endif %}
                 </div>
-
             </li>
             {% endfor %}
         </ul>
-        {% endfor %}
-    </div>
+    </span>
+    {% endfor %}
+</div>
 `;
 
 let categorias;
