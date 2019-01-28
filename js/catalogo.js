@@ -1,4 +1,6 @@
-<!-- Fichero de producción para hacer pruebas, no estará en la version final -->
+// lamentablemente no hay forma de hacer que este churro de código se vea bien en el editor de texto
+// pero funciona!
+let catalogoTwig = `
 <div class="card border-top-0">
     {% for categoria in categorias if categoria.platos %}
     <span class="categoria">
@@ -41,28 +43,59 @@
     </span>
     {% endfor %}
 </div>
+`;
 
-<div class="card">
-    {% for categoria in categorias %}
-    <span id="categoria-{{ categoria.nombre }}" class="categoria"></span>
-    <div class="card-body bg-light">
-        <h1 class="card-title text-center">{{ categoria.nombre }}</h1>
-    </div>
-    <ul class="list-group list-group-flush container-fluid px-0">
-        {% for plato in categoria.platos %}
-        <li class="list-group-item list-group-item-action row d-flex align-items-center p-0 mx-0">
-            <img src="{{ plato.imagen }}" class="imagen-plato col-3 border-right px-0 d-none d-md-block">
-            <div class="col-6">
-                <h3 class="mb-1">{{ plato.nombre }}</h3>
-                <p class="mb-1">{{ plato.notas }}</p>
-                <small class="text-muted">Mínimo {{ plato.unidadesMinimas }} {{ plato.tipoVenta }}.</small>
-            </div>
-            <div class="col-6 col-md-3 d-flex align-items-center justify-content-end">
+let categorias;
+let administrador;
+let recargar = false;
 
-            </div>
+$("#categoria-collapse>*").click(()=>{
+    $("#categoria-collapse").collapse("toggle");
+});
 
-        </li>
-        {% endfor %}
-    </ul>
-    {% endfor %}
-</div>
+
+$.getJSON("/reto3/?a=catalogo", (res) => {
+    administrador = res.administrador;
+    delete res.administrador;
+    categorias = Object.values(res);
+    cargarCatalogo(categorias);
+});
+
+$("#search").keyup(delay((evento)=> {
+    let input = $("#search").val();
+    if (input) {
+        let resultados = JSON.parse(JSON.stringify(categorias));
+        resultados.map((categoria) => {
+            categoria.platos = categoria.platos.filter((plato) => (plato.nombre.toLowerCase().includes(input.toLowerCase()) || plato.notas.toLowerCase().includes(input.toLowerCase())));
+            return resultados;
+        });
+        resultados = resultados.filter((categoria) => {
+            return categoria.platos.length;
+        });
+        cargarCatalogo(resultados);
+        recargar = true;
+    } else {
+        if (recargar) {
+            cargarCatalogo(categorias);
+            recargar = false;
+        }
+    }
+}));
+
+function cargarCatalogo(datos) {
+    let template = Twig.twig({
+        data: catalogoTwig
+    });
+    $("#catalogo").html(template.render({ "categorias": datos, "administrador": administrador}));
+}
+
+function delay(callback) {
+    var timer = 0;
+    return function () {
+        var context = this, args = arguments;
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+            callback.apply(context, args);
+        }, 250);
+    };
+}
