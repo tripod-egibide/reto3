@@ -10,8 +10,8 @@ class PlatoController
                 $this->nuevo();
                 break;
 
-            case 'editar':
-                $this->editar();
+            case 'edit':
+                $this->edit();
                 break;
 
             case 'insert':
@@ -20,6 +20,14 @@ class PlatoController
 
             case 'catalogo':
                 $this->catalogo();
+                break;
+            
+            case 'findById':
+                $this->findById();
+                break;
+
+            case 'delete':
+                $this->delete();
                 break;
 
             default:
@@ -44,7 +52,7 @@ class PlatoController
         echo twig()->render("indexView.twig", ["categorias" => $data]);
     }
 
-    private function editar()
+    private function edit()
     {
         echo json_encode(Plato::getById($_POST["idPlato"]));
     }
@@ -76,6 +84,16 @@ class PlatoController
     {
         //temp
         // éste sería el que hace el insert a la base de datos
+    }
+
+    private function findById()
+    {
+        echo json_encode(Plato::getById($_POST["idPlato"]));
+    }
+
+    private function delete(){
+        Plato::delete($_POST["idPlato"]);
+        header("Refresh:0");
     }
 
 }
