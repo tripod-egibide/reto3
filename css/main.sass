@@ -1,20 +1,33 @@
+$theme-colors: ("primary": #8B0066, "oldprimary": #0074d9)
+
+@import "bootstrap/scss/bootstrap";
+
+
+
 html
   scroll-behavior: smooth
+  min-height: 100%
+
+body
+  min-height: 100vh
   
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button
-  -webkit-appearance: none; 
+  -webkit-appearance: none
   margin: 0; 
 
 input[type="number"]
-  -moz-appearance: textfield;
+  -moz-appearance: textfield
 
 .prepend-min
   min-width: 50px
 
 .sticky
-  top: 50%;
-  transform: translate(0, -50%);
+  top: 30%;
+  transform: translate(0, -30%)
+  
+nav.sticky, #catalogo
+  transition: 0.3s ease
 
 .categoria-anchor
   position: relative
@@ -38,7 +51,3 @@ footer
 
   .material-icons
     font-size: 125%
-
-$theme-colors: ("primary": #8B0066, "oldprimary": #0074d9)
-
-@import "bootstrap/scss/bootstrap";
