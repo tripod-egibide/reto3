@@ -114,6 +114,54 @@ function readFile(input) {
 // FIN relacionado con PLATO <------------------------------------------------------------------------------------------
 
 $(document).ready(function(){
+
+    $(document).on('click', '#nuevo-plato', function(){
+        let unidades = $("#tipoVenta").children("option").length;
+        if(unidades == 0){
+            $.post("/reto3/?c=tipoventa&a=getAll",(res) => {
+                res.forEach(function(dato){
+                    $("#tipoVenta").append("<option value='" + dato.idTipoVenta + "'>" + dato.tipoVenta + "</option>");
+                });
+            }, "JSON");
+        }
+    });
+
+    $(document).on('click', '#admin-modal', function(){
+        let administradores = $("#administradoresModal").children("option").length;
+        if(administradores == 0){
+            $.post("/reto3/?c=admin&a=getAll",(res) => {
+                res.forEach(function(dato){
+                    $("#administradoresModal").append("<option value='" +dato.idAdministrador + "' data-value='" +dato.contrasenna + "'>" + dato.usuario + "</option>");
+                });
+            }, "JSON");
+        }
+        $('#altaAdminForm').hide();
+        $('#editarAdminForm').hide();
+    });
+
+    $(document).on('click', '#altaAdmin', function(){
+        $('#altaAdminForm').show();
+        $('#editarAdminForm').hide();
+    });
+
+    $(document).on('click', '#editarAdmin', function(){
+        $('#altaAdminForm').hide();
+        $('#editarAdminForm').show();
+
+        $("#editarAdminUsuario").val($("#administradoresModal option:selected").text());
+        $("#editarAdminContrasenna").val($("#administradoresModal option:selected").data("value"));
+        $("#editarAdminId").val($("#administradoresModal option:selected").val());
+    });
+
+    $(document).on('click', '#borrarAdmin', function(){
+        $('#altaAdminForm').hide();
+        $('#editarAdminForm').hide();
+
+        let id=$("#administradoresModal option:selected").val();
+    });
+});
+
+$(document).ready(function(){
     // CRUD Admin - Modificar usuario
     $(document).on('click', '.editarAdmin', function(){
         let id=$(this).val();

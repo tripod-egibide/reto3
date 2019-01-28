@@ -31,6 +31,9 @@ class AdminController
             case 'view':
                 $this->view();
                 break;
+            case 'getAll':
+                $this->getAll();
+                break;
             default:
                 $this->index();
                 break;
@@ -142,5 +145,10 @@ class AdminController
         {
             echo twig()->render("loginView.twig");
         }
+    }
+
+    private function getAll()
+    {
+        echo json_encode(Admin::getAll());
     }
 }
