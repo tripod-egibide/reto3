@@ -1,7 +1,7 @@
 // lamentablemente no hay forma de hacer que este churro de código se vea bien en el editor de texto
 // pero funciona!
 let catalogoTwig = `
-<div class="card border-top-0">
+<div class="card border-top-0 mb-5">
     {% for categoria in categorias if categoria.platos %}
     <span class="categoria">
         <span id="categoria-{{ categoria.nombre }}" class="categoria-anchor"></span>
@@ -19,7 +19,7 @@ let catalogoTwig = `
                 </div>
                 <div class="col-6 col-md-3 d-flex align-items-center justify-content-end">
                     {% if administrador %}
-                    <button class="btn btn-primary botonEditar" type="button" value={{ plato.idPlato }}><i class="material-icons align-bottom">edit</i></button>
+                    <button class="btn btn-oldprimary botonEditar" type="button" value={{ plato.idPlato }}><i class="material-icons align-bottom">edit</i></button>
                     <button class="btn {% if plato.estado == 1 %} btn-success {% else %} btn-danger {% endif %} botonEliminar ml-1"
                         type="button" value={{ plato.idPlato }}><i class="material-icons align-bottom">{% if
                             plato.estado == 1 %} visibility {% else %} visibility_off {% endif %}</i></button>
@@ -32,7 +32,7 @@ let catalogoTwig = `
                             aria-describedby="inputGroup-sizing-lg">
                         <input type="hidden" value={{ plato.idPlato }}>
                         <div class="input-group-append">
-                            <button class="btn btn-primary py-0 px-1" type="submit"><i class="material-icons align-bottom">add</i></button>
+                            <button class="btn btn-primary py-0 px-1" type="submit"><i class="material-icons align-bottom">add_shopping_cart</i></button>
                         </div>
                     </form>
                     {% endif %}
@@ -64,6 +64,9 @@ $.getJSON("/reto3/?a=catalogo", (res) => {
 $("#search").keyup(delay((evento)=> {
     let input = $("#search").val();
     if (input) {
+        $('nav.sticky').css({"transform": "translate(-100%, -30%)"});
+        $('#catalogo').removeClass("offset-lg-2 col-lg-7");
+        $('#catalogo').addClass("col-lg-9");
         let resultados = JSON.parse(JSON.stringify(categorias));
         resultados.map((categoria) => {
             categoria.platos = categoria.platos.filter((plato) => (plato.nombre.toLowerCase().includes(input.toLowerCase()) || plato.notas.toLowerCase().includes(input.toLowerCase())));
@@ -75,6 +78,9 @@ $("#search").keyup(delay((evento)=> {
         cargarCatalogo(resultados);
         recargar = true;
     } else {
+        $('nav.sticky').css({ "transform": "translate(0, -30%)" });
+        $('#catalogo').removeClass("col-lg-9");
+        $('#catalogo').addClass("offset-lg-2 col-lg-7");
         if (recargar) {
             cargarCatalogo(categorias);
             recargar = false;
@@ -96,6 +102,6 @@ function delay(callback) {
         clearTimeout(timer);
         timer = setTimeout(function () {
             callback.apply(context, args);
-        }, 250);
+        }, 200);
     };
 }
