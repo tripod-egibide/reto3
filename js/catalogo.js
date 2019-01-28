@@ -53,12 +53,11 @@ $("#categoria-collapse>*").click(()=>{
 });
 
 
-$.getJSON("/reto3/?a=busqueda", (res) => {
+$.getJSON("/reto3/?a=catalogo", (res) => {
     administrador = res.administrador;
     delete res.administrador;
     categorias = Object.values(res);
     cargarCatalogo(categorias);
-    console.log(res);
 });
 
 $("#search").keyup(delay((evento)=> {
@@ -66,7 +65,7 @@ $("#search").keyup(delay((evento)=> {
     if (input) {
         let resultados = JSON.parse(JSON.stringify(categorias));
         resultados.map((categoria) => {
-            categoria.platos = categoria.platos.filter((plato) => (plato.nombre.includes(input) || plato.notas.includes(input)));
+            categoria.platos = categoria.platos.filter((plato) => (plato.nombre.toLowerCase().includes(input.toLowerCase()) || plato.notas.toLowerCase().includes(input.toLowerCase())));
             return resultados;
         });
         resultados = resultados.filter((categoria) => {
@@ -86,7 +85,6 @@ function cargarCatalogo(datos) {
     let template = Twig.twig({
         data: catalogoTwig
     });
-    console.log({ "categorias": datos, "adminstrador": administrador});
     $("#catalogo").html(template.render({ "categorias": datos, "administrador": administrador}));
 }
 

@@ -18,6 +18,10 @@ class PlatoController
                 $this->insert();
                 break;
 
+            case 'catalogo':
+                $this->catalogo();
+                break;
+
             default:
                 $this->index();
                 break;
@@ -25,6 +29,16 @@ class PlatoController
     }
 
     private function index()
+    {
+        echo twig()->render("indexView.twig");
+    }
+
+    private function editar()
+    {
+        echo json_encode(Plato::getById($_POST["idPlato"]));
+    }
+
+    private function catalogo() 
     {
         require_once __DIR__ . "/../model/Categoria.php";
         $categorias = Categoria::getAll();
@@ -40,10 +54,6 @@ class PlatoController
         echo json_encode($data);
     }
 
-    private function editar()
-    {
-        echo json_encode(Plato::getById($_POST["idPlato"]));
-    }
 
     private function nuevo()
     {
