@@ -15,7 +15,7 @@ let catalogoTwig = `
                 <div class="col-6">
                     <h3 class="mb-1 text-dark">{{ plato.nombre }}</h3>
                     <p class="mb-1">{{ plato.notas }}</p>
-                    <small class="text-muted">Mínimo {{ plato.unidadesMinimas }} {{ plato.tipoVenta }}.</small>
+                    <small class="text-muted">Mínimo {{ plato.unidadesMinimas }} {{ plato.tipoVenta }}, {{ plato.precio}}€ por unidad.</small>
                 </div>
                 <div class="col-6 col-md-3 d-flex align-items-center justify-content-end">
                     {% if administrador %}
@@ -70,7 +70,8 @@ $("#search").keyup(delay((evento)=> {
         let resultados = JSON.parse(JSON.stringify(categorias));
         resultados.map((categoria) => {
             categoria.platos = categoria.platos.filter((plato) => 
-                (plato.nombre.toLowerCase().includes(input.toLowerCase()) || plato.notas.toLowerCase().includes(input.toLowerCase())));
+                (plato.nombre.toLowerCase().includes(input.toLowerCase()) || plato.notas.toLowerCase().includes(input.toLowerCase()))
+            );
             return resultados;
         });
         resultados = resultados.filter((categoria) => {
@@ -94,6 +95,9 @@ function cargarCatalogo(datos) {
         data: catalogoTwig
     });
     $("#catalogo").html(template.render({ "categorias": datos, "administrador": administrador}));
+    //esta función viene de carrito.js, y afecta a las funcionalidades asociadas con ese fichero
+    //preguntarle a nieves si es mejor que esto de error, o meter un if a ver si el usuario es administrador o no
+    habilitarBotonCompra();
 }
 
 function delay(callback) {
