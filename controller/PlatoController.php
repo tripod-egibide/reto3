@@ -55,9 +55,6 @@ class PlatoController
             ];            
         }
 
-        require_once __DIR__ . "/../model/TipoVenta.php";;
-        $tipoVentas = TipoVenta::getAll();
-
         echo twig()->render("indexView.twig", ["categorias" => $data]);
     }
 

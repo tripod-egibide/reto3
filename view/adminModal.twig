@@ -118,17 +118,14 @@
                     <div class="form-group">
                         <label for="categoria">Categor&iacute;a:</label>
                         <select class="form-control" id="categoria" name="categoria">
-                            {% for categoria in categorias %}
-                                <option value="{{ categoria.idCategoria }}">{{ categoria.nombre }}</option>
+                            {% for key, categoria in categorias %}
+                                <option value="{{ key }}">{{ categoria.nombre }}</option>
                             {% endfor %}
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="tipoVenta">Formato de medida:</label>
                         <select class="form-control" id="tipoVenta" name="tipoVenta">
-                            {% for tipoVenta in tipoVentas %}
-                                <option value="{{ tipoVenta.idTipoVenta }}">{{ tipoVenta.tipoVenta }}</option>
-                            {% endfor %}
                         </select>
                     </div>
                     <div class="form-group">
