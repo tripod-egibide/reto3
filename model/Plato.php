@@ -13,8 +13,9 @@ class Plato
      * @param $imagen
      * @param $idCategoria
      * @param $idTipoVenta
+     * @param $estado
      */
-    public function __construct($idPlato, $nombre, $precio, $unidadesMinimas, $notas, $imagen, $idCategoria, $idTipoVenta)
+    public function __construct($idPlato, $nombre, $precio, $unidadesMinimas, $notas, $imagen, $idCategoria, $idTipoVenta, $estado)
     {
         $this->idPlato = $idPlato;
         $this->nombre = $nombre;
@@ -24,6 +25,7 @@ class Plato
         $this->imagen = $imagen;
         $this->idCategoria = $idCategoria;
         $this->idTipoVenta = $idTipoVenta;
+        $this->estado = $estado;
     }
 
     public function toArray()
@@ -35,7 +37,8 @@ class Plato
             "notas" => $this->notas,
             "imagen" => $this->imagen,
             "idCategoria" => $this->idCategoria,
-            "idTipoVenta" => $this->idTipoVenta
+            "idTipoVenta" => $this->idTipoVenta,
+            "estado" => $this->estado
         ];
 
         if (isset($this->idPlato)) {
@@ -47,8 +50,10 @@ class Plato
 
     public function insert()
     {
-        preparedStatement("INSERT INTO Plato (nombre, precio, unidadesMinimas, notas, imagen, idCategoria, idTipoventa) 
-            VALUES (:nombre, :precio, :unidadesMinimas, :notas, :imagen, :idCategoria, :idTipoventa)", $this->toArray());
+        $dato = $this->toArray();
+        unset($dato["idPlato"]);
+        preparedStatement("INSERT INTO Plato (nombre, precio, unidadesMinimas, notas, imagen, idCategoria, idTipoventa, estado) 
+            VALUES (:nombre, :precio, :unidadesMinimas, :notas, :imagen, :idCategoria, :idTipoVenta, :estado)", $dato);
     }
 
     // realmente no existe un delete, simplemente cambia su estado para mostrar u ocultar.
@@ -58,10 +63,9 @@ class Plato
         preparedStatement("UPDATE plato SET estado = NOT estado WHERE idPlato = :idPlato;", ["idPlato" => $id]);
     }
 
-    public function update($id)
+    public function update()
     {
         $data = $this->toArray();
-        $data['idPlato'] = $id;
 
         preparedStatement("UPDATE Plato
             SET nombre = :nombre,
@@ -70,7 +74,8 @@ class Plato
                 notas = :notas,
                 imagen = :imagen,
                 idCategoria = :idCategoria,
-                idTipoVenta = :idTipoVenta
+                idTipoVenta = :idTipoVenta,
+                estado = :estado
             WHERE idPlato = :idPlato", $data);
     }
 

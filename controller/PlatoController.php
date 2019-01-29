@@ -54,7 +54,21 @@ class PlatoController
 
     private function edit()
     {
-        echo json_encode(Plato::getById($_POST["idPlato"]));
+        $uploadedFile = '';
+        if(!empty($_FILES["file"]["type"])){
+            $fileName = $_FILES['file']['name'];
+                $sourcePath = $_FILES['file']['tmp_name'];
+                $targetPath = "img/".$fileName;
+                if(move_uploaded_file($sourcePath,$targetPath)){
+                    $uploadedFile = $fileName;
+                }
+        }else{
+            $uploadedFile = "logo-restaurant.png";
+        }
+        $plato = new Plato($_POST['idPlato'], $_POST['nombre'], $_POST['precio'], $_POST['unidadesMinimas'], $_POST['notas'], "/reto3/img/".$uploadedFile,
+            $_POST['idCategoria'], $_POST['idTipoVenta'], $_POST['estado']);
+        $plato->update();
+
     }
 
     private function catalogo() 
@@ -82,8 +96,20 @@ class PlatoController
 
     private function insert()
     {
-        //temp
-        // éste sería el que hace el insert a la base de datos
+        $uploadedFile = '';
+        if(!empty($_FILES["file"]["type"])){
+            $fileName = $_FILES['file']['name'];
+            $sourcePath = $_FILES['file']['tmp_name'];
+            $targetPath = "img/".$fileName;
+            if(move_uploaded_file($sourcePath,$targetPath)){
+                $uploadedFile = $fileName;
+            }
+        }else{
+            $uploadedFile = "logo-restaurant.png";
+        }
+        $plato = new Plato($_POST['idPlato'], $_POST['nombre'], $_POST['precio'], $_POST['unidadesMinimas'], $_POST['notas'], "/reto3/img/".$uploadedFile,
+            $_POST['idCategoria'], $_POST['idTipoVenta'], $_POST['estado']);
+        $plato->insert();
     }
 
     private function findById()
