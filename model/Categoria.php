@@ -3,7 +3,7 @@ require_once __DIR__ . "/../core/database.php";
 
 class Categoria
 {
-    private $idCategoria,$nombre, $emailDepartamento, $orden;
+    private $idCategoria,$nombre, $emailDepartamento;
 
     /**
      * Categoria constructor.
@@ -11,36 +11,29 @@ class Categoria
      * @param $nombre
      * @param $emailDepartamento
      */
-    public function __construct($idCategoria, $nombre, $emailDepartamento, $orden)
+    public function __construct($idCategoria, $nombre, $emailDepartamento)
     {
         $this->idCategoria = $idCategoria;
         $this->nombre = $nombre;
         $this->emailDepartamento = $emailDepartamento;
-        $this->orden = $orden;
     }
 
     public function toArray()
     {
         $data = [
-            "idCategoria" => $this->idCategoria,
             "nombre" => $this->nombre,
-            "emailDepartamento" => $this->emailDepartamento,
-            "orden" => $this->orden
+            "emailDepartamento" => $this->emailDepartamento
         ];
-
-        if (isset($this->idCategoria)) {
-            $data["idCategoria"] = $this->idCategoria;
-        }
 
         return $data;
     }
 
     public function insert()
     {
-        return connection()->query("INSERT INTO Categoria (nombre, emailDepartamento, orden) VALUES(:nombre, :emailDepartamento, :orden)", $this->toArray());
+        preparedStatement("INSERT INTO Categoria (nombre, emailDepartamento) VALUES(:nombre, :emailDepartamento)", $this->toArray());
     }
 
-    public function delete($id)
+    public static function delete($id)
     {
         preparedStatement("DELETE FROM Categoria WHERE idCategoria = :idCategoria", ["idCategoria" => $id]);
     }
@@ -52,12 +45,11 @@ class Categoria
 
         preparedStatement("UPDATE Categoria
             SET nombre = :nombre,
-                emailDepartamento = :emailDepartamento,
-                orden = :orden
+                emailDepartamento = :emailDepartamento
             WHERE idCategoria = :idCategoria", $data);
     }
 
-    public function findById($id)
+    public static function findById($id)
     {
         $data = ["idCategoria" => $id];
         return connection()->query("SELECT * FROM Categoria WHERE idCategoria = :idCategoria", $data)->fetchAll();
@@ -65,7 +57,7 @@ class Categoria
 
     public static function getAll()
     {
-        return connection()->query("SELECT * FROM Categoria ")->fetchAll();
+        return connection()->query("SELECT * FROM Categoria")->fetchAll();
     }
 
     /**
@@ -114,22 +106,6 @@ class Categoria
     public function setNombre($nombre): void
     {
         $this->nombre = $nombre;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getOrden()
-    {
-        return $this->orden;
-    }
-
-    /**
-     * @param mixed $orden
-     */
-    public function setOrden($orden): void
-    {
-        $this->orden = $orden;
     }
     
 }
