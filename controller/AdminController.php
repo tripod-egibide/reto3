@@ -28,9 +28,6 @@ class AdminController
             case 'edit':
                 $this->edit();
                 break;
-            case 'view':
-                $this->view();
-                break;
             case 'getAll':
                 $this->getAll();
                 break;
@@ -80,12 +77,8 @@ class AdminController
 
             $admin = new Admin("", $usuario, $contrasenna);
             $admin->insert();
-            header("Location: /reto3/index.php?c=admin&a=view");
         }
-        else
-        {
-            header("Location: /reto3/");
-        }
+        header("Location: /reto3/");
     }
 
     private function remove()
@@ -93,12 +86,6 @@ class AdminController
         if(isset($_SESSION["administrador"]))
         {
             Admin::delete($_GET["administrador"]);
-
-            header("Location: /reto3/index.php?c=admin&a=view");
-        }
-        else
-        {
-            header("Location: /reto3/");
         }
     }
 
@@ -112,27 +99,8 @@ class AdminController
 
             $admin=new Admin("", $usuario, $contrasenna);
             $admin->update($idAdministrador);
-
-            header("Location: /reto3/index.php?c=admin&a=view");
         }
-        else
-        {
-            header("Location: /reto3/");
-        }
-    }
-
-    private function view()
-    {
-        if(isset($_SESSION["administrador"]))
-        {
-            $administradores = Admin::getAll();
-
-            echo twig()->render('adminView.twig', array("administradores" => $administradores));
-        }
-        else
-        {
-            header("Location: /reto3/");
-        }
+        header("Location: /reto3/");
     }
 
     private function index()

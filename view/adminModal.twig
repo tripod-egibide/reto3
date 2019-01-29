@@ -147,12 +147,12 @@
     </div>
 </div>
 
-{# Modal para controlar administradores #}
+{# Modal para el CRUD de los administradores #}
 <div class="modal fade" id="adminModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Datos del administrador</h5>
+                <h5 class="modal-title">Administradores</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -210,75 +210,114 @@
     </div>
 </div>
 
-{# Modal para insertar un administrador #}
-<div class="modal fade" id="altaAdminModal" tabindex="-1" role="dialog">
+{# Modal para el CRUD de las categorías #}
+<div class="modal fade" id="categoriaModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <form action="index.php?c=admin&a=add" method="post" class="needs-validation" novalidate>
-                <div class="modal-header">
-                    <h5 class="modal-title">Datos del administrador</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+            <div class="modal-header">
+                <h5 class="modal-title">Categor&iacute;as</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body container-fluid">
+                <div class="form-inline mb-3">
+                    <div class="input-group">
+                        <select class="custom-select" id="categoriasModal">
+                        </select>
+                    </div>
+
+                    <button id="altaCategoria" type="submit" class="btn btn-primary ml-2"><i class="material-icons align-bottom">add</i></button>
+                    <button id="editarCategoria" type="submit" class="btn btn-primary ml-2"><i class="material-icons align-bottom">edit</i></button>
+                    <button id="borrarCategoria" type="submit" class="btn btn-danger ml-2"><i class="material-icons align-bottom">delete</i></button>
                 </div>
-                <div class="modal-body">
+
+                <form id="altaCategoriaForm" action="index.php?c=categoria&a=add" method="post" class="needs-validation" novalidate>
                     <div class="form-group">
-                        <label for="altaAdminUsuario">Usuario:</label>
-                        <input type="text" class="form-control" id="altaAdminUsuario" name="usuario" placeholder="Usuario" required>
+                        <label for="altaCategoriaNombre">Nombre:</label>
+                        <input type="text" class="form-control" id="altaCategoriaNombre" name="nombre" placeholder="Nombre" required>
                         <div class="invalid-feedback">
-                            Debes introducir el usuario.
+                            Debes introducir el nombre.
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="altaAdminContrasenna">Contrase&ntilde;a:</label>
-                        <input type="password" class="form-control" id="altaAdminContrasenna" name="contrasenna" placeholder="Contrase&ntilde;a" required>
+                        <label for="altaCategoriaEmail">Correo electr&oacute;nico del departamento:</label>
+                        <input type="email" class="form-control" id="altaCategoriaEmail" name="emailDepartamento" placeholder="Correo electr&oacute;nico del departamento" required>
                         <div class="invalid-feedback">
-                            Debes introducir la contrase&ntilde;a.
+                            Debes introducir el correo electr&oacute;nico del departamento.
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-primary">A&ntilde;adir</button>
-                </div>
-            </form>
+                </form>
+
+                <form id="editarCategoriaForm" action="index.php?c=categoria&a=edit" method="post" class="needs-validation" novalidate>
+                    <div class="form-group">
+                        <label for="editarCategoriaNombre">Nombre:</label>
+                        <input type="text" class="form-control" id="editarCategoriaNombre" name="nombre" placeholder="Nombre" required>
+                        <div class="invalid-feedback">
+                            Debes introducir el nombre.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editarCategoriaEmail">Correo electr&oacute;nico del departamento:</label>
+                        <input type="email" class="form-control" id="editarCategoriaEmail" name="emailDepartamento" placeholder="Correo electr&oacute;nico del departamento" required>
+                        <div class="invalid-feedback">
+                            Debes introducir el correo electr&oacute;nico del departamento.
+                        </div>
+                    </div>
+                    <input type="hidden" id="editarCategoriaId" name="idCategoria" />
+                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
 
-{# Modal para modificar datos de un administrador #}
-<div class="modal fade" id="editarAdminModal" tabindex="-1" role="dialog">
+{# Modal para el CRUD de los tipos de venta #}
+<div class="modal fade" id="tipoVentaModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <form action="index.php?c=admin&a=edit" method="post" class="needs-validation" novalidate>
-                <div class="modal-header">
-                    <h5 class="modal-title">Datos del administrador</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+            <div class="modal-header">
+                <h5 class="modal-title">Tipos de venta</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body container-fluid">
+                <div class="form-inline mb-3">
+                    <div class="input-group">
+                        <select class="custom-select" id="tiposVentaModal">
+                        </select>
+                    </div>
+
+                    <button id="altaTipoVenta" type="submit" class="btn btn-primary ml-2"><i class="material-icons align-bottom">add</i></button>
+                    <button id="editarTipoVenta" type="submit" class="btn btn-primary ml-2"><i class="material-icons align-bottom">edit</i></button>
+                    <button id="borrarTipoVenta" type="submit" class="btn btn-danger ml-2"><i class="material-icons align-bottom">delete</i></button>
                 </div>
-                <div class="modal-body">
+
+                <form id="altaTipoVentaForm" action="index.php?c=tipoventa&a=add" method="post" class="needs-validation" novalidate>
                     <div class="form-group">
-                        <label for="editarAdminUsuario">Usuario:</label>
-                        <input type="text" class="form-control" id="editarAdminUsuario" name="usuario" placeholder="Usuario" required>
+                        <label for="altaTipoVentaNombre">Tipo de venta:</label>
+                        <input type="text" class="form-control" id="altaTipoVentaNombre" name="tipoVenta" placeholder="Tipo de venta" required>
                         <div class="invalid-feedback">
-                            Debes introducir el usuario.
+                            Debes introducir el tipo de venta.
                         </div>
                     </div>
+                    <button type="submit" class="btn btn-primary">A&ntilde;adir</button>
+                </form>
+
+                <form id="editarTipoVentaForm" action="index.php?c=tipoventa&a=edit" method="post" class="needs-validation" novalidate>
                     <div class="form-group">
-                        <label for="editarAdminContrasenna">Contrase&ntilde;a:</label>
-                        <input type="password" class="form-control" id="editarAdminContrasenna" name="contrasenna" placeholder="Contrase&ntilde;a" required>
+                        <label for="editarTipoVentaNombre">Tipo de venta:</label>
+                        <input type="text" class="form-control" id="editarTipoVentaNombre" name="tipoVenta" placeholder="Tipo de venta" required>
                         <div class="invalid-feedback">
-                            Debes introducir la contrase&ntilde;a.
+                            Debes introducir el tipo de venta.
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <input type="hidden" id="editarAdminId" name="idAdministrador" />
+                    <input type="hidden" id="editarTipoVentaId" name="idTipoVenta" />
                     <button type="submit" class="btn btn-primary">Actualizar</button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 </div>

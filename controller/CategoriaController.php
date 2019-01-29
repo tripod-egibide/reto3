@@ -23,12 +23,12 @@ class CategoriaController{
                 $this->edit();
                 break;
 
-            case 'view':
-                $this->view();
-                break;
-
             case 'findById':
                 $this->findById();
+                break;
+
+            case 'getAll':
+                $this->getAll();
                 break;
 
             default:
@@ -46,33 +46,22 @@ class CategoriaController{
 
             $categoria = new Categoria("", $nombre, $emailDepartamento);
             $categoria->insert();
-            header("Location: /reto3/index.php?c=categoria&a=view");
         }
-        else
-        {
-            header("Location: /reto3/");
-        }
+        header("Location: /reto3/");
     }
 
     private function remove()
     {
-        if(isset($_SESSION["administrador"]))
-        {
+        if(isset($_SESSION["administrador"])) {
             $idCategoria = $_GET["categoria"];
 
-            $platos=Plato::getByIdCategoria($idCategoria);
+            $platos = Plato::getByIdCategoria($idCategoria);
 
-            if($platos==NULL)
-            {
+            if ($platos == NULL) {
                 Categoria::delete($idCategoria);
             }
-
-            header("Location: /reto3/index.php?c=categoria&a=view");
         }
-        else
-        {
-            header("Location: /reto3/");
-        }
+        header("Location: /reto3/");
     }
 
     private function edit()
@@ -85,27 +74,8 @@ class CategoriaController{
 
             $categoria=new Categoria("", $nombre, $emailDepartamento);
             $categoria->edit($idCategoria);
-
-            header("Location: /reto3/index.php?c=categoria&a=view");
         }
-        else
-        {
-            header("Location: /reto3/");
-        }
-    }
-
-    private function view()
-    {
-        if(isset($_SESSION["administrador"]))
-        {
-            $categorias = Categoria::getAll();
-
-            echo twig()->render('categoriaView.twig', array("categorias" => $categorias));
-        }
-        else
-        {
-            echo twig()->render("loginView.twig");
-        }
+        header("Location: /reto3/");
     }
 
     private function findById()
@@ -119,6 +89,11 @@ class CategoriaController{
             ];
         }
         return $data;
+    }
+
+    private function getAll()
+    {
+        echo json_encode(Categoria::getAll());
     }
 
     private function index()

@@ -115,6 +115,7 @@ function readFile(input) {
 
 $(document).ready(function(){
 
+    // Modal Nuevo Plato
     $(document).on('click', '#nuevo-plato', function(){
         let unidades = $("#tipoVenta").children("option").length;
         if(unidades == 0){
@@ -126,6 +127,7 @@ $(document).ready(function(){
         }
     });
 
+    // Modal CRUD Administradores
     $(document).on('click', '#admin-modal', function(){
         let administradores = $("#administradoresModal").children("option").length;
         if(administradores == 0){
@@ -158,43 +160,99 @@ $(document).ready(function(){
         $('#editarAdminForm').hide();
 
         let id=$("#administradoresModal option:selected").val();
+
+        $.ajax({
+            method: 'GET',
+            url: 'index.php',
+            data: {'c':'admin','a':'remove', 'administrador':id}
+        }).done(function() {
+            location.reload();
+        });
     });
-});
 
-$(document).ready(function(){
-    // CRUD Admin - Modificar usuario
-    $(document).on('click', '.editarAdmin', function(){
-        let id=$(this).val();
-        let usuario=$('#usuario'+id).text();
-        let contrasenna=$('#contrasenna'+id).text();
-
-        $('#editarAdmin').modal('show');
-        $('#editarAdminId').val(id);
-        $('#editarAdminUsuario').val(usuario);
-        $('#editarAdminContrasenna').val(contrasenna);
-
+    // Modal CRUD Categorías
+    $(document).on('click', '#categoria-modal', function(){
+        let categorias = $("#categoriasModal").children("option").length;
+        if(categorias == 0){
+            $.post("/reto3/?c=categoria&a=getAll",(res) => {
+                res.forEach(function(dato){
+                    $("#categoriasModal").append("<option value='" +dato.idCategoria + "' data-value='" +dato.emailDepartamento + "'>" + dato.nombre + "</option>");
+                });
+            }, "JSON");
+        }
+        $('#altaCategoriaForm').hide();
+        $('#editarCategoriaForm').hide();
     });
-    // CRUD Categoria - Modificar categoria
-    $(document).on('click', '.editarCategoria', function(){
-        let id=$(this).val();
-        let nombre=$('#nombre'+id).text();
-        let emailDepartamento=$('#emailDepartamento'+id).text();
 
-        $('#editarCategoria').modal('show');
-        $('#editarCategoriaId').val(id);
-        $('#editarCategoriaNombre').val(nombre);
-        $('#editarCategoriaEmail').val(emailDepartamento);
-
+    $(document).on('click', '#altaCategoria', function(){
+        $('#altaCategoriaForm').show();
+        $('#editarCategoriaForm').hide();
     });
-    // CRUD Tipo de Venta - Modificar tipo de venta
-    $(document).on('click', '.editarTipoVenta', function(){
-        let id=$(this).val();
-        let tipoVenta=$('#tipoVenta'+id).text();
 
-        $('#editarTipoVenta').modal('show');
-        $('#editarTipoVentaId').val(id);
-        $('#editarTipoVentaNombre').val(tipoVenta);
+    $(document).on('click', '#editarCategoria', function(){
+        $('#altaCategoriaForm').hide();
+        $('#editarCategoriaForm').show();
 
+        $("#editarCategoriaNombre").val($("#categoriasModal option:selected").text());
+        $("#editarCategoriaEmail").val($("#categoriasModal option:selected").data("value"));
+        $("#editarCategoriaId").val($("#categoriasModal option:selected").val());
+    });
+
+    $(document).on('click', '#borrarCategoria', function(){
+        $('#altaCategoriaForm').hide();
+        $('#editarCategoriaForm').hide();
+
+        let id=$("#categoriasModal option:selected").val();
+
+        $.ajax({
+            method: 'GET',
+            url: 'index.php',
+            data: {'c':'categoria','a':'remove', 'categoria':id}
+        }).done(function() {
+            location.reload();
+        });
+    });
+
+    // Modal CRUD Tipos de Venta
+    $(document).on('click', '#tipoVenta-modal', function(){
+        let tiposVenta = $("#tiposVentaModal").children("option").length;
+        if(tiposVenta == 0){
+            $.post("/reto3/?c=tipoventa",(res) => {
+                res.forEach(function(dato){
+                    $("#tiposVentaModal").append("<option value='" + dato.idTipoVenta + "'>" + dato.tipoVenta + "</option>");
+                });
+            }, "JSON");
+        }
+        $('#altaTipoVentaForm').hide();
+        $('#editarTipoVentaForm').hide();
+    });
+
+    $(document).on('click', '#altaTipoVenta', function(){
+        $('#altaTipoVentaForm').show();
+        $('#editarTipoVentaForm').hide();
+    });
+
+    $(document).on('click', '#editarTipoVenta', function(){
+        $('#altaTipoVentaForm').hide();
+        $('#editarTipoVentaForm').show();
+
+        $("#editarTipoVentaNombre").val($("#tiposVentaModal option:selected").text());
+        $("#editarTipoVentaId").val($("#tiposVentaModal option:selected").val());
+    });
+
+    $(document).on('click', '#borrarTipoVenta', function(){
+        $('#altaTipoVentaForm').hide();
+        $('#editarTipoVentaForm').hide();
+
+        let id=$("#tiposVentaModal option:selected").val();
+
+        $.ajax({
+            method: 'GET',
+            url: 'index.php',
+            data: {'c':'tipoventa','a':'remove', 'tipoVenta':id}
+        }).done(function() {
+            location.reload();
+        });
     });
 });
 

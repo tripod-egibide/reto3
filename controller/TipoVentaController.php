@@ -23,10 +23,6 @@ class TipoVentaController{
                 $this->edit();
                 break;
 
-            case 'view':
-                $this->view();
-                break;
-
             case 'findById':
                 $this->findById();
                 break;
@@ -45,12 +41,8 @@ class TipoVentaController{
 
             $tipoVenta = new TipoVenta("", $tipoVenta);
             $tipoVenta->insert();
-            header("Location: /reto3/index.php?c=tipoventa&a=view");
         }
-        else
-        {
-            header("Location: /reto3/");
-        }
+        header("Location: /reto3/");
     }
 
     private function remove()
@@ -66,13 +58,8 @@ class TipoVentaController{
                 $tipoVenta = new TipoVenta("", "");
                 $tipoVenta->delete($idTipoVenta);
             }
-
-            header("Location: /reto3/index.php?c=tipoventa&a=view");
         }
-        else
-        {
-            header("Location: /reto3/");
-        }
+        header("Location: /reto3/");
     }
 
     private function edit()
@@ -84,27 +71,8 @@ class TipoVentaController{
 
             $tipoVenta=new TipoVenta("", $tipoVenta);
             $tipoVenta->update($idTipoVenta);
-
-            header("Location: /reto3/index.php?c=tipoventa&a=view");
         }
-        else
-        {
-            header("Location: /reto3/");
-        }
-    }
-
-    private function view()
-    {
-        if(isset($_SESSION["administrador"]))
-        {
-            $tiposVenta = TipoVenta::getAll();
-
-            echo twig()->render('tipoVentaView.twig', array("tiposVenta" => $tiposVenta));
-        }
-        else
-        {
-            echo twig()->render("loginView.twig");
-        }
+        header("Location: /reto3/");
     }
 
     private function findById()
