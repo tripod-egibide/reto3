@@ -15,26 +15,37 @@ let catalogoTwig = `
                 <div class="col-6">
                     <h3 class="mb-1 text-dark">{{ plato.nombre }}</h3>
                     <p class="mb-1">{{ plato.notas }}</p>
-                    <small class="text-muted">Mínimo {{ plato.unidadesMinimas }} {{ plato.tipoVenta }}, {{ plato.precio}}€ por unidad.</small>
+                    <small class="text-muted">
+                        {% if plato.unidadesMinimas > 1 %}
+                            Mínimo {{ plato.unidadesMinimas }} {{ plato.tipoVenta }}.
+                        {% else %}    
+                            Vendido por {{ plato.tipoVenta }}.
+                        {% endif%}                    
+                    </small>
                 </div>
-                <div class="col-6 col-md-3 d-flex align-items-center justify-content-end">
+                <div class="col-6 col-md-3 d-flex flex-wrap align-items-center justify-content-end">
                     {% if administrador %}
                     <button class="btn btn-oldprimary botonEditar" type="button" value={{ plato.idPlato }}><i class="material-icons align-bottom">edit</i></button>
                     <button class="btn {% if plato.estado == 1 %} btn-success {% else %} btn-danger {% endif %} botonEliminar ml-1"
                         type="button" value={{ plato.idPlato }}><i class="material-icons align-bottom">{% if
                             plato.estado == 1 %} visibility {% else %} visibility_off {% endif %}</i></button>
                     {% else %}
-                    <form class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text prepend-min"><strong class="mx-auto">{{ plato.precio }}€</strong></span>
-                        </div>
-                        <input type="number" class="form-control text-right" min={{ plato.unidadesMinimas }} value={{ plato.unidadesMinimas }}
+                    <div>
+                        <span class="text-center d-block">
+                            {{ plato.precio }}€ por unidad.
+                        </span>
+                        <form class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text prepend-min">Cant. </span>
+                            </div>
+                            <input type="number" class="form-control text-right" min={{ plato.unidadesMinimas }} value={{ plato.unidadesMinimas }}
                             aria-describedby="inputGroup-sizing-lg">
-                        <input type="hidden" value={{ plato.idPlato }}>
-                        <div class="input-group-append">
-                            <button class="btn btn-primary py-0 px-1" type="submit"><i class="material-icons align-bottom">add_shopping_cart</i></button>
-                        </div>
-                    </form>
+                            <input type="hidden" value={{ plato.idPlato }}>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary py-0 px-1" type="submit"><i class="material-icons align-bottom">add_shopping_cart</i></button>
+                            </div>
+                        </form>
+                    </div>
                     {% endif %}
                 </div>
             </li>
