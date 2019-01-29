@@ -1,4 +1,3 @@
-TRUNCATE TABLE `categoria`;
 INSERT INTO `categoria` (`idCategoria`, `nombre`, `emailDepartamento`) VALUES
 (1, 'Fritos', 'koor.mendizorrotza@egibide.org'),
 (2, 'Entrantes', 'koor.mendizorrotza@egibide.org'),
@@ -10,13 +9,11 @@ INSERT INTO `categoria` (`idCategoria`, `nombre`, `emailDepartamento`) VALUES
 (8, 'Tartas variadas', 'koor.mendizorrotza@egibide.org'),
 (9, 'Variedades', 'koor.mendizorrotza@egibide.org');
 
-TRUNCATE TABLE `tipoventa`;
 INSERT INTO `tipoventa` (`idTipoVenta`, `tipoVenta`) VALUES
 (1, 'raciones'),
 (2, 'kilos'),
 (3, 'unidades');
 
-TRUNCATE TABLE `plato`;
 INSERT INTO `plato` (`idPlato`, `nombre`, `precio`, `unidadesMinimas`, `notas`, `imagen`, `idCategoria`, `idTipoVenta`, `estado`) VALUES
 (1, 'Croquetas de hongos', 5, 2, 'Ración 12 unidades', 'img/platos/croquetas-de-hongos.jpg', 1, 1, 1),
 (2, 'Croquetas de jamón ibérico', 5, 2, 'Ración 12 unidades', 'img/platos/croquetas-de-jamon-iberico.jpg', 1, 1, 1),
