@@ -83,17 +83,25 @@ function editPlato(){
 }
 
 function deletePlato(plato){
-    //abre modal para confirmar la eliminacion de un plato
-    $("#atencion").attr("value", plato.idPlato);
-    $("#atencion").text("¿Seguro que desea eliminar el plato '" + plato.nombre + "'?");
+    if(plato.estado == 0){
+        $("#atencion").attr("value", plato.idPlato);
+        $("#atencion").html("¿Seguro que quiere habilitar el plato " + plato.nombre + "?<br>El plato ser&aacute; visible para todos sus visitantes.");
+    }else{
+        $("#atencion").attr("value", plato.idPlato);
+        $("#atencion").html("¿Seguro que quiere deshabilitar el plato " + plato.nombre + "?<br>El plato dejar&aacute; de estar visible para sus visitantes.");
+    }
+    //abre modal para confirmar la modificación del estado de un plato
     $("#modalEliminarPlato").modal();
 }
 
 function confirmDeletePlato(){
     //mandamos el id a eliminar
     let idPlato = $("#atencion").attr("value");
-    $.post("/reto3/?c=plato&a=delete",{idPlato});
-    $('#modalEliminarPlato').modal('toggle');
+    $.post("/reto3/?c=plato&a=delete",{idPlato},function(){
+        $('#modalEliminarPlato').modal('toggle');
+        location.reload();
+    });
+
 }
 
 // Cargar imagen al ser seleccionado
@@ -255,4 +263,3 @@ $(document).ready(function(){
         });
     });
 });
-

@@ -23,6 +23,10 @@ class PlatoController
                 $this->insert();
                 break;
 
+            case 'catalogo':
+                $this->catalogo();
+                break;
+            
             case 'findById':
                 $this->findById();
                 break;
@@ -39,6 +43,8 @@ class PlatoController
 
     private function index()
     {
+        // estos datos solo se usan para el nav de categorias
+        // en práctica tal vez sería mejor cargar eso por el cliente también, pero debemos usar twig en el servidor en alguna parte
         require_once __DIR__ . "/../model/Categoria.php";;
         $categorias = Categoria::getAll();
 
@@ -46,7 +52,6 @@ class PlatoController
         foreach ($categorias as $categoria) {
             $data[$categoria["idCategoria"]] = [
                 "nombre" => $categoria["nombre"], 
-                "platos" => Plato::getByCategoria($categoria["idCategoria"])
             ];            
         }
 
@@ -60,6 +65,23 @@ class PlatoController
     {
         echo json_encode(Plato::getById($_POST["idPlato"]));
     }
+
+    private function catalogo() 
+    {
+        require_once __DIR__ . "/../model/Categoria.php";
+        $categorias = Categoria::getAll();
+
+        $data = ["administrador" => $_SESSION["administrador"] ?? 0];
+        foreach ($categorias as $categoria) {
+            $data[$categoria["idCategoria"]] = [
+                "nombre" => $categoria["nombre"], 
+                "platos" => Plato::getByCategoria($categoria["idCategoria"]),
+            ];            
+        }
+        header('Content-type: application/json');
+        echo json_encode($data);
+    }
+
 
     private function nuevo()
     {
@@ -110,7 +132,6 @@ class PlatoController
 
     private function delete(){
         Plato::delete($_POST["idPlato"]);
-        header("Refresh:0");
     }
 
 }
