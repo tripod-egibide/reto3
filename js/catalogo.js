@@ -25,10 +25,8 @@ let catalogoTwig = `
                 </div>
                 <div class="col-6 col-md-3 d-flex flex-wrap align-items-center justify-content-end">
                     {% if administrador %}
-                    <button class="btn btn-oldprimary botonEditar" type="button" value={{ plato.idPlato }}><i class="material-icons align-bottom">edit</i></button>
-                    <button class="btn {% if plato.estado == 1 %} btn-success {% else %} btn-danger {% endif %} botonEliminar ml-1"
-                        type="button" value={{ plato.idPlato }}><i class="material-icons align-bottom">{% if
-                            plato.estado == 1 %} visibility {% else %} visibility_off {% endif %}</i></button>
+                        <button class="btn btn-oldprimary botonEditar" type="button" value={{ plato.idPlato }}><i class="material-icons align-bottom">edit</i></button>
+                        <button class="btn {% if plato.estado == 1 %} btn-success {% else %} btn-danger {% endif %} botonEliminar ml-1" type="button" value={{ plato.idPlato }}><i class="material-icons align-bottom">{% if plato.estado == 1 %} visibility {% else %} visibility_off {% endif %}</i></button>
                     {% else %}
                     <div>
                         <span class="text-center d-block">
@@ -109,6 +107,8 @@ function cargarCatalogo(datos) {
     //esta función viene de carrito.js, y afecta a las funcionalidades asociadas con ese fichero
     //preguntarle a nieves si es mejor que esto de error, o meter un if a ver si el usuario es administrador o no
     habilitarBotonCompra();
+    // función del fichero AdminController
+    habilitarBotonesEditarEliminar()
 }
 
 function delay(callback) {
