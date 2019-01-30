@@ -50,8 +50,10 @@ class Plato
 
     public function insert()
     {
-        preparedStatement("INSERT INTO Plato (nombre, precio, unidadesMinimas, notas, imagen, idCategoria, idTipoVenta, estado) 
-            VALUES (:nombre, :precio, :unidadesMinimas, :notas, :imagen, :idCategoria, :idTipoVenta, :estado)", $this->toArray());
+        $dato = $this->toArray();
+        unset($dato["idPlato"]);
+        preparedStatement("INSERT INTO Plato (nombre, precio, unidadesMinimas, notas, imagen, idCategoria, idTipoventa, estado) 
+            VALUES (:nombre, :precio, :unidadesMinimas, :notas, :imagen, :idCategoria, :idTipoVenta, :estado)", $dato);
     }
 
     // realmente no existe un delete, simplemente cambia su estado para mostrar u ocultar.
@@ -61,10 +63,9 @@ class Plato
         preparedStatement("UPDATE plato SET estado = NOT estado WHERE idPlato = :idPlato;", ["idPlato" => $id]);
     }
 
-    public function update($id)
+    public function update()
     {
         $data = $this->toArray();
-        $data['idPlato'] = $id;
 
         preparedStatement("UPDATE Plato
             SET nombre = :nombre,
@@ -73,7 +74,8 @@ class Plato
                 notas = :notas,
                 imagen = :imagen,
                 idCategoria = :idCategoria,
-                idTipoVenta = :idTipoVenta
+                idTipoVenta = :idTipoVenta,
+                estado = :estado
             WHERE idPlato = :idPlato", $data);
     }
 

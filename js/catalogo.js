@@ -19,10 +19,8 @@ let catalogoTwig = `
                 </div>
                 <div class="col-6 col-md-3 d-flex align-items-center justify-content-end">
                     {% if administrador %}
-                    <button class="btn btn-oldprimary botonEditar" type="button" value={{ plato.idPlato }}><i class="material-icons align-bottom">edit</i></button>
-                    <button class="btn {% if plato.estado == 1 %} btn-success {% else %} btn-danger {% endif %} botonEliminar ml-1"
-                        type="button" value={{ plato.idPlato }}><i class="material-icons align-bottom">{% if
-                            plato.estado == 1 %} visibility {% else %} visibility_off {% endif %}</i></button>
+                        <button class="btn btn-oldprimary botonEditar" type="button" value={{ plato.idPlato }}><i class="material-icons align-bottom">edit</i></button>
+                        <button class="btn {% if plato.estado == 1 %} btn-success {% else %} btn-danger {% endif %} botonEliminar ml-1" type="button" value={{ plato.idPlato }}><i class="material-icons align-bottom">{% if plato.estado == 1 %} visibility {% else %} visibility_off {% endif %}</i></button>
                     {% else %}
                     <form class="input-group">
                         <div class="input-group-prepend">
@@ -94,6 +92,8 @@ function cargarCatalogo(datos) {
         data: catalogoTwig
     });
     $("#catalogo").html(template.render({ "categorias": datos, "administrador": administrador}));
+    // función del fichero AdminController
+    habilitarBotonesEditarEliminar()
 }
 
 function delay(callback) {
