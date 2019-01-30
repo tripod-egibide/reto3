@@ -60,7 +60,21 @@ class PlatoController
 
     private function edit()
     {
-        echo json_encode(Plato::getById($_POST["idPlato"]));
+        $uploadedFile = '';
+        if(!empty($_FILES["file"]["type"])){
+            $fileName = $_FILES['file']['name'];
+                $sourcePath = $_FILES['file']['tmp_name'];
+                $targetPath = "img/".$fileName;
+                if(move_uploaded_file($sourcePath,$targetPath)){
+                    $uploadedFile = $fileName;
+                }
+        }else{
+            $uploadedFile = "logo-restaurant.png";
+        }
+        $plato = new Plato($_POST['idPlato'], $_POST['nombre'], $_POST['precio'], $_POST['unidadesMinimas'], $_POST['notas'], "/reto3/img/".$uploadedFile,
+            $_POST['idCategoria'], $_POST['idTipoVenta'], $_POST['estado']);
+        $plato->update();
+
     }
 
     private function catalogo() 
@@ -88,13 +102,10 @@ class PlatoController
 
     private function insert()
     {
-        //temp
-        // éste sería el que hace el insert a la base de datos
         if(isset($_SESSION["administrador"]) && isset($_POST["titulo"]))
         {
             if(!Plato::getByNombre($_POST["titulo"])) // Título del plato único
             {
-                // Coger datos
                 $nombre = $_POST["titulo"];
                 $precio = $_POST["precio"];
                 $unidadesMinimas = $_POST["cantidad"];
@@ -102,19 +113,17 @@ class PlatoController
                 $idCategoria = $_POST["categoria"];
                 $idTipoVenta = $_POST["tipoVenta"];
 
-                // Tratamiento de ficheros
-                $imagen="";
-                if($_FILES['imagen']['error']==0) // El fichero se envió correctamente
+                $imagen="img/logo-restaurant.png";
+                if($_FILES['imagen']['error']==0)
                 {
-                    $dir_subida = "img/platos/";
-                    $fichero_subido = __DIR__ . "/../". $dir_subida . basename($_FILES['imagen']['name']);
+                    $sourcePath = "img/platos/";
+                    $fichero_subido = __DIR__ . "/../". $sourcePath . basename($_FILES['imagen']['name']);
 
                     if(move_uploaded_file($_FILES['imagen']['tmp_name'], $fichero_subido)) {
-                        $imagen = $dir_subida . basename($_FILES['imagen']['name']);
+                        $imagen = $sourcePath . basename($_FILES['imagen']['name']);
                     }
                 }
 
-                // Insertar plato
                 $plato = new Plato("", $nombre, $precio, $unidadesMinimas, $notas, $imagen, $idCategoria, $idTipoVenta, 1);
                 $plato->insert();
             }

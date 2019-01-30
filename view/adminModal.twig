@@ -10,14 +10,13 @@
             </div>
             <div class="modal-body">
                 <!--- cuerpo del modal--->
-
-                    <form>
+                    <form id="idPlatoModal">
                         <div class="form-group" id="zonaImagen">
-                            <img class="form-control" src="" class="d-none d-md-block" alt="Egibide" id="imagen">
+                            <img class="form-control" src="/reto3/img/logo-restaurant.png" class="d-none d-md-block" alt="Escuela de Hosteler&iacute;a de Egibide" id="imagen">
                         </div>
                         <div class="form-group">
                             <label for="modificarImagen">Modificar Imagen:</label>
-                            <input type="file" class="form-control-file" id="modificarImagen" accept="image/*" value="Modificar Imagen">
+                            <input type="file" name="modificarImagen" class="form-control-file" id="modificarImagen" accept="image/*" value="Modificar Imagen">
                         </div>
                         <div class="form-group">
                             <label for="nombre">Nombre:</label>
@@ -45,9 +44,13 @@
                             <label for="categoria">Categoria</label>
                             <select id="categoria"  class="form-control" class="form-control" required>
                                 {% for key, categoria in categorias %}
-                                    <option id="cat{{ key }}">{{ categoria.nombre }}</option>
+                                    <option class="cat" value="{{ key }}">{{ categoria.nombre }}</option>
                                 {% endfor %}
                             </select>
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="estado" checked>
+                            <label class="form-check-label" for="estado">Mostrar el Plato</label>
                         </div>
                         <div class="modal-footer">
                             <input type="button" class="btn btn-primary" id="modificarPlato" value="Confirmar">
