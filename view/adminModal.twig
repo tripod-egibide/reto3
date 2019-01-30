@@ -49,10 +49,12 @@
                             </select>
                         </div>
                         <div class="form-group form-check">
-                            <input type="checkbox" class="form-check-input" id="estado" checked>
+                            <input type="checkbox" class="form-check-input" id="estado">
                             <label class="form-check-label" for="estado">Mostrar el Plato</label>
                         </div>
                         <div class="modal-footer">
+                            <input type="button" class="btn btn-secondary" id="cancelarPlato" value="Cancelar">
+                            <input type="button" class="btn btn-danger" id="EliminarPlato" value="Eliminar">
                             <input type="button" class="btn btn-primary" id="modificarPlato" value="Confirmar">
                         </div>
                     </form>
@@ -61,7 +63,7 @@
     </div>
 </div>
 
-<div id="modalEliminarPlato" class="modal fade" tabindex="-1" role="dialog">
+<div id="modalOcultarPlato" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -75,14 +77,36 @@
                 <label id="atencion"></label>
             </div>
             <div class="modal-footer">
-                <input type="button" class="btn btn-danger" id="eliminarPlato" value="Confirmar">
+                <input type="button" class="btn btn-secondary" id="cancelarOcultarPlato" value="Cancelar">
+                <input type="button" class="btn btn-danger" id="ocultarPlato" value="Confirmar">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalEliminarPlato" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Confirme Eliminar Plato</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!--- cuerpo del modal--->
+                <label id="atencionEliminar"></label>
+            </div>
+            <div class="modal-footer">
+                <input type="button" class="btn btn-secondary" id="cancelarEliminarPlato" value="Cancelar">
+                <input type="button" class="btn btn-danger" id="confirmarEliminarPlato" value="Confirmar">
             </div>
         </div>
     </div>
 </div>
 
 {# Modal para insertar un plato #}
-<div class="modal fade" id="altaPlatoModal" tabindex="-1" role="dialog">
+{#<div class="modal fade" id="altaPlatoModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <form action="index.php?c=plato&a=insert" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
@@ -146,7 +170,7 @@
             </form>
         </div>
     </div>
-</div>
+</div>#}
 
 {# Modal para el CRUD de los administradores #}
 <div class="modal fade" id="adminModal" tabindex="-1" role="dialog">
