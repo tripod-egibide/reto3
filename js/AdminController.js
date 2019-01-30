@@ -39,7 +39,8 @@ function habilitarBotonesEstaticos() {
         $("#modalModificarPlato").modal();
     });
     //editar plato con modal
-    $("#modificarPlato").click(function () {
+    $("#modificarPlato").submit(function (event) {
+        event.preventDefault();
         editPlato();
     });
     //eliminar un plato
@@ -187,18 +188,6 @@ function readFile(input) {
 // FIN relacionado con PLATO <------------------------------------------------------------------------------------------
 
 $(document).ready(function(){
-
-    // Modal Nuevo Plato
-    $(document).on('click', '#nuevo-plato', function(){
-        let unidades = $("#tipoVenta").children("option").length;
-        if(unidades == 0){
-            $.post("/reto3/?c=tipoventa&a=getAll",(res) => {
-                res.forEach(function(dato){
-                    $("#tipoVenta").append("<option value='" + dato.idTipoVenta + "'>" + dato.tipoVenta + "</option>");
-                });
-            }, "JSON");
-        }
-    });
 
     // Modal CRUD Administradores
     $(document).on('click', '#admin-modal', function(){

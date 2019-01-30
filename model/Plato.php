@@ -41,9 +41,9 @@ class Plato
             "estado" => $this->estado
         ];
 
-        /*if (isset($this->idPlato)) {
+        if (isset($this->idPlato)) {
             $data["idPlato"] = $this->idPlato;
-        }*/
+        }
 
         return $data;
     }
