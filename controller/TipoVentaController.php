@@ -1,8 +1,14 @@
 <?php
+
+if(session_id()==''){
+    session_start();
+}
+
 class TipoVentaController{
     public function run($action = "")
     {
         require_once __DIR__ . "/../model/TipoVenta.php";
+        require_once __DIR__ . "/../model/Plato.php";
         require_once __DIR__ . "/../core/twig.php";
         switch ($action) {
             case 'add':
@@ -29,17 +35,44 @@ class TipoVentaController{
 
     private function add()
     {
-        // temp
+        if(isset($_SESSION["administrador"]))
+        {
+            $tipoVenta = $_POST["tipoVenta"];
+
+            $tipoVenta = new TipoVenta("", $tipoVenta);
+            $tipoVenta->insert();
+        }
+        header("Location: /reto3/");
     }
 
     private function remove()
     {
-        // temp
+        if(isset($_SESSION["administrador"]))
+        {
+            $idTipoVenta = $_GET["tipoVenta"];
+
+            $platos=Plato::getByIdTipoVenta($idTipoVenta);
+
+            if($platos==NULL)
+            {
+                $tipoVenta = new TipoVenta("", "");
+                $tipoVenta->delete($idTipoVenta);
+            }
+        }
+        header("Location: /reto3/");
     }
 
     private function edit()
     {
-        // temp
+        if(isset($_SESSION["administrador"]))
+        {
+            $idTipoVenta=$_POST["idTipoVenta"];
+            $tipoVenta = $_POST["tipoVenta"];
+
+            $tipoVenta=new TipoVenta("", $tipoVenta);
+            $tipoVenta->update($idTipoVenta);
+        }
+        header("Location: /reto3/");
     }
 
     private function findById()

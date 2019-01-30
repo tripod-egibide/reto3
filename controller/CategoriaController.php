@@ -1,8 +1,14 @@
 <?php
+
+if(session_id()==''){
+    session_start();
+}
+
 class CategoriaController{
     public function run($action = "")
     {
         require_once __DIR__ . "/../model/Categoria.php";
+        require_once __DIR__ . "/../model/Plato.php";
         require_once __DIR__ . "/../core/twig.php";
         switch ($action) {
             case 'add':
@@ -21,6 +27,10 @@ class CategoriaController{
                 $this->findById();
                 break;
 
+            case 'getAll':
+                $this->getAll();
+                break;
+
             default:
                 $this->index();
                 break;
@@ -29,17 +39,43 @@ class CategoriaController{
 
     private function add()
     {
-        // temp
+        if(isset($_SESSION["administrador"]))
+        {
+            $nombre = $_POST["nombre"];
+            $emailDepartamento = $_POST["emailDepartamento"];
+
+            $categoria = new Categoria("", $nombre, $emailDepartamento);
+            $categoria->insert();
+        }
+        header("Location: /reto3/");
     }
 
     private function remove()
     {
-        // temp
+        if(isset($_SESSION["administrador"])) {
+            $idCategoria = $_GET["categoria"];
+
+            $platos = Plato::getByIdCategoria($idCategoria);
+
+            if ($platos == NULL) {
+                Categoria::delete($idCategoria);
+            }
+        }
+        header("Location: /reto3/");
     }
 
     private function edit()
     {
-        // temp
+        if(isset($_SESSION["administrador"]))
+        {
+            $idCategoria=$_POST["idCategoria"];
+            $nombre = $_POST["nombre"];
+            $emailDepartamento = $_POST["emailDepartamento"];
+
+            $categoria=new Categoria("", $nombre, $emailDepartamento);
+            $categoria->edit($idCategoria);
+        }
+        header("Location: /reto3/");
     }
 
     private function findById()
@@ -49,11 +85,15 @@ class CategoriaController{
         foreach ($categorias as $categoria) {
             $data[$categoria["idCategoria"]] = [
                 "nombre" => $categoria["nombre"],
-                "emailDepartamento" => $categoria["emailDepartamento"],
-                "orden" => $categoria["orden"]
+                "emailDepartamento" => $categoria["emailDepartamento"]
             ];
         }
         return $data;
+    }
+
+    private function getAll()
+    {
+        echo json_encode(Categoria::getAll());
     }
 
     private function index()
@@ -63,8 +103,7 @@ class CategoriaController{
         foreach ($categorias as $categoria) {
             $data[$categoria["idCategoria"]] = [
                 "nombre" => $categoria["nombre"],
-                "emailDepartamento" => $categoria["emailDepartamento"],
-                "orden" => $categoria["orden"]
+                "emailDepartamento" => $categoria["emailDepartamento"]
             ];
         }
         return $data;

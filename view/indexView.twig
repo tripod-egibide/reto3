@@ -15,11 +15,10 @@ Catálogo
     <div class="row">
 
         {% include "navCategoria.twig" %}
-
         <!-- Se carga a través de JS, véase catalogo.js -->
         <div class="col {{ administrador ? "col-lg-10" : "col-lg-7" }} offset-lg-2" id="catalogo">
         </div>
-
+        
         {% if not administrador %}
             {% include "carrito.twig" %}
         {% endif %}
