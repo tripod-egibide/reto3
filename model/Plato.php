@@ -41,9 +41,9 @@ class Plato
             "estado" => $this->estado
         ];
 
-        if (isset($this->idPlato)) {
+        /*if (isset($this->idPlato)) {
             $data["idPlato"] = $this->idPlato;
-        }
+        }*/
 
         return $data;
     }
@@ -87,6 +87,11 @@ class Plato
         return connection()->query("SELECT * FROM Plato as p " . ((isset($_SESSION["administrador"]) ? " WHERE estado = 1" : "")))->fetchAll();
     }
 
+    public static function getByNombre($nombre)
+    {
+        return preparedStatement("SELECT * FROM Plato WHERE nombre = :nombre", ["nombre" => $nombre])->fetchAll();
+    }
+
     public static function getByString($string)
     {
         return preparedStatement("SELECT * FROM Plato WHERE nombre like :string or notas like :string", ["string" => $string])->fetchAll();
@@ -104,6 +109,18 @@ class Plato
             (SELECT tipoVenta from TipoVenta where idTipoVenta = p.idTipoVenta) as 'tipoVenta', 
             (SELECT nombre from Categoria where idCategoria = p.idCategoria) as 'categoria' 
             FROM Plato as p WHERE idPlato = :idPlato", ["idPlato" => $idPlato])->fetchAll();
+    }
+
+    public static function getByIdCategoria($idCategoria)
+    {
+        return preparedStatement("SELECT idPlato
+            FROM Plato WHERE idCategoria = :idCategoria", ["idCategoria" => $idCategoria])->fetchAll();
+    }
+
+    public static function getByIdTipoVenta($idTipoVenta)
+    {
+        return preparedStatement("SELECT idPlato
+            FROM Plato WHERE idTipoVenta = :idTipoVenta", ["idTipoVenta" => $idTipoVenta])->fetchAll();
     }
 
     /**

@@ -82,12 +82,12 @@
 </div>
 
 {# Modal para insertar un plato #}
-<div class="modal fade" id="altaPlatoModal" tabindex="-1" role="dialog" aria-labelledby="altaPlatoModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" id="altaPlatoModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <form action="" method="post" class="needs-validation" novalidate>
+            <form action="index.php?c=plato&a=insert" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
                 <div class="modal-header">
-                    <h5 class="modal-title" id="altaPlatoModalLabel">Datos del plato</h5>
+                    <h5 class="modal-title">Datos del plato</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -102,21 +102,21 @@
                     </div>
                     <div class="form-group">
                         <label for="precio">Precio:</label>
-                        <input type="number" class="form-control" id="precio" name="precio" placeholder="Precio" required>
+                        <input type="number" class="form-control" id="precio" name="precio" min="0" step="any" placeholder="Precio" required>
                         <div class="invalid-feedback">
                             Debes introducir el precio del plato.
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="cantidad">Pedido m&iacute;nimo:</label>
-                        <input type="number" class="form-control" id="cantidad" name="cantidad" placeholder="Cantidad" required>
+                        <input type="number" class="form-control" id="cantidad" name="cantidad" min="1" placeholder="Cantidad" required>
                         <div class="invalid-feedback">
                             Debes introducir la cantidad del plato.
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="notas">Notas:</label>
-                        <textarea class="form-control" id="notas" rows="3" placeholder="Notas"></textarea>
+                        <textarea class="form-control" id="notas" name="notas" rows="3" placeholder="Notas"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="categoria">Categor&iacute;a:</label>
@@ -127,7 +127,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="tipoVenta">Tipo de venta:</label>
+                        <label for="tipoVenta">Formato de medida:</label>
                         <select class="form-control" id="tipoVenta" name="tipoVenta">
                             {% for tipoVenta in tipoVentas %}
                                 <option value="{{ tipoVenta.idTipoVenta }}">{{ tipoVenta.tipoVenta }}</option>
@@ -135,8 +135,8 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="archivo">Archivo:</label><br />
-                        <input type="file" id="archivo" name="archivo">
+                        <label for="imagen">Imagen:</label>
+                        <input type="file" class="form-control" id="imagen" name="imagen">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -148,75 +148,177 @@
     </div>
 </div>
 
-{# Modal para insertar un administrador #}
-<div class="modal fade" id="altaAdministradorModal" tabindex="-1" role="dialog" aria-labelledby="altaAdministradorModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+{# Modal para el CRUD de los administradores #}
+<div class="modal fade" id="adminModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <form action="index.php?c=admin&a=insertar" method="post" class="needs-validation" novalidate>
-                <div class="modal-header">
-                    <h5 class="modal-title" id="altaAdministradorModalLabel">Datos del administrador</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="usuarioAdmin">Usuario:</label>
-                        <input type="text" class="form-control" id="usuarioAdmin" name="usuario" placeholder="Usuario" required>
-                        <div class="invalid-feedback">
-                            Debes introducir el usuario.
-                        </div>
+            <div class="modal-header">
+                <h5 class="modal-title">Administradores</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body container-fluid">
+                <div class="form-inline mb-3">
+                    <div class="input-group">
+                        <select class="custom-select" id="administradoresModal">
+                        </select>
                     </div>
-                    <div class="form-group">
-                        <label for="contrasennaAdmin">Contrase&ntilde;a:</label>
-                        <input type="password" class="form-control" id="contrasennaAdmin" name="contrasenna" placeholder="Contrase&ntilde;a" required>
-                        <div class="invalid-feedback">
-                            Debes introducir la contrase&ntilde;a.
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary">A&ntilde;adir</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 
-{# Modal para modificar datos de un administrador #}
-<div class="modal fade" id="editarAdministradorModal" tabindex="-1" role="dialog" aria-labelledby="editaAdministradorModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form action="index.php?c=admin&a=modificar" method="post" class="needs-validation" novalidate>
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editarAdministradorModalLabel">Datos del administrador</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button id="altaAdmin" type="submit" class="btn btn-primary ml-2"><i class="material-icons align-bottom">add</i></button>
+                    <button id="editarAdmin" type="submit" class="btn btn-primary ml-2"><i class="material-icons align-bottom">edit</i></button>
+                    <button id="borrarAdmin" type="submit" class="btn btn-danger ml-2"><i class="material-icons align-bottom">delete</i></button>
                 </div>
-                <div class="modal-body">
+
+                <form id="altaAdminForm" action="index.php?c=admin&a=add" method="post" class="needs-validation" novalidate>
                     <div class="form-group">
-                        <label for="eusuarioAdmin">Usuario:</label>
-                        <input type="text" class="form-control" id="eusuarioAdmin" name="usuario" placeholder="Usuario" required>
+                        <label for="altaAdminUsuario">Usuario:</label>
+                        <input type="text" class="form-control" id="altaAdminUsuario" name="usuario" placeholder="Usuario" required>
                         <div class="invalid-feedback">
                             Debes introducir el usuario.
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="econtrasennaAdmin">Contrase&ntilde;a:</label>
-                        <input type="password" class="form-control" id="econtrasennaAdmin" name="contrasenna" placeholder="Contrase&ntilde;a" required>
+                        <label for="altaAdminContrasenna">Contrase&ntilde;a:</label>
+                        <input type="password" class="form-control" id="altaAdminContrasenna" name="contrasenna" placeholder="Contrase&ntilde;a" required>
                         <div class="invalid-feedback">
                             Debes introducir la contrase&ntilde;a.
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <input type="hidden" name="eidAdmin" name="idAdministrador" />
+                    <button type="submit" class="btn btn-primary">A&ntilde;adir</button>
+                </form>
+
+                <form id="editarAdminForm" action="index.php?c=admin&a=edit" method="post" class="needs-validation" novalidate>
+                    <div class="form-group">
+                        <label for="editarAdminUsuario">Usuario:</label>
+                        <input type="text" class="form-control" id="editarAdminUsuario" name="usuario" placeholder="Usuario" required>
+                        <div class="invalid-feedback">
+                            Debes introducir el usuario.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editarAdminContrasenna">Contrase&ntilde;a:</label>
+                        <input type="password" class="form-control" id="editarAdminContrasenna" name="contrasenna" placeholder="Contrase&ntilde;a" required>
+                        <div class="invalid-feedback">
+                            Debes introducir la contrase&ntilde;a.
+                        </div>
+                    </div>
+                    <input type="hidden" id="editarAdminId" name="idAdministrador" />
                     <button type="submit" class="btn btn-primary">Actualizar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{# Modal para el CRUD de las categorías #}
+<div class="modal fade" id="categoriaModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Categor&iacute;as</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body container-fluid">
+                <div class="form-inline mb-3">
+                    <div class="input-group">
+                        <select class="custom-select" id="categoriasModal">
+                        </select>
+                    </div>
+
+                    <button id="altaCategoria" type="submit" class="btn btn-primary ml-2"><i class="material-icons align-bottom">add</i></button>
+                    <button id="editarCategoria" type="submit" class="btn btn-primary ml-2"><i class="material-icons align-bottom">edit</i></button>
+                    <button id="borrarCategoria" type="submit" class="btn btn-danger ml-2"><i class="material-icons align-bottom">delete</i></button>
                 </div>
-            </form>
+
+                <form id="altaCategoriaForm" action="index.php?c=categoria&a=add" method="post" class="needs-validation" novalidate>
+                    <div class="form-group">
+                        <label for="altaCategoriaNombre">Nombre:</label>
+                        <input type="text" class="form-control" id="altaCategoriaNombre" name="nombre" placeholder="Nombre" required>
+                        <div class="invalid-feedback">
+                            Debes introducir el nombre.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="altaCategoriaEmail">Correo electr&oacute;nico del departamento:</label>
+                        <input type="email" class="form-control" id="altaCategoriaEmail" name="emailDepartamento" placeholder="Correo electr&oacute;nico del departamento" required>
+                        <div class="invalid-feedback">
+                            Debes introducir el correo electr&oacute;nico del departamento.
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">A&ntilde;adir</button>
+                </form>
+
+                <form id="editarCategoriaForm" action="index.php?c=categoria&a=edit" method="post" class="needs-validation" novalidate>
+                    <div class="form-group">
+                        <label for="editarCategoriaNombre">Nombre:</label>
+                        <input type="text" class="form-control" id="editarCategoriaNombre" name="nombre" placeholder="Nombre" required>
+                        <div class="invalid-feedback">
+                            Debes introducir el nombre.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editarCategoriaEmail">Correo electr&oacute;nico del departamento:</label>
+                        <input type="email" class="form-control" id="editarCategoriaEmail" name="emailDepartamento" placeholder="Correo electr&oacute;nico del departamento" required>
+                        <div class="invalid-feedback">
+                            Debes introducir el correo electr&oacute;nico del departamento.
+                        </div>
+                    </div>
+                    <input type="hidden" id="editarCategoriaId" name="idCategoria" />
+                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{# Modal para el CRUD de los tipos de venta #}
+<div class="modal fade" id="tipoVentaModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Tipos de venta</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body container-fluid">
+                <div class="form-inline mb-3">
+                    <div class="input-group">
+                        <select class="custom-select" id="tiposVentaModal">
+                        </select>
+                    </div>
+
+                    <button id="altaTipoVenta" type="submit" class="btn btn-primary ml-2"><i class="material-icons align-bottom">add</i></button>
+                    <button id="editarTipoVenta" type="submit" class="btn btn-primary ml-2"><i class="material-icons align-bottom">edit</i></button>
+                    <button id="borrarTipoVenta" type="submit" class="btn btn-danger ml-2"><i class="material-icons align-bottom">delete</i></button>
+                </div>
+
+                <form id="altaTipoVentaForm" action="index.php?c=tipoventa&a=add" method="post" class="needs-validation" novalidate>
+                    <div class="form-group">
+                        <label for="altaTipoVentaNombre">Tipo de venta:</label>
+                        <input type="text" class="form-control" id="altaTipoVentaNombre" name="tipoVenta" placeholder="Tipo de venta" required>
+                        <div class="invalid-feedback">
+                            Debes introducir el tipo de venta.
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">A&ntilde;adir</button>
+                </form>
+
+                <form id="editarTipoVentaForm" action="index.php?c=tipoventa&a=edit" method="post" class="needs-validation" novalidate>
+                    <div class="form-group">
+                        <label for="editarTipoVentaNombre">Tipo de venta:</label>
+                        <input type="text" class="form-control" id="editarTipoVentaNombre" name="tipoVenta" placeholder="Tipo de venta" required>
+                        <div class="invalid-feedback">
+                            Debes introducir el tipo de venta.
+                        </div>
+                    </div>
+                    <input type="hidden" id="editarTipoVentaId" name="idTipoVenta" />
+                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>

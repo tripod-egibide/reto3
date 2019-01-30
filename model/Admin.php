@@ -26,14 +26,10 @@ class Admin
             "contrasenna" => $this->contrasenna
         ];
 
-        if (isset($this->idAdministrador)) {
-            $data["idAdministrador"] = $this->idAdministrador;
-        }
-
         return $data;
     }
 
-    public function validar($usuario, $contrasenna) {
+    public static function validar($usuario, $contrasenna) {
         return preparedStatement("SELECT idAdministrador FROM Administrador WHERE usuario = :usuario AND contrasenna = :contrasenna", 
             ["usuario" => $usuario, "contrasenna" => $contrasenna])->fetch(0);
     }
@@ -60,14 +56,9 @@ class Admin
             WHERE idAdministrador = :idAdministrador", $data);
     }
 
-    public function getAll()
+    public static function getAll()
     {
         return connection()->query("SELECT * FROM Administrador")->fetchAll();
-    }
-
-    public function getById($idAdministrador)
-    {
-        return preparedStatement("SELECT * FROM Administrador WHERE idAdministrador = :idAdministrador", ["idAdministrador" => $idAdministrador])->fetchAll();
     }
 
     /**

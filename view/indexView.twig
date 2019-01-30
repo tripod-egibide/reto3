@@ -16,16 +16,20 @@ Catálogo
 
         {% include "navCategoria.twig" %}
         <!-- Se carga a través de JS, véase catalogo.js -->
-        <div class="col col-lg-7 offset-lg-2" id="catalogo">
+        <div class="col {{ administrador ? "col-lg-10" : "col-lg-7" }} offset-lg-2" id="catalogo">
         </div>
-        {% include "carrito.twig" %}
+        
+        {% if not administrador %}
+            {% include "carrito.twig" %}
+        {% endif %}
 
     </div>
 </main>
 
 <footer class="col col-lg-7 offset-lg-2 d-flex text-muted position-absolute">
     <p class="col d-flex justify-content-center align-items-center px-0 my-auto"><i class="material-icons">copyright</i>
-        2019 Tripod, Inc.</p>
+        2019 Tripod, Inc.
+    </p>
     <div class="col d-flex justify-content-center align-items-center px-0 my-auto">
         <a href="https://github.com/tripod-egibide/reto3" target="_blank" class="text-muted"><i class="material-icons align-middle">code</i></a>
         <a href="/Documentacion/Manual%20del%20Usuario.pdf" id="ayuda" target="_blank" class="text-muted"><i class="material-icons align-middle">help_outline</i></a>
@@ -34,7 +38,7 @@ Catálogo
 </footer>
 
 {% if administrador %}
-{% include "adminModal.twig" %}
+    {% include "adminModal.twig" %}
 {% endif%}
 
 {% endblock cuerpo %}
