@@ -1,17 +1,44 @@
 <aside class="col-3 d-none d-lg-block align-self-start position-fixed offset-9 sticky">
     <div class="card border-primary">
-        <h5 class="card-header">Lorem</h5>
-        <div class="card-body">
-            <h5 class="card-title">Ipsum</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium necessitatibus, voluptates facilis recusandae provident dolores odit! Sit reiciendis voluptate est quisquam, optio quod suscipit eaque quam, quo, numquam perspiciatis odit.
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis explicabo doloribus laborum. Sapiente incidunt pariatur omnis veritatis earum quisquam, magni amet praesentium, ab porro officiis dolorum dignissimos fugit reiciendis! Tempore!
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur quos quod itaque, exercitationem voluptas rem delectus omnis expedita quia. Explicabo tempora molestias voluptates temporibus corrupti perferendis dolore beatae sunt numquam.
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam repellat natus earum cumque, velit voluptatem provident placeat at corporis harum similique magni mollitia est, omnis fugiat, sit perspiciatis consequatur itaque!
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero exercitationem, maiores odio voluptatum mollitia laudantium animi, enim iusto unde similique praesentium autem dolorem quia corporis nostrum at ab ipsa fugiat!
-                lore
-            </p>
-            <a href="#" class="btn btn-primary">hh</a>
+        <h3 class="card-header d-flex justify-content-between bg-primary">
+            <span class="text-light">
+                Cesta
+            </span>
+        </h3>
+        <table class="table table-hover mb-0 text-center">
+            <tr>
+
+                <th class="border-top-0 border-bottom px-1 align-middle">Nombre</th>
+                <th class="border-top-0 border-bottom px-1 align-middle">Cant.</th>
+                <th class="border-top-0 border-bottom px-1 align-middle">Coste</th>
+                <th class="border-top-0 border-bottom px-1 align-middle"></th>
+            </tr>
+            <tr>
+                <td class="border-top-0 align-middle p1 pl-0">Paella tradicional</td>
+                <td class="border-top-0 align-middle p1 w-25"><input type="number" class="form-control text-center border-0" value=6 min=6></td>
+                <td class="border-top-0 align-middle p1">30€</td>
+                <td class="carrito-eliminar border-top-0 align-middle p1">
+                    <button class="btn btn-outline-danger border-0">
+                        <i class="material-icons p-0 m-0 align-bottom">cancel</i>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td class="border-top-0 align-middle p1 pl-0">Tarta de queso</td>
+                <td class="border-top-0 align-middle p1 w-25"><input type="number" class="form-control text-center border-0" value=4 min=4></td>
+                <td class="border-top-0 align-middle p1">12€</td>
+                <td class="carrito-eliminar border-top-0 align-middle p1">
+                    <button class="btn btn-outline-danger border-0">
+                        <i class="material-icons p-0 m-0 align-bottom">cancel</i>
+                    </button>
+                </td>
+            </tr>
+        </table>
+        <div class="d-flex justify-content-around card-footer">
+            <h3 class="my-auto">Total: 42€</h3>    
+            <button type="submit" class="btn btn-primary py-2">
+                <h4 class="py-0 my-auto">Comprar</h4>    
+            </button>
         </div>
     </div>    
 </aside>
