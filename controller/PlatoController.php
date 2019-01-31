@@ -1,4 +1,9 @@
 <?php
+
+if(session_id()==''){
+    session_start();
+}
+
 class PlatoController
 {
     public function run($action = "")
@@ -49,12 +54,30 @@ class PlatoController
                 "nombre" => $categoria["nombre"], 
             ];            
         }
+
+        require_once __DIR__ . "/../model/TipoVenta.php";;
+        $tipoVentas = TipoVenta::getAll();
+
         echo twig()->render("indexView.twig", ["categorias" => $data]);
     }
 
     private function edit()
     {
-        echo json_encode(Plato::getById($_POST["idPlato"]));
+        $uploadedFile = '';
+        if(!empty($_FILES["file"]["type"])){
+            $fileName = $_FILES['file']['name'];
+                $sourcePath = $_FILES['file']['tmp_name'];
+                $targetPath = "img/".$fileName;
+                if(move_uploaded_file($sourcePath,$targetPath)){
+                    $uploadedFile = $fileName;
+                }
+        }else{
+            $uploadedFile = "logo-restaurant.png";
+        }
+        $plato = new Plato($_POST['idPlato'], $_POST['nombre'], $_POST['precio'], $_POST['unidadesMinimas'], $_POST['notas'], "/reto3/img/".$uploadedFile,
+            $_POST['idCategoria'], $_POST['idTipoVenta'], $_POST['estado']);
+        $plato->update();
+
     }
 
     private function catalogo() 
@@ -82,8 +105,33 @@ class PlatoController
 
     private function insert()
     {
-        //temp
-        // éste sería el que hace el insert a la base de datos
+        if(isset($_SESSION["administrador"]) && isset($_POST["titulo"]))
+        {
+            if(!Plato::getByNombre($_POST["titulo"])) // Título del plato único
+            {
+                $nombre = $_POST["titulo"];
+                $precio = $_POST["precio"];
+                $unidadesMinimas = $_POST["cantidad"];
+                $notas = $_POST["notas"];
+                $idCategoria = $_POST["categoria"];
+                $idTipoVenta = $_POST["tipoVenta"];
+
+                $imagen="img/logo-restaurant.png";
+                if($_FILES['imagen']['error']==0)
+                {
+                    $sourcePath = "img/platos/";
+                    $fichero_subido = __DIR__ . "/../". $sourcePath . basename($_FILES['imagen']['name']);
+
+                    if(move_uploaded_file($_FILES['imagen']['tmp_name'], $fichero_subido)) {
+                        $imagen = $sourcePath . basename($_FILES['imagen']['name']);
+                    }
+                }
+
+                $plato = new Plato("", $nombre, $precio, $unidadesMinimas, $notas, $imagen, $idCategoria, $idTipoVenta, 1);
+                $plato->insert();
+            }
+        }
+        header("Location: /reto3/");
     }
 
     private function findById()
@@ -93,7 +141,6 @@ class PlatoController
 
     private function delete(){
         Plato::delete($_POST["idPlato"]);
-        header("Refresh:0");
     }
 
 }
