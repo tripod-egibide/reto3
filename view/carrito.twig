@@ -1,53 +1,47 @@
-<aside class="col-3 d-none d-lg-block align-self-start position-fixed offset-9 sticky">
-    <div class="card border-primary">
-        <h3 class="card-header d-flex justify-content-between bg-light">
-            <span class="text-dark">
-                Cesta
-            </span>
-        </h3>
-        <table class="table table-hover mb-0 text-center">
-            <tr>
-
-                <th class="border-top-0 border-bottom px-1 align-middle">Nombre</th>
-                <th class="border-top-0 border-bottom px-1 align-middle">Cant.</th>
-                <th class="border-top-0 border-bottom px-1 align-middle">Coste</th>
-                <th class="border-top-0 border-bottom px-1 align-middle"></th>
-            </tr>
-            <tr>
-                <td class="border-top-0 align-middle p1 pl-0">Paella tradicional</td>
-                <td class="border-top-0 align-middle p1 w-25"><input type="number" class="form-control text-center border-0" value=6 min=6></td>
-                <td class="border-top-0 align-middle p1">30€</td>
-                <td class="carrito-eliminar border-top-0 align-middle p1">
-                    <button class="btn btn-outline-danger border-0">
-                        <i class="material-icons p-0 m-0 align-bottom">cancel</i>
-                    </button>
-                </td>
-            </tr>
-            <tr>
-                <td class="border-top-0 align-middle p1 pl-0">Tarta de queso</td>
-                <td class="border-top-0 align-middle p1 w-25"><input type="number" class="form-control text-center border-0" value=4 min=4></td>
-                <td class="border-top-0 align-middle p1">12€</td>
-                <td class="carrito-eliminar border-top-0 align-middle p1">
-                    <button class="btn btn-outline-danger border-0">
-                        <i class="material-icons p-0 m-0 align-bottom">cancel</i>
-                    </button>
-                </td>
-            </tr>
-        </table>
-        <div class="container-fluid">
-            <div class="row">
-                <h3 class="my-auto col-6 border-top py-2 bg-light d-flex justify-content-between">
-                    <span>
-                        Total:
-                    </span>
-                    <span>
-                        42€
-                    </span>                     
-                </h3>    
-                <button type="submit" class="col-6 btn btn-primary py-2 rounded-0">
-                    <h4 class="py-0 my-auto">Comprar</h4>    
+{# esta plantilla se carga en cliente, no en servidor
+    véase carrito.js #}
+<div class="card border-primary">
+    <h3 class="card-header d-flex justify-content-between bg-light">
+        <span class="text-dark">
+            Cesta
+        </span>
+    </h3>
+    <table class="table table-hover mb-0 text-center">
+        <tr>
+            <th class="border-top-0 border-bottom px-1 align-middle">Nombre</th>
+            <th class="border-top-0 border-bottom px-1 align-middle">Cant.</th>
+            <th class="border-top-0 border-bottom px-1 align-middle">Coste</th>
+            <th class="border-top-0 border-bottom px-1 align-middle"></th>
+        </tr>
+        {% for id, plato in carrito %}
+        <tr>
+            <input type="hidden" value="{{ id }}">
+            <td class="border-top-0 align-middle p1 pl-0">{{ plato.nombre }}</td>
+            <td class="border-top-0 align-middle p1 w-25"><input type="number" class="cantidad-carrito form-control text-center border-0"
+                    value={{ plato.cantidad }} min={{ plato.unidadesMinimas }}></td>
+            <td class="border-top-0 align-middle p1">
+                <span class="carrito-coste">{{ plato.precio * plato.cantidad }}</span>€
+            </td>
+            <td class="carrito-eliminar border-top-0 align-middle p1">
+                <button class="carrito-eliminar btn btn-outline-danger border-0">
+                    <i class="material-icons p-0 m-0 align-bottom">cancel</i>
                 </button>
-            </div>    
-        </div>    
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div class="container-fluid">
+        <div class="row">
+            <h3 class="my-auto col-6 border-top py-2 bg-light d-flex justify-content-between">
+                <span>
+                    Total:
+                </span>
+                <span id="carrito-total">
+                </span>
+            </h3>
+            <button type="button" class="carrito-comprar col-6 btn btn-primary py-2 rounded-0">
+                <h4 class="py-0 my-auto">Comprar</h4>
+            </button>
+        </div>
     </div>
-</aside>
+</div>

@@ -21,7 +21,8 @@ Catálogo
         </div>
 
         {% if not administrador %}
-            {% include "carrito.twig" %}
+            <aside id="carrito" class="col-3 d-none d-lg-block align-self-start position-fixed offset-9 sticky">
+            </aside>
         {% endif %}
 
     </div>
