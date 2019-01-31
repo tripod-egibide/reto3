@@ -10,11 +10,17 @@ function habilitarBotonesEditarOcultar() {
         readPlato($(this));
     });
     //ocultar un plato
+//    $(".botonOcultar").click(function () {
+//        readPlato($(this));
+//    });
+    $('#modalModificarPlato').on('hidden.bs.modal', limpiar);
+
+
+
+//ocultar un plato
     $(".botonOcultar").click(function () {
         readPlato($(this));
     });
-    $('#modalModificarPlato').on('hidden.bs.modal', limpiar);
-
 }
 
 function limpiar() {
