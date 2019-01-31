@@ -2,38 +2,33 @@
 
 $(document).ready(function () {
     habilitarBotonesEstaticos();
-
-    //borramos los datos si cierran el modal
-
-
 });
 
-
-function habilitarBotonesEditarEliminar() {
+function habilitarBotonesEditarOcultar() {
     //editar plato con modal
     $(".botonEditar").click(function () {
         readPlato($(this));
     });
-    //eliminar un plato
-    $(".botonEliminar").click(function () {
+    //ocultar un plato
+    $(".botonOcultar").click(function () {
         readPlato($(this));
     });
     $('#modalModificarPlato').on('hidden.bs.modal', limpiar);
-    //ejecutamos limpiar por las altas y ediciones, que el reload no fuerza
-    limpiar();
+
 }
 
 function limpiar() {
     $("form")[0].reset(); //para borrar todos los datos que tenga los input, textareas, select.
-    $("#imagen").attr("src", "/reto3/img/logo-restaurant.png");
-    $("#idPlatoModal").attr("value","");
+    $("#imagen").prop("src", "/reto3/img/logo-restaurant.png");
+    $("#idPlatoModal").prop("value","");
     $("p").remove(".text-danger");
 }
 
 function habilitarBotonesEstaticos() {
     //Agregar plato
     $("#nuevo-plato").click(function () {
-        $("#modificarPlato").attr("value", "Alta Plato");
+        limpiar();
+        $("#modificarPlato").prop("value", "Alta Plato");
         // comprobamos si existe las unidades de medida, en caso contrario lo cargamos
         cargarUnidadesMedida();
         $("#modalModificarPlato").modal();
@@ -43,10 +38,32 @@ function habilitarBotonesEstaticos() {
         event.preventDefault();
         editPlato();
     });
-    //eliminar un plato
-    $("#eliminarPlato").click(function () {
+    //ocultar un plato
+    $("#ocultarPlato").click(function () {
+        confirmHiddenPlato();
+    });
+    //cancelar el proceso o modal
+    $("#cancelarPlato").click(function () {
+        $("#modalModificarPlato").modal("hide");
+    });
+    //cancelar el cancelar o modal
+    $("#cancelarOcultarPlato").click(function () {
+        $("#modalOcultarPlato").modal("hide");
+    });
+    //preguntar si elimina el plato
+    $("#EliminarPlato").click(function () {
+        deletePlato($("#nombre").val(), $("#idPlatoModal").val());
+        $("#modalEliminarPlato").modal();
+    });
+    //Eliminar el plato
+    $("#confirmarEliminarPlato").click(function () {
         confirmDeletePlato();
     });
+    //cancelar el eliminar o modal
+    $("#cancelarEliminarPlato").click(function () {
+        $("#modalEliminarPlato").modal("hide");
+    });
+
 }
 
 function readPlato(etiqueta) {
@@ -65,7 +82,7 @@ function readPlato(etiqueta) {
                     // cargamos los datos en vista
                     cargarDatos(json);
                 } else {
-                    deletePlato(json);
+                    hiddenPlato(json);
                 }
             }
             else
@@ -88,18 +105,33 @@ function cargarUnidadesMedida() {
     }
 }
 
+//comprobar si se puede eliminar un plato
+function comprobarSiEliminable(idPlato) {
+
+    $.post("/reto3/?c=plato&a=findQty", {"idPlato": idPlato}, (res) => {
+        if(res[0].pedidos == null){
+            $("#EliminarPlato").show();
+            $("#modalModificarPlato").modal();
+        }else{
+            $("#EliminarPlato").hide();
+            $("#modalModificarPlato").modal();
+        }
+    }, "JSON");
+}
+
 function cargarDatos(plato) {
     //aseguramos de borrar posibles archivos que se han quedado en el input
     $("#modificarImagen").val("");
     //cargamos los datos de un plato al modal
-    $("#idPlatoModal").attr("value", plato.idPlato);
-    $("#imagen").attr("src", plato.imagen);
-    $("#imagen").attr("alt", plato.nombre);
+    $("#idPlatoModal").prop("value", plato.idPlato);
+    $("#imagen").prop("src", plato.imagen);
+    $("#imagen").prop("alt", plato.nombre);
     $("#nombre").val(plato.nombre);
     $("#descripcion").val(plato.notas);
     $("#precio").val(plato.precio);
     $("#cantidad").val(plato.unidadesMinimas);
-    $("#modalModificarPlato").modal();
+    $("#estado").prop("checked", (plato.estado ==1)?true:false);
+    comprobarSiEliminable(plato.idPlato);
 }
 
 function editPlato() {
@@ -108,12 +140,14 @@ function editPlato() {
     let formData = new FormData();
     if ($("#modificarPlato").val() == "Confirmar") {
         opcion = "edit";
-        formData.append("idPlato", $("#idPlatoModal").attr("value"));
+        formData.append("idPlato", $("#idPlatoModal").prop("value"));
         formData.append("nombre", $("#nombre").val());
         formData.append("notas", $("#descripcion").val());
         formData.append("precio", $("#precio").val());
         formData.append("unidadesMinimas", $("#cantidad").val());
-        formData.append("file", $("#modificarImagen")[0].files[0]);
+        if($("#modificarImagen")[0].files[0]!= null) {
+            formData.append("file", $("#modificarImagen")[0].files[0]);
+        }
         formData.append("idCategoria", $("#categoria").val());
         formData.append("idTipoVenta", $("#medida").val());
         formData.append("estado", ($("#estado").prop("checked")) ? 1 : 0);
@@ -146,27 +180,39 @@ function editPlato() {
 
 }
 
-function deletePlato(plato) {
+function hiddenPlato(plato) {
     if (plato.estado == 0) {
-        $("#atencion").attr("value", plato.idPlato);
+        $("#atencion").prop("value", plato.idPlato);
         $("#atencion").html("¿Seguro que quiere habilitar el plato " + plato.nombre + "?<br>El plato ser&aacute; visible para todos sus visitantes.");
     } else {
-        $("#atencion").attr("value", plato.idPlato);
+        $("#atencion").prop("value", plato.idPlato);
         $("#atencion").html("¿Seguro que quiere deshabilitar el plato " + plato.nombre + "?<br>El plato dejar&aacute; de estar visible para sus visitantes.");
     }
     //abre modal para confirmar la modificación del estado de un plato
+    $("#modalOcultarPlato").modal();
+}
+
+function confirmHiddenPlato() {
+    //mandamos el id a ocultar
+    let idPlato = $("#atencion").prop("value");
+    $.post("/reto3/?c=plato&a=hidden", {idPlato}, function () {
+        location.reload();
+    });
+
+}
+
+function deletePlato(nombre, idPlato) {
+    $("#atencionEliminar").prop("value", idPlato);
+    $("#atencionEliminar").html("¿Seguro que quiere Eliminar el plato " + nombre + "?");
     $("#modalEliminarPlato").modal();
 }
 
 function confirmDeletePlato() {
     //mandamos el id a ocultar
-    let idPlato = $("#atencion").attr("value");
+    let idPlato = $("#atencionEliminar").prop("value");
     $.post("/reto3/?c=plato&a=delete", {idPlato}, function () {
-        // recargamos la página(lo vemos necesario por si otro administrador haya cambiado el estado de visibilidad)
-        // y asi evitar conflicto en el cambio de visibilidad de un plato
         location.reload();
     });
-
 }
 
 // Cargar imagen al ser seleccionado
@@ -179,7 +225,7 @@ function readFile(input) {
     if (input.files) {
         var reader = new FileReader();
         reader.onload = function (e) {
-            $("#imagen").attr("src", e.target.result);
+            $("#imagen").prop("src", e.target.result);
         }
         reader.readAsDataURL(input.files[0]);
     }

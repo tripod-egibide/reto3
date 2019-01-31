@@ -31,6 +31,14 @@ class PlatoController
                 $this->findById();
                 break;
 
+            case 'hidden':
+                $this->hidden();
+                break;
+
+            case 'findQty':
+                $this->findQty();
+                break;
+
             case 'delete':
                 $this->delete();
                 break;
@@ -60,24 +68,20 @@ class PlatoController
 
     private function edit()
     {
-        $defaultImgPath="img/";
-        $imgPath="img/platos/";
-
         $uploadedFile = '';
         if(!empty($_FILES["file"]["type"])){
             $fileName = $_FILES['file']['name'];
                 $sourcePath = $_FILES['file']['tmp_name'];
-                $targetPath = $imgPath.$fileName;
+                $targetPath = "img/plato/".$fileName;
                 if(move_uploaded_file($sourcePath,$targetPath)){
-                    $uploadedFile = $targetPath;
+                    $uploadedFile = "/reto3/img/plato/".$fileName;
                 }
         }else{
-            $uploadedFile = $defaultImgPath."logo-restaurant.png";
+            $uploadedFile = null;
         }
         $plato = new Plato($_POST['idPlato'], $_POST['nombre'], $_POST['precio'], $_POST['unidadesMinimas'], $_POST['notas'], $uploadedFile,
             $_POST['idCategoria'], $_POST['idTipoVenta'], $_POST['estado']);
         $plato->update();
-
     }
 
     private function catalogo() 
@@ -105,31 +109,37 @@ class PlatoController
 
     private function insert()
     {
-        if(!Plato::getByNombre($_POST["nombre"]))
-        {
-            $defaultImgPath="img/";
-            $imgPath="img/platos/";
-
-            $uploadedFile = '';
-            if(!empty($_FILES["file"]["type"])){
-                $fileName = $_FILES['file']['name'];
-                $sourcePath = $_FILES['file']['tmp_name'];
-                $targetPath = $imgPath.$fileName;
-                if(move_uploaded_file($sourcePath,$targetPath)){
-                    $uploadedFile = $targetPath;
+            if(!Plato::getByNombre($_POST["nombre"])) // Título del plato único
+            {
+                $uploadedFile = '';
+                if(!empty($_FILES["file"]["type"])){
+                    $fileName = $_FILES['file']['name'];
+                    $sourcePath = $_FILES['file']['tmp_name'];
+                    $targetPath = "img/plato/".$fileName;
+                    if(move_uploaded_file($sourcePath,$targetPath)){
+                        $uploadedFile = "/reto3/img/plato/".$fileName;
+                    }
+                }else{
+                    $uploadedFile = "/reto3/img/logo-restaurant.png";
                 }
-            }else{
-                $uploadedFile = $defaultImgPath."logo-restaurant.png";
+                $plato = new Plato($_POST['idPlato'], $_POST['nombre'], $_POST['precio'], $_POST['unidadesMinimas'], $_POST['notas'], $uploadedFile,
+                    $_POST['idCategoria'], $_POST['idTipoVenta'], $_POST['estado']);
+                $plato->insert();
             }
-            $plato = new Plato($_POST['idPlato'], $_POST['nombre'], $_POST['precio'], $_POST['unidadesMinimas'], $_POST['notas'], $uploadedFile,
-                $_POST['idCategoria'], $_POST['idTipoVenta'], $_POST['estado']);
-            $plato->insert();
-        }
     }
 
     private function findById()
     {
         echo json_encode(Plato::getById($_POST["idPlato"]));
+    }
+
+    private function findQty()
+    {
+        echo json_encode(Plato::findQty($_POST["idPlato"]));
+    }
+
+    private function hidden(){
+        Plato::hidden($_POST["idPlato"]);
     }
 
     private function delete(){

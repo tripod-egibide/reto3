@@ -52,13 +52,14 @@ class Plato
     {
         $dato = $this->toArray();
         unset($dato["idPlato"]);
+        var_dump($dato);
         preparedStatement("INSERT INTO Plato (nombre, precio, unidadesMinimas, notas, imagen, idCategoria, idTipoventa, estado) 
             VALUES (:nombre, :precio, :unidadesMinimas, :notas, :imagen, :idCategoria, :idTipoVenta, :estado)", $dato);
     }
 
     // realmente no existe un delete, simplemente cambia su estado para mostrar u ocultar.
     // por motivos de integridad de datos.
-    public static function delete($id)
+    public static function hidden($id)
     {
         preparedStatement("UPDATE plato SET estado = NOT estado WHERE idPlato = :idPlato;", ["idPlato" => $id]);
     }
@@ -66,8 +67,19 @@ class Plato
     public function update()
     {
         $data = $this->toArray();
-
-        preparedStatement("UPDATE Plato
+        if($data["imagen"]==null){
+            unset($data["imagen"]);
+            preparedStatement("UPDATE Plato
+            SET nombre = :nombre,
+                precio = :precio,
+                unidadesMinimas = :unidadesMinimas,
+                notas = :notas,
+                idCategoria = :idCategoria,
+                idTipoVenta = :idTipoVenta,
+                estado = :estado
+            WHERE idPlato = :idPlato", $data);
+        }else{
+            preparedStatement("UPDATE Plato
             SET nombre = :nombre,
                 precio = :precio,
                 unidadesMinimas = :unidadesMinimas,
@@ -77,6 +89,13 @@ class Plato
                 idTipoVenta = :idTipoVenta,
                 estado = :estado
             WHERE idPlato = :idPlato", $data);
+        }
+
+    }
+
+    public static function delete($idPlato)
+    {
+        return preparedStatement("DELETE FROM Plato WHERE idPlato = :idPlato ", ["idPlato" => $idPlato])->fetchAll();
     }
 
     public static function getAll()
@@ -101,6 +120,12 @@ class Plato
     {
         return preparedStatement("SELECT *, (SELECT tipoVenta from TipoVenta where idTipoVenta = p.idTipoVenta) as 'tipoVenta' 
             FROM Plato as p WHERE idCategoria = :idCategoria " . (isset($_SESSION["administrador"]) ? "" : " and estado = 1 ") , ["idCategoria" => $idCategoria])->fetchAll();
+    }
+
+    public static function findQty($idPlato)
+    {
+        return preparedStatement("SELECT sum(idPedido) as pedidos
+            FROM detallePedido WHERE idPlato = :idPlato", ["idPlato" => $idPlato])->fetchAll();
     }
 
     public static function getById($idPlato)
