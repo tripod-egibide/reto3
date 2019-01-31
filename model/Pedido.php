@@ -89,6 +89,11 @@ class Pedido
         return preparedStatement("SELECT * FROM Pedido WHERE fechaEntrega between fechaI and fechaF ", ["fechaI" => $fechaI, "fechaF" => $fechaF])->fetchAll();
     }
 
+    public static function getAllDetallePedidoByIdPedido($idPedido)
+    {
+        return preparedStatement("SELECT * FROM DetallePedido WHERE idPedido = :idPedido", ["idPedido" => $idPedido])->fetchAll();
+    }
+
     /**
      * @return mixed
      */
