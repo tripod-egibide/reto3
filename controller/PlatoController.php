@@ -63,9 +63,6 @@ class PlatoController
             ];            
         }
 
-        require_once __DIR__ . "/../model/TipoVenta.php";;
-        $tipoVentas = TipoVenta::getAll();
-
         echo twig()->render("indexView.twig", ["categorias" => $data]);
     }
 
@@ -85,7 +82,6 @@ class PlatoController
         $plato = new Plato($_POST['idPlato'], $_POST['nombre'], $_POST['precio'], $_POST['unidadesMinimas'], $_POST['notas'], $uploadedFile,
             $_POST['idCategoria'], $_POST['idTipoVenta'], $_POST['estado']);
         $plato->update();
-
     }
 
     private function catalogo() 
@@ -130,7 +126,6 @@ class PlatoController
                     $_POST['idCategoria'], $_POST['idTipoVenta'], $_POST['estado']);
                 $plato->insert();
             }
-
     }
 
     private function findById()
