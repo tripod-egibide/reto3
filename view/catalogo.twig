@@ -3,7 +3,7 @@
 <div class="card border-top-0 mb-5">
     {% for categoria in categorias if categoria.platos %}
     <span class="categoria">
-        <span id="categoria-{{ categoria.nombre }}" class="categoria-anchor"></span>
+        <span id="categoria-{{ categoria.nombre|replace({" ": "-"}) }}" class="categoria-anchor"></span>
         <div class="card-body bg-light border-top">
             <h1 class="card-title text-center text-primary">{{ categoria.nombre }}</h1>
         </div>
@@ -40,7 +40,7 @@
                             <input type="number" name="cantidad" class="form-control text-right" min={{ plato.unidadesMinimas }}
                                 value={{ plato.unidadesMinimas }} aria-describedby="inputGroup-sizing-lg">
                             <input type="hidden" name="id" value={{ plato.idPlato }}>
-                            <input type="hidden" name="nombre" value="{{ plato.nombre }}">
+                            <input type="hidden" name="nombre" value="{{ plato.nombre }}"   >
                             <input type="hidden" name="precio" value={{ plato.precio }}>
                             <input type="hidden" name="unidadesMinimas" value={{ plato.unidadesMinimas }}>
                             <div class="input-group-append">

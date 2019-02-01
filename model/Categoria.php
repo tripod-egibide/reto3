@@ -57,7 +57,7 @@ class Categoria
 
     public static function getAll()
     {
-        return connection()->query("SELECT * FROM Categoria")->fetchAll();
+        return connection()->query("SELECT * FROM Categoria ORDER BY preferencia")->fetchAll();
     }
 
     /**
