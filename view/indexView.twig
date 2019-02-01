@@ -20,8 +20,16 @@ Catálogo
         </div>
         
         {% if not administrador %}
-            <aside id="carrito" class="col-3 d-none d-lg-block align-self-start position-fixed offset-9 sticky">
-            </aside>
+        <aside id="carrito" class="col-3 d-none d-lg-block align-self-start position-fixed offset-9 sticky">
+            <div class="card border-primary">
+                    <h3 class="card-header d-flex justify-content-between bg-light">
+                        <span class="text-dark">
+                            Cesta
+                        </span>
+                    </h3>
+                {% include "carrito.twig" %}
+            </div>
+        </aside>
         {% endif %}
 
     </div>

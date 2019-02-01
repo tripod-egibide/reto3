@@ -51,11 +51,14 @@ $("#search").keyup(delay((evento)=> {
 
 function cargarCatalogo(datos) {
     $("#catalogo").html(Twig.twig({"ref": "catalogo"}).render({ "categorias": datos, "administrador": administrador}));
-    //esta función viene de carrito.js, y afecta a las funcionalidades asociadas con ese fichero
     //preguntarle a nieves si es mejor que esto de error, o meter un if a ver si el usuario es administrador o no
-    habilitarBotonCompra();
-    // función del fichero AdminController
-    habilitarBotonesEditarEliminar()
+    if (administrador) {
+        // función del fichero AdminController
+        habilitarBotonesEditarEliminar();
+    } else {
+        //esta función viene de carrito.js, y afecta a las funcionalidades asociadas con ese fichero
+        habilitarBotonCompra();
+    }
 }
 
 function delay(callback) {

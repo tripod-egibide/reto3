@@ -1,10 +1,25 @@
-let carrito = {};
-
 Twig.twig({
-    href: "/reto3/view/carrito.twig",
+    href: "/reto3/view/tablaCarrito.twig",
     id: "carrito",
     async: false
 });
+
+let carrito;
+
+if (localStorage.carrito) {
+    carrito = JSON.parse(localStorage.carrito);
+    cargarCarrito();
+} else {
+    carrito = {};
+}
+
+$("#carrito-navbar").popover({
+    content: '<span class="text-muted">Añadido!</span>',
+    html: true,
+    placement: "bottom",
+    trigger: "manual"
+});
+
 
 function habilitarBotonCompra() {
     $(".form-plato").submit((evento) => {
@@ -22,13 +37,18 @@ function habilitarBotonCompra() {
             "nombre": plato.nombre
         };
 
+        $("#carrito-navbar").popover("show");
+        setTimeout(() => $("#carrito-navbar").popover("hide"), 2000);
+
         cargarCarrito();
+        almacenarCarrito();
         evento.preventDefault();
     });
+
 }
 
 function cargarCarrito() {
-    $("#carrito").html(Twig.twig({ "ref": "carrito" }).render({ "carrito": carrito }));
+    $(".tabla-carrito").html(Twig.twig({ "ref": "carrito" }).render({ "carrito": carrito }));
     habilitarCambiosAutomaticos();
     calcularCosteTotal();
 }
@@ -38,7 +58,18 @@ function habilitarCambiosAutomaticos() {
         let target = $(evento.target);
         let id = (target.parent().prevAll("input").val());
         target.parent().next().children(".carrito-coste").html(carrito[id].precio * target.val());
+
+        carrito[id].cantidad = +target.val();
+        almacenarCarrito();
         calcularCosteTotal();
+    });
+
+    $(".carrito-eliminar").click((evento) => {
+        let target = $(evento.target);
+        delete carrito[$(target).parent().prevAll("input").val()];
+
+        almacenarCarrito();
+        cargarCarrito();
     });
 }
 
@@ -48,4 +79,8 @@ function calcularCosteTotal() {
         total += +($(this).text());
     });
     $("#carrito-total").html(total + "€");
+}
+
+function almacenarCarrito() {
+    localStorage.carrito = JSON.stringify(carrito);
 }
