@@ -30,6 +30,7 @@ $(document).ready(function(){
 
     //confirmar pedido
     $(".confirmarPedido").click(function(){
+        let idPedido = $(this).val();
         
     });
 });
