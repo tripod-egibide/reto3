@@ -1,4 +1,9 @@
 <?php
+
+if(session_id()==''){
+    session_start();
+}
+
 class PedidoController
 {
     public function run($action = "")
@@ -15,6 +20,10 @@ class PedidoController
                 $this->getDetallePedido();
                 break;
 
+            case 'eliminar':
+                $this->eliminar();
+                break;
+
             case 'detalles':
                 $this->detalles();
                 break;
@@ -27,25 +36,41 @@ class PedidoController
 
     private function ver()
     {
-        $pedidos = Pedido::getAll();
+        if(isset($_SESSION["administrador"]))
+        {
+            $pedidos = Pedido::getAll();
 
-        echo twig()->render("pedidoView.twig", ["pedidos" => $pedidos]);
+            echo twig()->render("pedidoView.twig", ["pedidos" => $pedidos]);
+        }
+
     }
 
     private function getDetallePedido()
     {
-        $platos=Pedido::getAllDetallePedidoByIdPedido($_GET["idPedido"]);
-        $data=Array();
-        foreach ($platos as $plato) {
-            $platosSeleccionado=Plato::getAllById($plato["idPlato"]);
-            $data[] = [
-                "nombre" => $platosSeleccionado["nombre"],
-                "precio" => $platosSeleccionado["precio"],
-                "cantidad" => $plato["cantidad"]
-            ];
+        if(isset($_SESSION["administrador"]))
+        {
+            $platos=Pedido::getAllDetallePedidoByIdPedido($_GET["idPedido"]);
+            $data=Array();
+            foreach ($platos as $plato) {
+                $platosSeleccionado=Plato::getAllById($plato["idPlato"]);
+                $data[] = [
+                    "nombre" => $platosSeleccionado["nombre"],
+                    "precio" => $platosSeleccionado["precio"],
+                    "cantidad" => $plato["cantidad"]
+                ];
+            }
+            header('Content-Type: application/json');
+            echo json_encode($data);
         }
-        header('Content-type: application/json');
-        echo json_encode($data);
+    }
+
+    private function eliminar()
+    {
+        if(isset($_SESSION["administrador"]))
+        {
+            Pedido::delete($_GET["idPedido"]);
+        }
+
     }
 
     private function detalles()
