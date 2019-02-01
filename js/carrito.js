@@ -6,12 +6,13 @@ Twig.twig({
 
 let carrito;
 
-if (localStorage.carrito) {
+if (localStorage.carrito && !administrador) {
     carrito = JSON.parse(localStorage.carrito);
     cargarCarrito();
 } else {
     carrito = {};
 }
+determinarAncho(); //catalogo.js
 
 $("#carrito-navbar").popover({
     content: '<span class="text-muted">Añadido!</span>',
@@ -53,6 +54,14 @@ function cargarCarrito() {
     $(".tabla-carrito").html(Twig.twig({ "ref": "carrito" }).render({ "carrito": carrito }));
     habilitarCambiosAutomaticos();
     calcularCosteTotal();
+
+    if (!administrador) {
+        if (jQuery.isEmptyObject(carrito)) {
+            $('#carrito').css({ "transform": "translate(100%, -30%)" });     
+        } else {
+            $('#carrito').css({ "transform": "translate(0%, -30%)" });
+        }
+    }
 }
 
 function habilitarCambiosAutomaticos() {
@@ -85,5 +94,6 @@ function calcularCosteTotal() {
 
 function almacenarCarrito() {
     localStorage.carrito = JSON.stringify(carrito);
+    determinarAncho(); //catalogo.js
 }
 

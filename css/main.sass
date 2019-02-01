@@ -24,9 +24,14 @@ input[type="number"]
 
 .sticky
   top: 30%;
+
+nav.sticky
   transform: translate(0, -30%)
-  
-nav.sticky, #catalogo
+
+#carrito
+  transform: translate(100%, -30%)
+
+nav.sticky, #catalogo, #carrito
   transition: 0.3s ease
 
 .categoria-anchor
@@ -35,11 +40,7 @@ nav.sticky, #catalogo
 
 
 #categoria-collapse
-  z-index: 2000
-
-  .list-group-item
-    border-left: 0 none
-    border-right: 0 none
+  z-index: 2001
 
   .list-group-item:first-child
     border-top: 0 none

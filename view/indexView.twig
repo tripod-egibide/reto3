@@ -16,7 +16,7 @@ Catálogo
 
         {% include "navCategoria.twig" %}
         <!-- Se carga a través de JS, véase catalogo.js -->
-        <div class="col {{ administrador ? "col-lg-10" : "col-lg-7" }} offset-lg-2" id="catalogo">
+        <div class="col {{ administrador or not carrito ? "col-lg-10" : "col-lg-7" }} offset-lg-2" id="catalogo">
         </div>
         
         {% if not administrador %}
@@ -48,6 +48,6 @@ Catálogo
 
 {% if administrador %}
     {% include "adminModal.twig" %}
-{% endif%}
+{% endif %}
 
 {% endblock cuerpo %}

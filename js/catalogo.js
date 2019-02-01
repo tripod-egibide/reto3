@@ -24,8 +24,6 @@ $("#search").keyup(delay((evento)=> {
     let input = $("#search").val();
     if (input) {
         $('nav.sticky').css({"transform": "translate(-100%, -30%)"});
-        $('#catalogo').removeClass("offset-lg-2 col-lg-7");
-        $('#catalogo').addClass("col-lg-9");
         let resultados = JSON.parse(JSON.stringify(categorias));
         resultados.map((categoria) => {
             categoria.platos = categoria.platos.filter((plato) => 
@@ -40,13 +38,12 @@ $("#search").keyup(delay((evento)=> {
         recargar = true;
     } else {
         $('nav.sticky').css({ "transform": "translate(0, -30%)" });
-        $('#catalogo').removeClass("col-lg-9");
-        $('#catalogo').addClass("offset-lg-2 col-lg-7");
         if (recargar) {
             cargarCatalogo(categorias);
             recargar = false;
         }
     }
+    determinarAncho();
 }));
 
 function cargarCatalogo(datos) {
@@ -70,4 +67,22 @@ function delay(callback) {
             callback.apply(context, args);
         }, 200);
     };
+}
+
+function determinarAncho() {
+    let ancho = 7;
+    ancho += 2 * !!$("#search").val();
+    ancho += 3 * (jQuery.isEmptyObject(carrito));
+
+    console.log(ancho);
+    
+    $('#catalogo').removeClass(["col-lg-7", "col-lg-9", "col-lg-10", "col-lg-12"]);
+    $('#catalogo').addClass("col-lg-" + ancho);
+
+    if ($("#search").val()) {
+        $('#catalogo').removeClass("offset-lg-2");
+    } else {
+        $('#catalogo').addClass("offset-lg-2");
+    }
+
 }
