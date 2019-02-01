@@ -37,8 +37,10 @@ function habilitarBotonCompra() {
             "nombre": plato.nombre
         };
 
-        $("#carrito-navbar").popover("show");
-        setTimeout(() => $("#carrito-navbar").popover("hide"), 2000);
+        if ($("#carrito-navbar").is(":visible")) {
+            $("#carrito-navbar").popover("show");
+            setTimeout(() => $("#carrito-navbar").popover("hide"), 2000);
+        }
 
         cargarCarrito();
         almacenarCarrito();
@@ -84,3 +86,4 @@ function calcularCosteTotal() {
 function almacenarCarrito() {
     localStorage.carrito = JSON.stringify(carrito);
 }
+
