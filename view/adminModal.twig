@@ -21,7 +21,6 @@
                         </div>
                     </div>
                     <div class="form-row">
-
                         <div class="col-12">
                             <label for="nombre">Nombre:</label>
                             <input class="form-control" type="text" id="nombre" required>
@@ -34,21 +33,20 @@
                             <input class="form-control" type="text" id="descripcion">
                         </div>
                         <div class="col-md-6">
-                            <label for="precio">Precio:</label>
+                            <label for="precio" id="labelPrecio">Precio:</label>
                             <input class="form-control" type="number" id="precio" step="0.01" min="0" required>
                             <div class="invalid-feedback">
                                 Debes introducir el precio del plato.
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <label for="cantidad">Pedido m&iacute;nimo:</label>
+                            <label for="cantidad" id="labelCantidad">Pedido m&iacute;nimo:</label>
                             <input class="form-control" type="number" id="cantidad" min="1" required>
                             <div class="invalid-feedback">
                                 Debes introducir el pedido m&iacute;nimo del plato.
                             </div>
                         </div>
                     </div>
-
                     <div class="form-row">
                         <div class="col-md-6">
                             <label for="medida">Formato de la medida</label>
@@ -145,73 +143,6 @@
         </div>
     </div>
 </div>
-
-{# Modal para insertar un plato #}
-{#<div class="modal fade" id="altaPlatoModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <form action="index.php?c=plato&a=insert" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
-                <div class="modal-header">
-                    <h5 class="modal-title">Datos del plato</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="titulo">T&iacute;tulo:</label>
-                        <input type="text" class="form-control" id="titulo" name="titulo" placeholder="T&iacute;tulo" required>
-                        <div class="invalid-feedback">
-                            Debes introducir el t&iacute;tulo del plato.
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="precio">Precio:</label>
-                        <input type="number" class="form-control" id="precio" name="precio" min="0" step="any" placeholder="Precio" required>
-                        <div class="invalid-feedback">
-                            Debes introducir el precio del plato.
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="cantidad">Pedido m&iacute;nimo:</label>
-                        <input type="number" class="form-control" id="cantidad" name="cantidad" min="1" placeholder="Cantidad" required>
-                        <div class="invalid-feedback">
-                            Debes introducir la cantidad del plato.
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="notas">Notas:</label>
-                        <textarea class="form-control" id="notas" name="notas" rows="3" placeholder="Notas"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="categoria">Categor&iacute;a:</label>
-                        <select class="form-control" id="categoria" name="categoria">
-                            {% for categoria in categorias %}
-                                <option value="{{ categoria.idCategoria }}">{{ categoria.nombre }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="tipoVenta">Formato de medida:</label>
-                        <select class="form-control" id="tipoVenta" name="tipoVenta">
-                            {% for tipoVenta in tipoVentas %}
-                                <option value="{{ tipoVenta.idTipoVenta }}">{{ tipoVenta.tipoVenta }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="imagen">Imagen:</label>
-                        <input type="file" class="form-control" id="imagen" name="imagen">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary">A&ntilde;adir</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>#}
 
 {# Modal para el CRUD de los administradores #}
 <div class="modal fade" id="adminModal" tabindex="-1" role="dialog">
