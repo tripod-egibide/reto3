@@ -12,10 +12,9 @@
                 <!--- cuerpo del modal--->
                     <form id="idPlatoModal" class="needs-validation" novalidate>
                         <div class="form-group" id="zonaImagen">
-                            <img src="/reto3/img/logo-restaurant.png" class="form-control d-none d-md-block" alt="Escuela de Hosteler&iacute;a de Egibide" id="imagen">
+                            <img src="/reto3/img/logo-restaurant.png" class="form-control" alt="Escuela de Hosteler&iacute;a de Egibide" id="imagen">
                         </div>
                         <div class="form-group">
-                            <label for="modificarImagen">Imagen:</label>
                             <input type="file" name="modificarImagen" class="form-control-file" id="modificarImagen" accept="image/*" value="Modificar Imagen">
                         </div>
                         <div class="form-group">
@@ -62,9 +61,9 @@
                             <label class="form-check-label" for="estado">Mostrar el Plato</label>
                         </div>
                         <div class="modal-footer">
-                            <input type="button" class="btn btn-secondary" id="cancelarPlato" value="Cancelar">
+                            <input type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelarPlato" value="Cancelar">
                             <input type="button" class="btn btn-danger" id="EliminarPlato" value="Eliminar">
-                            <input type="button" class="btn btn-primary" id="modificarPlato" value="Confirmar">
+                            <input type="submit" class="btn btn-primary" id="modificarPlato" value="Confirmar">
                         </div>
                     </form>
             </div>
@@ -86,7 +85,7 @@
                 <label id="atencion"></label>
             </div>
             <div class="modal-footer">
-                <input type="button" class="btn btn-secondary" id="cancelarOcultarPlato" value="Cancelar">
+                <input type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelarOcultarPlato" value="Cancelar">
                 <input type="button" class="btn btn-danger" id="ocultarPlato" value="Confirmar">
             </div>
         </div>
@@ -107,8 +106,30 @@
                 <label id="atencionEliminar"></label>
             </div>
             <div class="modal-footer">
-                <input type="button" class="btn btn-secondary" id="cancelarEliminarPlato" value="Cancelar">
+                <input type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelarEliminarPlato" value="Cancelar">
                 <input type="button" class="btn btn-danger" id="confirmarEliminarPlato" value="Confirmar">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalError" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Error de Dato</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!--- cuerpo del modal--->
+                <div class="alert alert-danger" role="alert">
+                    <label id="textoError"></label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="button" class="btn btn-danger" data-dismiss="modal" value="Ok">
             </div>
         </div>
     </div>

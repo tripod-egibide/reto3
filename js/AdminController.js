@@ -7,6 +7,7 @@ $(document).ready(function () {
 function habilitarBotonesEditarOcultar() {
     //editar plato con modal
     $(".botonEditar").click(function () {
+        $("#modificarPlato").prop("value", "Confirmar");
         readPlato($(this));
     });
     //ocultar un plato
@@ -14,13 +15,13 @@ function habilitarBotonesEditarOcultar() {
         readPlato($(this));
     });
     $('#modalModificarPlato').on('hidden.bs.modal', limpiar);
-
 }
 
 function limpiar() {
     $("form")[0].reset(); //para borrar todos los datos que tenga los input, textareas, select.
     $("#imagen").prop("src", "/reto3/img/logo-restaurant.png");
     $("#idPlatoModal").prop("value","");
+
     $("p").remove(".text-danger");
 }
 
@@ -34,21 +35,13 @@ function habilitarBotonesEstaticos() {
         $("#modalModificarPlato").modal();
     });
     //editar plato con modal
-    $("#modificarPlato").submit(function (event) {
+    $("#idPlatoModal").submit(function( event ) {
         event.preventDefault();
-        editPlato();
+        comprobarCampos();
     });
     //ocultar un plato
     $("#ocultarPlato").click(function () {
         confirmHiddenPlato();
-    });
-    //cancelar el proceso o modal
-    $("#cancelarPlato").click(function () {
-        $("#modalModificarPlato").modal("hide");
-    });
-    //cancelar el cancelar o modal
-    $("#cancelarOcultarPlato").click(function () {
-        $("#modalOcultarPlato").modal("hide");
     });
     //preguntar si elimina el plato
     $("#EliminarPlato").click(function () {
@@ -59,11 +52,6 @@ function habilitarBotonesEstaticos() {
     $("#confirmarEliminarPlato").click(function () {
         confirmDeletePlato();
     });
-    //cancelar el eliminar o modal
-    $("#cancelarEliminarPlato").click(function () {
-        $("#modalEliminarPlato").modal("hide");
-    });
-
 }
 
 function readPlato(etiqueta) {
@@ -86,10 +74,11 @@ function readPlato(etiqueta) {
                 }
             }
             else
-                throw new Error("Plato no encontrado...");
+                throw "Plato no encontrado...";
         }, "JSON");
-    } catch (err) {
-        alert(err);
+    } catch (er) {
+        $("#textoError").text(er.toString());
+        $("#modalError").modal();
     }
 }
 
@@ -134,7 +123,26 @@ function cargarDatos(plato) {
     comprobarSiEliminable(plato.idPlato);
 }
 
+function rellenar(){
+
+}
+// para que funcione sin recargar la página, usamos ajax y anulamos submit
+//supone unas líneas adicionales, asi como extraer los datos del form y meterlos a mano en un FormData
+function comprobarCampos(){
+    try{
+        if($.isNumeric($("#cantidad").val()) && $.isNumeric($("#precio").val()) && $("#nombre").val().length > 0){
+            editPlato();
+        }else{
+            throw "Los campos marcados en rojo, son Obligatorios.";
+        }
+    }catch(er){
+        $("#textoError").text(er.toString());
+        $("#modalError").modal();
+    }
+}
+
 function editPlato() {
+    try{
     //mandamos el objeto
     let opcion;
     let formData = new FormData();
@@ -162,7 +170,6 @@ function editPlato() {
         formData.append("idTipoVenta", $("#medida").val());
         formData.append("estado", ($("#estado").prop("checked")) ? 1 : 0);
     }
-
     $.ajax({
         type: 'POST',
         url: "/reto3/?c=plato&a=" + opcion,
@@ -171,13 +178,17 @@ function editPlato() {
         cache: false,
         processData:false,
         success: function(){
-            location.reload();
+            $("#modalModificarPlato").modal("hide");
+            cargarPaginaPlato();
         },
         error: function() {
-            $("#modificarPlato").before("<p class='text-danger'>Hubo un error al guardar los datos.</p>");
+            throw "Hubo un error al insertar los datos.";
         }
     });
-
+    }catch(er){
+        $("#textoError").text(er.toString());
+        $("#modalError").modal();
+    }
 }
 
 function hiddenPlato(plato) {
@@ -196,7 +207,8 @@ function confirmHiddenPlato() {
     //mandamos el id a ocultar
     let idPlato = $("#atencion").prop("value");
     $.post("/reto3/?c=plato&a=hidden", {idPlato}, function () {
-        location.reload();
+        $("#modalOcultarPlato").modal("hide");
+        cargarPaginaPlato();
     });
 
 }
@@ -211,7 +223,9 @@ function confirmDeletePlato() {
     //mandamos el id a ocultar
     let idPlato = $("#atencionEliminar").prop("value");
     $.post("/reto3/?c=plato&a=delete", {idPlato}, function () {
-        location.reload();
+        $("#modalModificarPlato").modal("hide");
+        $("#modalEliminarPlato").modal("hide");
+        cargarPaginaPlato();
     });
 }
 
