@@ -12,13 +12,18 @@ $("#categoria-collapse>*").click(()=>{
     $("#categoria-collapse").collapse("toggle");
 });
 
+cargarPaginaPlato();
+// lo hacemos así para no recargar la pagina al modificar un plato
+function cargarPaginaPlato(){
+    $.getJSON("/reto3/?a=catalogo", (res) => {
+        administrador = res.administrador;
+        delete res.administrador;
+        categorias = Object.values(res);
+        cargarCatalogo(categorias);
+    });
+};
 
-$.getJSON("/reto3/?a=catalogo", (res) => {
-    administrador = res.administrador;
-    delete res.administrador;
-    categorias = Object.values(res);
-    cargarCatalogo(categorias);
-});
+
 
 $("#search").keyup(delay((evento)=> {
     let input = $("#search").val();

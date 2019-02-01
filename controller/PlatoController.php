@@ -31,6 +31,14 @@ class PlatoController
                 $this->findById();
                 break;
 
+            case 'hidden':
+                $this->hidden();
+                break;
+
+            case 'findQty':
+                $this->findQty();
+                break;
+
             case 'delete':
                 $this->delete();
                 break;
@@ -55,9 +63,6 @@ class PlatoController
             ];            
         }
 
-        require_once __DIR__ . "/../model/TipoVenta.php";;
-        $tipoVentas = TipoVenta::getAll();
-
         echo twig()->render("indexView.twig", ["categorias" => $data]);
     }
 
@@ -67,17 +72,16 @@ class PlatoController
         if(!empty($_FILES["file"]["type"])){
             $fileName = $_FILES['file']['name'];
                 $sourcePath = $_FILES['file']['tmp_name'];
-                $targetPath = "img/".$fileName;
+                $targetPath = "img/plato/".$fileName;
                 if(move_uploaded_file($sourcePath,$targetPath)){
-                    $uploadedFile = $fileName;
+                    $uploadedFile = "/reto3/img/plato/".$fileName;
                 }
         }else{
-            $uploadedFile = "logo-restaurant.png";
+            $uploadedFile = null;
         }
-        $plato = new Plato($_POST['idPlato'], $_POST['nombre'], $_POST['precio'], $_POST['unidadesMinimas'], $_POST['notas'], "/reto3/img/".$uploadedFile,
+        $plato = new Plato($_POST['idPlato'], $_POST['nombre'], $_POST['precio'], $_POST['unidadesMinimas'], $_POST['notas'], $uploadedFile,
             $_POST['idCategoria'], $_POST['idTipoVenta'], $_POST['estado']);
         $plato->update();
-
     }
 
     private function catalogo() 
@@ -105,38 +109,37 @@ class PlatoController
 
     private function insert()
     {
-        if(isset($_SESSION["administrador"]) && isset($_POST["titulo"]))
-        {
-            if(!Plato::getByNombre($_POST["titulo"])) // Título del plato único
+            if(!Plato::getByNombre($_POST["nombre"])) // Título del plato único
             {
-                $nombre = $_POST["titulo"];
-                $precio = $_POST["precio"];
-                $unidadesMinimas = $_POST["cantidad"];
-                $notas = $_POST["notas"];
-                $idCategoria = $_POST["categoria"];
-                $idTipoVenta = $_POST["tipoVenta"];
-
-                $imagen="img/logo-restaurant.png";
-                if($_FILES['imagen']['error']==0)
-                {
-                    $sourcePath = "img/platos/";
-                    $fichero_subido = __DIR__ . "/../". $sourcePath . basename($_FILES['imagen']['name']);
-
-                    if(move_uploaded_file($_FILES['imagen']['tmp_name'], $fichero_subido)) {
-                        $imagen = $sourcePath . basename($_FILES['imagen']['name']);
+                $uploadedFile = '';
+                if(!empty($_FILES["file"]["type"])){
+                    $fileName = $_FILES['file']['name'];
+                    $sourcePath = $_FILES['file']['tmp_name'];
+                    $targetPath = "img/plato/".$fileName;
+                    if(move_uploaded_file($sourcePath,$targetPath)){
+                        $uploadedFile = "/reto3/img/plato/".$fileName;
                     }
+                }else{
+                    $uploadedFile = "/reto3/img/logo-restaurant.png";
                 }
-
-                $plato = new Plato("", $nombre, $precio, $unidadesMinimas, $notas, $imagen, $idCategoria, $idTipoVenta, 1);
+                $plato = new Plato($_POST['idPlato'], $_POST['nombre'], $_POST['precio'], $_POST['unidadesMinimas'], $_POST['notas'], $uploadedFile,
+                    $_POST['idCategoria'], $_POST['idTipoVenta'], $_POST['estado']);
                 $plato->insert();
             }
-        }
-        header("Location: /reto3/");
     }
 
     private function findById()
     {
         echo json_encode(Plato::getById($_POST["idPlato"]));
+    }
+
+    private function findQty()
+    {
+        echo json_encode(Plato::findQty($_POST["idPlato"]));
+    }
+
+    private function hidden(){
+        Plato::hidden($_POST["idPlato"]);
     }
 
     private function delete(){
