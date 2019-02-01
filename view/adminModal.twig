@@ -1,4 +1,3 @@
-
 <div id="modalModificarPlato" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -10,63 +9,72 @@
             </div>
             <div class="modal-body">
                 <!--- cuerpo del modal--->
-                    <form id="idPlatoModal" class="needs-validation" novalidate>
-                        <div class="form-group" id="zonaImagen">
-                            <img src="/reto3/img/logo-restaurant.png" class="form-control d-none d-md-block" alt="Escuela de Hosteler&iacute;a de Egibide" id="imagen">
+                <form id="idPlatoModal" class="needs-validation" novalidate>
+                    <div class="form-row" id="zonaImagen">
+                        <div class="offset-2 col-8 img-thumbnail" >
+                            <img src="/reto3/img/logo-restaurant.png" class="img-fluid"
+                                 alt="Escuela de Hosteler&iacute;a de Egibide" id="imagen">
                         </div>
-                        <div class="form-group">
-                            <label for="modificarImagen">Imagen:</label>
-                            <input type="file" name="modificarImagen" class="form-control-file" id="modificarImagen" accept="image/*" value="Modificar Imagen">
+                        <div class="col-md-12">
+                            <input type="file" name="modificarImagen" class="form-control-file" id="modificarImagen"
+                                   accept="image/*" value="Modificar Imagen">
                         </div>
-                        <div class="form-group">
+                    </div>
+                    <div class="form-row">
+
+                        <div class="col-12">
                             <label for="nombre">Nombre:</label>
                             <input class="form-control" type="text" id="nombre" required>
                             <div class="invalid-feedback">
                                 Debes introducir el nombre del plato.
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="col-12">
                             <label for="descripcion">Descripci&oacute;n:</label>
                             <input class="form-control" type="text" id="descripcion">
                         </div>
-                        <div class="form-group">
+                        <div class="col-md-6">
                             <label for="precio">Precio:</label>
                             <input class="form-control" type="number" id="precio" step="0.01" min="0" required>
                             <div class="invalid-feedback">
                                 Debes introducir el precio del plato.
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="col-md-6">
                             <label for="cantidad">Pedido m&iacute;nimo:</label>
                             <input class="form-control" type="number" id="cantidad" min="1" required>
                             <div class="invalid-feedback">
                                 Debes introducir el pedido m&iacute;nimo del plato.
                             </div>
                         </div>
+                    </div>
 
-                        <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
                             <label for="medida">Formato de la medida</label>
                             <select id="medida" class="form-control" required>
                             </select>
                         </div>
-                        <div class="form-group">
+                        <div class="col-md-6">
                             <label for="categoria">Categoria</label>
-                            <select id="categoria"  class="form-control" class="form-control" required>
+                            <select id="categoria" class="form-control" class="form-control" required>
                                 {% for key, categoria in categorias %}
                                     <option class="cat" value="{{ key }}">{{ categoria.nombre }}</option>
                                 {% endfor %}
                             </select>
                         </div>
-                        <div class="form-group form-check">
-                            <input type="checkbox" class="form-check-input" id="estado">
-                            <label class="form-check-label" for="estado">Mostrar el Plato</label>
-                        </div>
-                        <div class="modal-footer">
-                            <input type="button" class="btn btn-secondary" id="cancelarPlato" value="Cancelar">
-                            <input type="button" class="btn btn-danger" id="EliminarPlato" value="Eliminar">
-                            <input type="button" class="btn btn-primary" id="modificarPlato" value="Confirmar">
-                        </div>
-                    </form>
+                    </div>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="estado" checked>
+                        <label class="form-check-label" for="estado">Mostrar el Plato</label>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelarPlato"
+                               value="Cancelar">
+                        <input type="button" class="btn btn-danger" id="EliminarPlato" value="Eliminar">
+                        <input type="submit" class="btn btn-primary" id="modificarPlato" value="Confirmar">
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -86,7 +94,8 @@
                 <label id="atencion"></label>
             </div>
             <div class="modal-footer">
-                <input type="button" class="btn btn-secondary" id="cancelarOcultarPlato" value="Cancelar">
+                <input type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelarOcultarPlato"
+                       value="Cancelar">
                 <input type="button" class="btn btn-danger" id="ocultarPlato" value="Confirmar">
             </div>
         </div>
@@ -107,8 +116,31 @@
                 <label id="atencionEliminar"></label>
             </div>
             <div class="modal-footer">
-                <input type="button" class="btn btn-secondary" id="cancelarEliminarPlato" value="Cancelar">
+                <input type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelarEliminarPlato"
+                       value="Cancelar">
                 <input type="button" class="btn btn-danger" id="confirmarEliminarPlato" value="Confirmar">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalError" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Error de Dato</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!--- cuerpo del modal--->
+                <div class="alert alert-danger" role="alert">
+                    <label id="textoError"></label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="button" class="btn btn-danger" data-dismiss="modal" value="Ok">
             </div>
         </div>
     </div>
@@ -198,22 +230,28 @@
                         </select>
                     </div>
 
-                    <button id="altaAdmin" type="submit" class="btn btn-primary ml-2"><i class="material-icons align-bottom">add</i></button>
-                    <button id="editarAdmin" type="submit" class="btn btn-primary ml-2"><i class="material-icons align-bottom">edit</i></button>
-                    <button id="borrarAdmin" type="submit" class="btn btn-danger ml-2"><i class="material-icons align-bottom">delete</i></button>
+                    <button id="altaAdmin" type="submit" class="btn btn-primary ml-2"><i
+                                class="material-icons align-bottom">add</i></button>
+                    <button id="editarAdmin" type="submit" class="btn btn-primary ml-2"><i
+                                class="material-icons align-bottom">edit</i></button>
+                    <button id="borrarAdmin" type="submit" class="btn btn-danger ml-2"><i
+                                class="material-icons align-bottom">delete</i></button>
                 </div>
 
-                <form id="altaAdminForm" action="index.php?c=admin&a=add" method="post" class="needs-validation" novalidate>
+                <form id="altaAdminForm" action="index.php?c=admin&a=add" method="post" class="needs-validation"
+                      novalidate>
                     <div class="form-group">
                         <label for="altaAdminUsuario">Usuario:</label>
-                        <input type="text" class="form-control" id="altaAdminUsuario" name="usuario" placeholder="Usuario" required>
+                        <input type="text" class="form-control" id="altaAdminUsuario" name="usuario"
+                               placeholder="Usuario" required>
                         <div class="invalid-feedback">
                             Debes introducir el usuario.
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="altaAdminContrasenna">Contrase&ntilde;a:</label>
-                        <input type="password" class="form-control" id="altaAdminContrasenna" name="contrasenna" placeholder="Contrase&ntilde;a" required>
+                        <input type="password" class="form-control" id="altaAdminContrasenna" name="contrasenna"
+                               placeholder="Contrase&ntilde;a" required>
                         <div class="invalid-feedback">
                             Debes introducir la contrase&ntilde;a.
                         </div>
@@ -221,22 +259,25 @@
                     <button type="submit" class="btn btn-primary">A&ntilde;adir</button>
                 </form>
 
-                <form id="editarAdminForm" action="index.php?c=admin&a=edit" method="post" class="needs-validation" novalidate>
+                <form id="editarAdminForm" action="index.php?c=admin&a=edit" method="post" class="needs-validation"
+                      novalidate>
                     <div class="form-group">
                         <label for="editarAdminUsuario">Usuario:</label>
-                        <input type="text" class="form-control" id="editarAdminUsuario" name="usuario" placeholder="Usuario" required>
+                        <input type="text" class="form-control" id="editarAdminUsuario" name="usuario"
+                               placeholder="Usuario" required>
                         <div class="invalid-feedback">
                             Debes introducir el usuario.
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="editarAdminContrasenna">Contrase&ntilde;a:</label>
-                        <input type="password" class="form-control" id="editarAdminContrasenna" name="contrasenna" placeholder="Contrase&ntilde;a" required>
+                        <input type="password" class="form-control" id="editarAdminContrasenna" name="contrasenna"
+                               placeholder="Contrase&ntilde;a" required>
                         <div class="invalid-feedback">
                             Debes introducir la contrase&ntilde;a.
                         </div>
                     </div>
-                    <input type="hidden" id="editarAdminId" name="idAdministrador" />
+                    <input type="hidden" id="editarAdminId" name="idAdministrador"/>
                     <button type="submit" class="btn btn-primary">Actualizar</button>
                 </form>
             </div>
@@ -261,22 +302,28 @@
                         </select>
                     </div>
 
-                    <button id="altaCategoria" type="submit" class="btn btn-primary ml-2"><i class="material-icons align-bottom">add</i></button>
-                    <button id="editarCategoria" type="submit" class="btn btn-primary ml-2"><i class="material-icons align-bottom">edit</i></button>
-                    <button id="borrarCategoria" type="submit" class="btn btn-danger ml-2"><i class="material-icons align-bottom">delete</i></button>
+                    <button id="altaCategoria" type="submit" class="btn btn-primary ml-2"><i
+                                class="material-icons align-bottom">add</i></button>
+                    <button id="editarCategoria" type="submit" class="btn btn-primary ml-2"><i
+                                class="material-icons align-bottom">edit</i></button>
+                    <button id="borrarCategoria" type="submit" class="btn btn-danger ml-2"><i
+                                class="material-icons align-bottom">delete</i></button>
                 </div>
 
-                <form id="altaCategoriaForm" action="index.php?c=categoria&a=add" method="post" class="needs-validation" novalidate>
+                <form id="altaCategoriaForm" action="index.php?c=categoria&a=add" method="post" class="needs-validation"
+                      novalidate>
                     <div class="form-group">
                         <label for="altaCategoriaNombre">Nombre:</label>
-                        <input type="text" class="form-control" id="altaCategoriaNombre" name="nombre" placeholder="Nombre" required>
+                        <input type="text" class="form-control" id="altaCategoriaNombre" name="nombre"
+                               placeholder="Nombre" required>
                         <div class="invalid-feedback">
                             Debes introducir el nombre.
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="altaCategoriaEmail">Correo electr&oacute;nico del departamento:</label>
-                        <input type="email" class="form-control" id="altaCategoriaEmail" name="emailDepartamento" placeholder="Correo electr&oacute;nico del departamento" required>
+                        <input type="email" class="form-control" id="altaCategoriaEmail" name="emailDepartamento"
+                               placeholder="Correo electr&oacute;nico del departamento" required>
                         <div class="invalid-feedback">
                             Debes introducir el correo electr&oacute;nico del departamento.
                         </div>
@@ -284,22 +331,25 @@
                     <button type="submit" class="btn btn-primary">A&ntilde;adir</button>
                 </form>
 
-                <form id="editarCategoriaForm" action="index.php?c=categoria&a=edit" method="post" class="needs-validation" novalidate>
+                <form id="editarCategoriaForm" action="index.php?c=categoria&a=edit" method="post"
+                      class="needs-validation" novalidate>
                     <div class="form-group">
                         <label for="editarCategoriaNombre">Nombre:</label>
-                        <input type="text" class="form-control" id="editarCategoriaNombre" name="nombre" placeholder="Nombre" required>
+                        <input type="text" class="form-control" id="editarCategoriaNombre" name="nombre"
+                               placeholder="Nombre" required>
                         <div class="invalid-feedback">
                             Debes introducir el nombre.
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="editarCategoriaEmail">Correo electr&oacute;nico del departamento:</label>
-                        <input type="email" class="form-control" id="editarCategoriaEmail" name="emailDepartamento" placeholder="Correo electr&oacute;nico del departamento" required>
+                        <input type="email" class="form-control" id="editarCategoriaEmail" name="emailDepartamento"
+                               placeholder="Correo electr&oacute;nico del departamento" required>
                         <div class="invalid-feedback">
                             Debes introducir el correo electr&oacute;nico del departamento.
                         </div>
                     </div>
-                    <input type="hidden" id="editarCategoriaId" name="idCategoria" />
+                    <input type="hidden" id="editarCategoriaId" name="idCategoria"/>
                     <button type="submit" class="btn btn-primary">Actualizar</button>
                 </form>
             </div>
@@ -324,15 +374,20 @@
                         </select>
                     </div>
 
-                    <button id="altaTipoVenta" type="submit" class="btn btn-primary ml-2"><i class="material-icons align-bottom">add</i></button>
-                    <button id="editarTipoVenta" type="submit" class="btn btn-primary ml-2"><i class="material-icons align-bottom">edit</i></button>
-                    <button id="borrarTipoVenta" type="submit" class="btn btn-danger ml-2"><i class="material-icons align-bottom">delete</i></button>
+                    <button id="altaTipoVenta" type="submit" class="btn btn-primary ml-2"><i
+                                class="material-icons align-bottom">add</i></button>
+                    <button id="editarTipoVenta" type="submit" class="btn btn-primary ml-2"><i
+                                class="material-icons align-bottom">edit</i></button>
+                    <button id="borrarTipoVenta" type="submit" class="btn btn-danger ml-2"><i
+                                class="material-icons align-bottom">delete</i></button>
                 </div>
 
-                <form id="altaTipoVentaForm" action="index.php?c=tipoventa&a=add" method="post" class="needs-validation" novalidate>
+                <form id="altaTipoVentaForm" action="index.php?c=tipoventa&a=add" method="post" class="needs-validation"
+                      novalidate>
                     <div class="form-group">
                         <label for="altaTipoVentaNombre">Tipo de venta:</label>
-                        <input type="text" class="form-control" id="altaTipoVentaNombre" name="tipoVenta" placeholder="Tipo de venta" required>
+                        <input type="text" class="form-control" id="altaTipoVentaNombre" name="tipoVenta"
+                               placeholder="Tipo de venta" required>
                         <div class="invalid-feedback">
                             Debes introducir el tipo de venta.
                         </div>
@@ -340,15 +395,17 @@
                     <button type="submit" class="btn btn-primary">A&ntilde;adir</button>
                 </form>
 
-                <form id="editarTipoVentaForm" action="index.php?c=tipoventa&a=edit" method="post" class="needs-validation" novalidate>
+                <form id="editarTipoVentaForm" action="index.php?c=tipoventa&a=edit" method="post"
+                      class="needs-validation" novalidate>
                     <div class="form-group">
                         <label for="editarTipoVentaNombre">Tipo de venta:</label>
-                        <input type="text" class="form-control" id="editarTipoVentaNombre" name="tipoVenta" placeholder="Tipo de venta" required>
+                        <input type="text" class="form-control" id="editarTipoVentaNombre" name="tipoVenta"
+                               placeholder="Tipo de venta" required>
                         <div class="invalid-feedback">
                             Debes introducir el tipo de venta.
                         </div>
                     </div>
-                    <input type="hidden" id="editarTipoVentaId" name="idTipoVenta" />
+                    <input type="hidden" id="editarTipoVentaId" name="idTipoVenta"/>
                     <button type="submit" class="btn btn-primary">Actualizar</button>
                 </form>
             </div>
