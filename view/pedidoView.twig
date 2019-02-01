@@ -26,8 +26,6 @@
                 </li>
             </ul>
         </div>
-
-
     </nav>
 
 
@@ -54,7 +52,7 @@
                     <td>{{ pedido.email }}</td>
                     <td>{{ pedido.telefono }}</td>
                     <td>{{ pedido.fechaEntrega }}</td>
-                    <td>{% if pedido.confirmado == 0 %}<button class="btn btn-outline-primary" value="{{ pedido.idPedido }}">Confirmar</button>{% else %}<i class="material-icons align-bottom">done</i>{% endif %}</td>
+                    <td>{% if pedido.confirmado == 0 %}<button class="btn btn-outline-primary confirmarPedido" value="{{ pedido.idPedido }}">Confirmar</button>{% else %}<i class="material-icons align-bottom">done</i>{% endif %}</td>
                     <td><button class="btn btn-outline-primary verPedido" value="{{ pedido.idPedido }}">Ver pedido</button></td>
                     <td><button class="btn btn-outline-danger eliminarPedido" value="{{ pedido.idPedido }}"><i class="material-icons align-bottom">delete</i></button></td>
                 </tr>

@@ -26,7 +26,6 @@ function limpiar() {
     $("#labelPrecio").css("color","black");
     $("#precio").css("color","black");
     $("#precio").css("border-color","black");
-    $("p").remove(".text-danger");
 }
 
 function habilitarBotonesEstaticos() {
