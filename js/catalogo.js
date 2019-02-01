@@ -21,7 +21,7 @@ function cargarPaginaPlato(){
         categorias = Object.values(res);
         cargarCatalogo(categorias);
     });
-};
+}
 
 
 
@@ -78,8 +78,6 @@ function determinarAncho() {
     let ancho = 7;
     ancho += 2 * !!$("#search").val();
     ancho += 3 * (jQuery.isEmptyObject(carrito));
-
-    console.log(ancho);
     
     $('#catalogo').removeClass(["col-lg-7", "col-lg-9", "col-lg-10", "col-lg-12"]);
     $('#catalogo').addClass("col-lg-" + ancho);
