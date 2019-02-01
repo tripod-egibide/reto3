@@ -75,8 +75,14 @@ function delay(callback) {
 }
 
 function determinarAncho() {
+    // esta funcion se llama también desde carrito.js, ya que su comportamiento afecta el ancho de la página
+
+    // el ancho mínimo que el catalogo puede tener es 7
     let ancho = 7;
+    // el scrollspy es redundante al hacer una búsqueda, así que escondemos
+    // como ocupa 2 cols, estas las sumamos al ancho del catalogo
     ancho += 2 * !!$("#search").val();
+    // si el carrito está vacío, lo escondemos y hacemos que el catalogo ocupe sus 3 cols
     ancho += 3 * (jQuery.isEmptyObject(carrito));
     
     $('#catalogo').removeClass(["col-lg-7", "col-lg-9", "col-lg-10", "col-lg-12"]);
@@ -87,5 +93,4 @@ function determinarAncho() {
     } else {
         $('#catalogo').addClass("offset-lg-2");
     }
-
 }
