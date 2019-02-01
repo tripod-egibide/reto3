@@ -9229,11 +9229,19 @@ input[type="number"] {
 
 .sticky {
   top: 30%;
+}
+
+nav.sticky {
   -webkit-transform: translate(0, -30%);
           transform: translate(0, -30%);
 }
 
-nav.sticky, #catalogo {
+#carrito {
+  -webkit-transform: translate(100%, -30%);
+          transform: translate(100%, -30%);
+}
+
+nav.sticky, #catalogo, #carrito {
   -webkit-transition: 0.3s ease;
   transition: 0.3s ease;
 }
@@ -9244,18 +9252,17 @@ nav.sticky, #catalogo {
 }
 
 #categoria-collapse {
-  z-index: 2000;
-}
-
-#categoria-collapse .list-group-item {
-  border-left: 0 none;
-  border-right: 0 none;
+  z-index: 2001;
 }
 
 #categoria-collapse .list-group-item:first-child {
   border-top: 0 none;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+#carrito-collapse {
+  z-index: 2000;
 }
 
 footer {
