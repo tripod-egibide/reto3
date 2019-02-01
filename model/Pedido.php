@@ -47,9 +47,9 @@ class Pedido
             VALUES (:nombre, :apellidos, :email, :telefono, :fechaEntrega)", $this->toArray());
     }
 
-    public function delete($id)
+    public static function delete($id)
     {
-        preparedStatement("DELETE FROM Pedido WHERE idPlato = :idPedido", ["idPedido" => $id]);
+        preparedStatement("DELETE FROM Pedido WHERE idPedido = :idPedido", ["idPedido" => $id]);
     }
 
     public function update($id)
@@ -87,6 +87,11 @@ class Pedido
     public static function getByDate($fechaI, $fechaF)
     {
         return preparedStatement("SELECT * FROM Pedido WHERE fechaEntrega between fechaI and fechaF ", ["fechaI" => $fechaI, "fechaF" => $fechaF])->fetchAll();
+    }
+
+    public static function getAllDetallePedidoByIdPedido($idPedido)
+    {
+        return preparedStatement("SELECT * FROM DetallePedido WHERE idPedido = :idPedido", ["idPedido" => $idPedido])->fetchAll();
     }
 
     /**
