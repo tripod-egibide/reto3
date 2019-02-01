@@ -106,6 +106,11 @@ class Plato
         return connection()->query("SELECT * FROM Plato as p " . ((isset($_SESSION["administrador"]) ? " WHERE estado = 1" : "")))->fetchAll();
     }
 
+    public static function getAllById($idPlato)
+    {
+        return preparedStatement("SELECT * FROM Plato WHERE idPlato = :idPlato", ["idPlato" => $idPlato])->fetch();
+    }
+
     public static function getByNombre($nombre)
     {
         return preparedStatement("SELECT * FROM Plato WHERE nombre = :nombre", ["nombre" => $nombre])->fetchAll();
