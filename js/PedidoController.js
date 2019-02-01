@@ -1,5 +1,17 @@
 $(document).ready(function(){
 
+    $(document).on('click', '#ver-pedidos', function(){
+
+        $.ajax({
+            method: 'GET',
+            url: 'index.php',
+            data: {'c':'pedido', 'a': 'getAll'},
+            dataType: 'JSON'
+        }).done(function(data){
+            cargarPedidos(data);
+        });
+    });
+
     // Ver detalle del pedido
     $(document).on('click', '.verPedido', function(){
 
@@ -31,6 +43,39 @@ $(document).ready(function(){
         });
     });
 });
+
+function cargarPedidos(pedidos) {
+    let tabla=$('#verPedidosModalTabla');
+
+    tabla.empty();
+    tabla.append("<thead>\n" +
+        "           <tr>\n" +
+        "               <th scope='col'>Nombre</th>\n" +
+        "               <th scope='col'>Apellidos</th>\n" +
+        "               <th scope='col'>Correo electr&oacute;nico</th>\n" +
+        "               <th scope='col'>Tel&eacute;fono</th>\n" +
+        "               <th scope='col'>Fecha de entrega</th>\n" +
+        "               <th scope='col' colspan='3' class='text-center'>Acciones</th>\n" +
+        "           </tr>\n" +
+        "         </thead>");
+
+    tabla.append("<tbody>");
+
+    for(let i=0;i<pedidos.length;i++){
+        tabla.append("<tr>\n" +
+            "           <td scope='row'>" + pedidos[i]["nombre"] + "</td>\n" +
+            "           <td>" + pedidos[i]["apellidos"] + "</td>\n" +
+            "           <td>" + pedidos[i]["email"] + "</td>\n" +
+            "           <td>" + pedidos[i]["telefono"] + "</td>\n" +
+            "           <td>" + pedidos[i]["fechaEntrega"] + "</td>\n" +
+            "           <td><button class='btn btn-outline-primary' value=''>Confirmar</button><i class='material-icons align-bottom'>done</i></td>\n" +
+            "           <td><button class='btn btn-outline-primary verPedido' value='" + pedidos[i]["idPedido"] + "'>Ver pedido</button></td>\n" +
+            "           <td><button class='btn btn-outline-primary eliminarPedido' value='" + pedidos[i]["idPedido"] + "'><i class='material-icons align-bottom'>delete</i></button></td>\n" +
+            "         </tr>");
+    }
+
+    tabla.append("</tbody>");
+}
 
 function cargarPedido(platos) {
     let tabla=$('#verPedidoModalTabla');

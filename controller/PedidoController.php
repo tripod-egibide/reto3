@@ -24,6 +24,10 @@ class PedidoController
                 $this->ver();
                 break;
 
+            case 'getAll':
+                $this->getAll();
+                break;
+
             case 'getDetallePedido':
                 $this->getDetallePedido();
                 break;
@@ -58,6 +62,14 @@ class PedidoController
 
             echo twig()->render("pedidoView.twig", ["pedidos" => $pedidos]);
         }
+
+    }
+
+    private function getAll()
+    {
+        $pedidos = Pedido::getAll();
+        header('Content-type: application/json');
+        echo json_encode($pedidos);
 
     }
 

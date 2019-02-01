@@ -256,6 +256,14 @@
                             Debes introducir la contrase&ntilde;a.
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="altaAdminEmail">Correo electr&oacute;nico:</label>
+                        <input type="email" class="form-control" id="altaAdminEmail" name="email"
+                               placeholder="Correo electr&oacute;nico" required>
+                        <div class="invalid-feedback">
+                            Debes introducir el correo electr&oacute;nico.
+                        </div>
+                    </div>
                     <button type="submit" class="btn btn-primary">A&ntilde;adir</button>
                 </form>
 
@@ -275,6 +283,14 @@
                                placeholder="Contrase&ntilde;a" required>
                         <div class="invalid-feedback">
                             Debes introducir la contrase&ntilde;a.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editarAdminEmail">Correo electr&oacute;nico:</label>
+                        <input type="email" class="form-control" id="editarAdminEmail" name="email"
+                               placeholder="Correo electr&oacute;nico" required>
+                        <div class="invalid-feedback">
+                            Debes introducir el correo electr&oacute;nico.
                         </div>
                     </div>
                     <input type="hidden" id="editarAdminId" name="idAdministrador"/>
@@ -328,6 +344,14 @@
                             Debes introducir el correo electr&oacute;nico del departamento.
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="altaCategoriaPreferencia">Preferencia:</label>
+                        <input type="number" class="form-control" id="altaCategoriaPreferencia" name="preferencia"
+                               placeholder="Preferencia" required>
+                        <div class="invalid-feedback">
+                            Debes introducir la preferencia.
+                        </div>
+                    </div>
                     <button type="submit" class="btn btn-primary">A&ntilde;adir</button>
                 </form>
 
@@ -347,6 +371,14 @@
                                placeholder="Correo electr&oacute;nico del departamento" required>
                         <div class="invalid-feedback">
                             Debes introducir el correo electr&oacute;nico del departamento.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editarCategoriaPreferencia">Preferencia:</label>
+                        <input type="number" class="form-control" id="editarCategoriaPreferencia" name="preferencia"
+                               placeholder="Preferencia" required>
+                        <div class="invalid-feedback">
+                            Debes introducir la preferencia.
                         </div>
                     </div>
                     <input type="hidden" id="editarCategoriaId" name="idCategoria"/>
@@ -408,6 +440,47 @@
                     <input type="hidden" id="editarTipoVentaId" name="idTipoVenta"/>
                     <button type="submit" class="btn btn-primary">Actualizar</button>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{# Modal para ver los pedidos #}
+<div class="modal fade" id="verPedidosModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ver pedidos</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body container-fluid">
+                <div class="table-responsive">
+                    <table id="verPedidosModalTabla" class="table">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{# Modal para ver los detalles del pedido #}
+<div id="verPedidoModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Detalles del pedido</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table id="verPedidoModalTabla" class="table table-bordered table-striped text-center">
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>

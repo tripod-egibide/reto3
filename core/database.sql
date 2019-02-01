@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS `Administrador` (
   `idAdministrador` INT NOT NULL AUTO_INCREMENT,
   `usuario` VARCHAR(16) NOT NULL,
   `contrasenna` VARCHAR(32) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`idAdministrador`))
 ENGINE = InnoDB;
 
@@ -28,6 +29,7 @@ CREATE TABLE IF NOT EXISTS `Pedido` (
   `telefono` VARCHAR(9) NULL,
   `fechaEntrega` DATE NULL,
   `total` DOUBLE NULL,
+  `confirmado` BOOLEAN NOT NULL,
   PRIMARY KEY (`idPedido`))
 ENGINE = InnoDB;
 
@@ -41,6 +43,7 @@ CREATE TABLE IF NOT EXISTS `Categoria` (
   `idCategoria` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(255) NOT NULL,
   `emailDepartamento` VARCHAR(255) NOT NULL,
+  `preferencia` INT NOT NULL,
   PRIMARY KEY (`idCategoria`),
   CONSTRAINT `uk_nombre_Categoria`
     UNIQUE KEY (`nombre`))

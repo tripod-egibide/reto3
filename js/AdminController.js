@@ -256,7 +256,7 @@ $(document).ready(function(){
         if(administradores == 0){
             $.post("/reto3/?c=admin&a=getAll",(res) => {
                 res.forEach(function(dato){
-                    $("#administradoresModal").append("<option value='" +dato.idAdministrador + "' data-value='" +dato.contrasenna + "'>" + dato.usuario + "</option>");
+                    $("#administradoresModal").append("<option value='" +dato.idAdministrador + "' data-value='" +dato.contrasenna + "' data-value2='" +dato.email + "'>" + dato.usuario + "</option>");
                 });
             }, "JSON");
         }
@@ -275,6 +275,7 @@ $(document).ready(function(){
 
         $("#editarAdminUsuario").val($("#administradoresModal option:selected").text());
         $("#editarAdminContrasenna").val($("#administradoresModal option:selected").data("value"));
+        $("#editarAdminEmail").val($("#administradoresModal option:selected").data("value2"));
         $("#editarAdminId").val($("#administradoresModal option:selected").val());
     });
 
@@ -299,7 +300,7 @@ $(document).ready(function(){
         if(categorias == 0){
             $.post("/reto3/?c=categoria&a=getAll",(res) => {
                 res.forEach(function(dato){
-                    $("#categoriasModal").append("<option value='" +dato.idCategoria + "' data-value='" +dato.emailDepartamento + "'>" + dato.nombre + "</option>");
+                    $("#categoriasModal").append("<option value='" +dato.idCategoria + "' data-value='" +dato.emailDepartamento + "' data-value2='" +dato.preferencia + "'>" + dato.nombre + "</option>");
                 });
             }, "JSON");
         }
@@ -318,6 +319,7 @@ $(document).ready(function(){
 
         $("#editarCategoriaNombre").val($("#categoriasModal option:selected").text());
         $("#editarCategoriaEmail").val($("#categoriasModal option:selected").data("value"));
+        $("#editarCategoriaPreferencia").val($("#categoriasModal option:selected").data("value2"));
         $("#editarCategoriaId").val($("#categoriasModal option:selected").val());
     });
 
