@@ -21,7 +21,6 @@
                         </div>
                     </div>
                     <div class="form-row">
-
                         <div class="col-12">
                             <label for="nombre">Nombre:</label>
                             <input class="form-control" type="text" id="nombre" required>
@@ -34,21 +33,20 @@
                             <input class="form-control" type="text" id="descripcion">
                         </div>
                         <div class="col-md-6">
-                            <label for="precio">Precio:</label>
+                            <label for="precio" id="labelPrecio">Precio:</label>
                             <input class="form-control" type="number" id="precio" step="0.01" min="0" required>
                             <div class="invalid-feedback">
                                 Debes introducir el precio del plato.
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <label for="cantidad">Pedido m&iacute;nimo:</label>
+                            <label for="cantidad" id="labelCantidad">Pedido m&iacute;nimo:</label>
                             <input class="form-control" type="number" id="cantidad" min="1" required>
                             <div class="invalid-feedback">
                                 Debes introducir el pedido m&iacute;nimo del plato.
                             </div>
                         </div>
                     </div>
-
                     <div class="form-row">
                         <div class="col-md-6">
                             <label for="medida">Formato de la medida</label>

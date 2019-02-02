@@ -16,11 +16,20 @@ Catálogo
 
         {% include "navCategoria.twig" %}
         <!-- Se carga a través de JS, véase catalogo.js -->
-        <div class="col {{ administrador ? "col-lg-10" : "col-lg-7" }} offset-lg-2" id="catalogo">
+        <div class="col {{ administrador or not carrito ? "col-lg-10" : "col-lg-7" }} offset-lg-2" id="catalogo">
         </div>
         
         {% if not administrador %}
-            {% include "carrito.twig" %}
+        <aside id="carrito" class="col-3 d-none d-lg-block align-self-start position-fixed offset-9 sticky">
+            <div class="card border-primary">
+                    <h3 class="card-header d-flex justify-content-between bg-light">
+                        <span class="text-dark">
+                            Cesta
+                        </span>
+                    </h3>
+                {% include "carrito.twig" %}
+            </div>
+        </aside>
         {% endif %}
 
     </div>
@@ -39,6 +48,6 @@ Catálogo
 
 {% if administrador %}
     {% include "adminModal.twig" %}
-{% endif%}
+{% endif %}
 
 {% endblock cuerpo %}

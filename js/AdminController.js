@@ -22,8 +22,10 @@ function limpiar() {
     $("form")[0].reset(); //para borrar todos los datos que tenga los input, textareas, select.
     $("#imagen").prop("src", "/reto3/img/logo-restaurant.png");
     $("#idPlatoModal").prop("value","");
-
-    $("p").remove(".text-danger");
+    $("#labelPrecio").text("Precio:");
+    $("#labelPrecio").css("color","black");
+    $("#precio").css("color","black");
+    $("#precio").css("border-color","black");
 }
 
 function habilitarBotonesEstaticos() {
@@ -31,6 +33,7 @@ function habilitarBotonesEstaticos() {
     $("#nuevo-plato").click(function () {
         limpiar();
         $("#modificarPlato").prop("value", "Alta Plato");
+        $("#EliminarPlato").hide();
         // comprobamos si existe las unidades de medida, en caso contrario lo cargamos
         cargarUnidadesMedida();
         $("#modalModificarPlato").modal();
@@ -52,6 +55,19 @@ function habilitarBotonesEstaticos() {
     //Eliminar el plato
     $("#confirmarEliminarPlato").click(function () {
         confirmDeletePlato();
+    });
+    $("#precio").on("focusout", function(){
+        if($("#precio").val()<1){
+           $("#labelPrecio").text("Precio: (Ojo, el precio de venta es inferior a 1€)");
+           $("#labelPrecio").css("color","red");
+            $("#precio").css("color","red");
+            $("#precio").css("border-color","red");
+        }else{
+            $("#labelPrecio").text("Precio:");
+            $("#labelPrecio").css("color","black");
+            $("#precio").css("color","black");
+            $("#precio").css("border-color","black");
+        }
     });
 }
 
@@ -130,16 +146,20 @@ function rellenar(){
 // para que funcione sin recargar la página, usamos ajax y anulamos submit
 //supone unas líneas adicionales, asi como extraer los datos del form y meterlos a mano en un FormData
 function comprobarCampos(){
-    try{
-        if($.isNumeric($("#cantidad").val()) && $.isNumeric($("#precio").val()) && $("#nombre").val().length > 0){
+    //try{
+    //entendemos que pueden ofrecer algun producto de forma gratuita,
+    //pero por si acaso hay un aviso de venta inferior a 1 euro
+        if($("#cantidad").val()>0 && $.isNumeric($("#precio").val()) && $("#nombre").val().length > 0){
             editPlato();
-        }else{
+        }
+        // PREGUNTAR A NIEVES SI ES VIABLE----------------------------------------------------------------------------------------------------------
+        /*else{
             throw "Los campos marcados en rojo, son Obligatorios.";
         }
     }catch(er){
         $("#textoError").text(er.toString());
         $("#modalError").modal();
-    }
+    }*/
 }
 
 function editPlato() {

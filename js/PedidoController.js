@@ -32,9 +32,7 @@ $(document).ready(function(){
 
     // Eliminar pedido
     $(document).on('click', '.eliminarPedido', function(){
-
         let idPedido =$(this).val();
-
         $.ajax({
             method: 'GET',
             url: 'index.php',
@@ -42,6 +40,12 @@ $(document).ready(function(){
         }).done(function(){
             location.reload();
         });
+    });
+
+    //confirmar pedido
+    $(".confirmarPedido").click(function(){
+        let idPedido = $(this).val();
+
     });
 });
 
