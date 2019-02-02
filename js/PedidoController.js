@@ -1,5 +1,6 @@
 $(document).ready(function(){
 
+    // Ver pedidos
     $(document).on('click', '#ver-pedidos', function(){
 
         $.ajax({
@@ -48,53 +49,69 @@ function cargarPedidos(pedidos) {
     let tabla=$('#verPedidosModalTabla');
 
     tabla.empty();
-    tabla.append("<thead>\n" +
-        "           <tr>\n" +
-        "               <th scope='col'>Nombre</th>\n" +
-        "               <th scope='col'>Apellidos</th>\n" +
-        "               <th scope='col'>Correo electr&oacute;nico</th>\n" +
-        "               <th scope='col'>Tel&eacute;fono</th>\n" +
-        "               <th scope='col'>Fecha de entrega</th>\n" +
-        "               <th scope='col' colspan='3' class='text-center'>Acciones</th>\n" +
-        "           </tr>\n" +
-        "         </thead>");
+    if(pedidos.length>0)
+    {
+        tabla.append("<thead>\n" +
+            "           <tr>\n" +
+            "               <th scope='col'>Nombre</th>\n" +
+            "               <th scope='col'>Apellidos</th>\n" +
+            "               <th scope='col'>Correo electr&oacute;nico</th>\n" +
+            "               <th scope='col'>Tel&eacute;fono</th>\n" +
+            "               <th scope='col'>Fecha de entrega</th>\n" +
+            "               <th scope='col' colspan='3' class='text-center'>Acciones</th>\n" +
+            "           </tr>\n" +
+            "         </thead>");
 
-    tabla.append("<tbody>");
+        tabla.append("<tbody>");
 
-    for(let i=0;i<pedidos.length;i++){
-        tabla.append("<tr>\n" +
-            "           <td scope='row'>" + pedidos[i]["nombre"] + "</td>\n" +
-            "           <td>" + pedidos[i]["apellidos"] + "</td>\n" +
-            "           <td>" + pedidos[i]["email"] + "</td>\n" +
-            "           <td>" + pedidos[i]["telefono"] + "</td>\n" +
-            "           <td>" + pedidos[i]["fechaEntrega"] + "</td>\n" +
-            "           <td><button class='btn btn-outline-primary' value=''>Confirmar</button><i class='material-icons align-bottom'>done</i></td>\n" +
-            "           <td><button class='btn btn-outline-primary verPedido' value='" + pedidos[i]["idPedido"] + "'>Ver pedido</button></td>\n" +
-            "           <td><button class='btn btn-outline-primary eliminarPedido' value='" + pedidos[i]["idPedido"] + "'><i class='material-icons align-bottom'>delete</i></button></td>\n" +
-            "         </tr>");
+        for(let i=0;i<pedidos.length;i++){
+            let confirmado="";
+            if(pedidos[i]["confirmado"]==0)
+            {
+                confirmado="<button class='btn btn-outline-primary' value='" + pedidos[i]["idPedido"] + "'>Confirmar</button>";
+            }
+            else
+            {
+                confirmado="<i class='material-icons align-bottom'>done</i>";
+            }
+            tabla.append("<tr>\n" +
+                "           <td scope='row'>" + pedidos[i]["nombre"] + "</td>\n" +
+                "           <td>" + pedidos[i]["apellidos"] + "</td>\n" +
+                "           <td>" + pedidos[i]["email"] + "</td>\n" +
+                "           <td>" + pedidos[i]["telefono"] + "</td>\n" +
+                "           <td>" + pedidos[i]["fechaEntrega"] + "</td>\n" +
+                "           <td>" + confirmado + "</td>\n" +
+                "           <td><button class='btn btn-outline-primary verPedido' value='" + pedidos[i]["idPedido"] + "'>Ver pedido</button></td>\n" +
+                "           <td><button class='btn btn-outline-danger eliminarPedido' value='" + pedidos[i]["idPedido"] + "'><i class='material-icons align-bottom'>delete</i></button></td>\n" +
+                "         </tr>");
+        }
+
+        tabla.append("</tbody>");
     }
-
-    tabla.append("</tbody>");
 }
 
 function cargarPedido(platos) {
     let tabla=$('#verPedidoModalTabla');
 
     tabla.empty();
-    tabla.append("<thead><tr><th scope='col' class='text-left'>Platos</th><th scope='col'>Cantidad</th><th scope='col'>Precio unitario</th><th scope='col'>Total</th></tr></thead>");
-    let total=0;
 
-    tabla.append("<tbody>");
+    if(platos.length>0)
+    {
+        let total=0;
+        tabla.append("<thead><tr><th scope='col' class='text-left'>Platos</th><th scope='col'>Cantidad</th><th scope='col'>Precio unitario</th><th scope='col'>Total</th></tr></thead>");
 
-    for(let i=0;i<platos.length;i++){
+        tabla.append("<tbody>");
+
+        for(let i=0;i<platos.length;i++){
             tabla.append("<tr><td scope='row' class='text-left'>" + platos[i]["nombre"] + "</td><td>" + platos[i]["cantidad"] + "</td><td>" + formatearPrecio(platos[i]["precio"]) + " &euro;</td><td>" + formatearPrecio(platos[i]["cantidad"]*platos[i]["precio"]) + " &euro;</td></tr>");
 
             let precio=platos[i]["cantidad"]*platos[i]["precio"];
             total=total+precio;
-    }
-    tabla.append("<tr><td scope='row' colspan='3'></td><td scope='row'>" + formatearPrecio(total) + " &euro;</td></tr>");
+        }
+        tabla.append("<tr><td scope='row' colspan='3'></td><td scope='row'>" + formatearPrecio(total) + " &euro;</td></tr>");
 
-    tabla.append("</tbody>");
+        tabla.append("</tbody>");
+    }
 }
 
 function formatearPrecio(precio){
