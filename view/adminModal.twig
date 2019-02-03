@@ -1,3 +1,4 @@
+{% include "errorModal.twig" %}
 <div id="modalModificarPlato" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -117,28 +118,6 @@
                 <input type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelarEliminarPlato"
                        value="Cancelar">
                 <input type="button" class="btn btn-danger" id="confirmarEliminarPlato" value="Confirmar">
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="modalError" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Error de Dato</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!--- cuerpo del modal--->
-                <div class="alert alert-danger" role="alert">
-                    <label id="textoError"></label>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <input type="button" class="btn btn-danger" data-dismiss="modal" value="Ok">
             </div>
         </div>
     </div>

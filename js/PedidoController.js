@@ -30,10 +30,33 @@ $(document).ready(function(){
 
     //confirmar pedido
     $(".confirmarPedido").click(function(){
-        let idPedido = $(this).val();
-        
+        let objeto = {
+        "idPedido": $(this).val(),
+        "nombre": $($(this).parents("tr").find("td")[0]).text(),
+        "apellidos": $($(this).parents("tr").find("td")[1]).text(),
+        "email": $($(this).parents("tr").find("td")[2]).text(),
+        "fecha": $($(this).parents("tr").find("td")[4]).text()
+        }
+        confirmarPedido(objeto);
     });
 });
+
+function confirmarPedido(objeto){
+    try{
+        $.post("/reto3/?c=pedido&a=pedidoConfirmado", objeto, (res) => {
+            console.log(res);
+            if (res== "Ok") {
+                location.reload();
+            }else{
+                $("#textoError").html("Hubo un error al grabar el Confirmar el pedido.");
+                $("#modalError").modal();
+            }
+        });
+    }catch(er){
+        $("#textoError").text(er.toString());
+        $("#modalError").modal();
+    }
+}
 
 function cargarPedido(platos) {
     let tabla=$('#verPedidoModalTabla');
