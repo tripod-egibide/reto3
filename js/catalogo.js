@@ -56,7 +56,7 @@ function cargarCatalogo(datos) {
     //preguntarle a nieves si es mejor que esto de error, o meter un if a ver si el usuario es administrador o no
     if (administrador) {
         // función del fichero AdminController
-        habilitarBotonesEditarEliminar();
+        habilitarBotonesEditarOcultar();
     } else {
         //esta función viene de carrito.js, y afecta a las funcionalidades asociadas con ese fichero
         habilitarBotonCompra();
