@@ -1,6 +1,6 @@
-INSERT INTO `Administrador` (`idAdministrador`, `usuario`, `contrasenna`) VALUES (NULL, 'admin1', 'admin1'), (NULL, 'admin2', 'admin2');
+INSERT INTO `Administrador` (`idAdministrador`, `usuario`, `contrasenna`, `email`) VALUES (NULL, 'admin1', 'admin1', 'mygoldxp@msn.com'), (NULL, 'admin2', 'admin2', null);
 
-INSERT INTO `Categoria` (`idCategoria`, `nombre`, `emailDepartamento`) VALUES (NULL, 'Entrantes', 'entrante@ikasle.com'), (NULL, 'Pescados', 'pescados@ikasle.com'), (NULL, 'Postres', 'postres@ikasle.com'), (NULL, 'Ensaladas', 'postres@ikasle.com');
+INSERT INTO `Categoria` (`idCategoria`, `nombre`, `emailDepartamento`, `preferencia`) VALUES (NULL, 'Entrantes', 'entrante@ikasle.com', '1'), (NULL, 'Pescados', 'pescados@ikasle.com', '2'), (NULL, 'Postres', 'postres@ikasle.com', '3'), (NULL, 'Ensaladas', 'postres@ikasle.com', '4');
 
 INSERT INTO `TipoVenta` (`idTipoVenta`, `tipoVenta`) VALUES (NULL, 'kilos'), (NULL, 'raciones');
 

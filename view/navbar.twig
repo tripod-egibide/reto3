@@ -1,10 +1,10 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top border-bottom">
-    <a class="navbar-brand" href="index.php"><img src="/reto3/img/logo-restaurant.png" alt="Egibide Hostelería" height=32px></a>
-    <a class="d-lg-none ml-auto mr-1 btn btn-outline-light" data-toggle="collapse" href="#carrito-collapse" role="button">
-        <i class="material-icons align-middle text-primary">shopping_cart</i>
+    <a class="navbar-brand" href="#"><img src="/reto3/img/logo-restaurant.png" alt="Egibide Hostelería" height=32px></a>
+    <a id="carrito-navbar" class="d-lg-none ml-auto mr-1 btn btn-outline-primary border-0" data-toggle="collapse" href="#carrito-collapse" role="button">
+        <i class="material-icons align-middle">shopping_cart</i>
     </a>
-    <a class="d-lg-none mr-4 btn btn-outline-light" data-toggle="collapse" href="#categoria-collapse" role="button">
-        <i class="material-icons align-middle text-primary">filter_list</i>
+    <a class="d-lg-none mr-4 btn btn-outline-primary border-0" data-toggle="collapse" href="#categoria-collapse" role="button">
+        <i class="material-icons align-middle">filter_list</i>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
         aria-expanded="false" aria-label="Toggle navigation">
@@ -52,7 +52,11 @@
 </nav>
 <div class="collapse position-fixed w-100 d-lg-none" id="categoria-collapse">
     {% for categoria in categorias %}
-        {# añadir funcionalidad de JS para contraer el collapse al hacer click en uno de estos #}
-        <a class="list-group-item list-group-item-action navbar-scrollspy text-center" href="#categoria-{{ categoria.nombre }}">{{ categoria.nombre }}</a>        
+        <a class="list-group-item list-group-item-action navbar-scrollspy text-center border-right-0 border-left-0" href="#categoria-{{ categoria.nombre }}">{{ categoria.nombre }}</a>        
     {% endfor %}
+</div>
+<div id="carrito-collapse" class="collapse position-fixed w-100 d-lg-none">
+    <div class="card border-top-0 border-right-0 border-left-0 rounded-0 border-primary">
+        {% include "carrito.twig" %}
+    </div>
 </div>

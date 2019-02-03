@@ -1,20 +1,21 @@
-<aside class="col-3 d-none d-lg-block align-self-start position-fixed offset-9 sticky">
-    <div class="card border-primary">
-        <h5 class="card-header">Lorem</h5>
-        <div class="card-body">
-            <h5 class="card-title">Ipsum</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium necessitatibus, voluptates facilis recusandae provident dolores odit! Sit reiciendis voluptate est quisquam, optio quod suscipit eaque quam, quo, numquam perspiciatis odit.
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis explicabo doloribus laborum. Sapiente incidunt pariatur omnis veritatis earum quisquam, magni amet praesentium, ab porro officiis dolorum dignissimos fugit reiciendis! Tempore!
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur quos quod itaque, exercitationem voluptas rem delectus omnis expedita quia. Explicabo tempora molestias voluptates temporibus corrupti perferendis dolore beatae sunt numquam.
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam repellat natus earum cumque, velit voluptatem provident placeat at corporis harum similique magni mollitia est, omnis fugiat, sit perspiciatis consequatur itaque!
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero exercitationem, maiores odio voluptatum mollitia laudantium animi, enim iusto unde similique praesentium autem dolorem quia corporis nostrum at ab ipsa fugiat!
-                lore
-            </p>
-            <a href="#" class="btn btn-primary">hh</a>
-        </div>
-    </div>    
-</aside>
+<span class="tabla-carrito">
+    {# esta plantilla se carga en cliente, no en servidor
+    véase carrito.js #}
+</span>
+<div class="container-fluid">
+    <div class="row">
+        <h3 class="my-auto col-6 border-top py-2 bg-light d-flex justify-content-between">
+            <span>
+                Total:
+            </span>
+            <span id="carrito-total">
+            </span>
+        </h3>
+        <button type="button" class="carrito-comprar col-6 btn btn-primary py-2 rounded-0">
+            <h4 class="py-0 my-auto">Comprar</h4>
+        </button>
+    </div>
+</div>    
 
 <div id="modalCliente" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -44,7 +45,6 @@
                         <label for="calendario">Seleccione la fecha de recogida:</label>
                         <input class="form-control" type="calendar" id="calendario" required>
                     </div>
-
                     <div class="form-group form-check">
                         <input type="checkbox" class="form-check-input" id="estado" checked required>
                         <label class="form-check-label" for="estado">Acepto el <a href="#" target="_blank">RGPD</a> y las <a href="#" target="_blank">Condiciones Generales de compra</a></label>
