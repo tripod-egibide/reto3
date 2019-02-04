@@ -14,3 +14,14 @@ function emailConfirmado(){
     return $mensaje;
 }
 
+function emailRecibido(){
+    $mensaje = "
+<div>
+    <p>Estimado se&ntilde;or/a <b>" . $_POST["nombre"] . ", " . $_POST["apellidos"] . " </b></p>
+    <p>Hemos recibido su pedido con n&uacute;mero <b>". $_POST["idPedido"] . "</b>, recibir&aacute; un email con la confirmaci&oacute;n de su pedido.</p>
+    <p>Gracias por su confianza.</p>
+    <p><img src='cid:logo' alt='Escuela de Hostelería de Egibide Mendizorrotza'> </p>
+    </div>
+    ";
+    return $mensaje;
+}

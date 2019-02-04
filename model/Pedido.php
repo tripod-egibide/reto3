@@ -91,7 +91,11 @@ class Pedido
 
     public static function getAllDetallePedidoByIdPedido($idPedido)
     {
-        return preparedStatement("SELECT * FROM DetallePedido WHERE idPedido = :idPedido", ["idPedido" => $idPedido])->fetchAll();
+        return preparedStatement("SELECT categoria.idCategoria, categoria.emailDepartamento FROM detallepedido 
+inner join plato on plato.idPlato = detallepedido.idPlato 
+inner join categoria on categoria.idCategoria = plato.idCategoria 
+where detallepedido.idPedido = :idPedido 
+group by plato.idCategoria", ["idPedido" => $idPedido])->fetchAll();
     }
 
     public static function confirmarPedido($idPedido)
