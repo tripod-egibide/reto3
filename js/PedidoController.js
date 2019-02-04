@@ -78,7 +78,7 @@ function cargarPedidos(pedidos) {
             let confirmado="";
             if(pedidos[i]["confirmado"]==0)
             {
-                confirmado="<button class='btn btn-outline-primary' value='" + pedidos[i]["idPedido"] + "'>Confirmar</button>";
+                confirmado="<button class='btn btn-outline-primary confirmarPedido' value='" + pedidos[i]["idPedido"] + "'>Confirmar</button>";
             }
             else
             {
