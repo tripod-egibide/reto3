@@ -146,10 +146,11 @@ class PedidoController
             echo "Fallido";
         }
         // envía un mensaje a todos los administradores de que hay un pedido que deben autorizar
-        $this->enviarEmailAdministrador($idPedido);
+        //$this->enviarEmailAdministrador($idPedido);
     }
 
     private function enviarEmailAdministrador($idPedido){
+        $categoria = Categoria::findById();
         $mensaje = "";
         $admines = Admin::getAll();
         foreach ($admines as $admin){

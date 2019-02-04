@@ -15,17 +15,15 @@ function habilitarBotonesEditarOcultar() {
     $(".botonOcultar").click(function () {
         readPlato($(this));
     });
-    $('#modalModificarPlato').on('hidden.bs.modal', limpiar);
 }
 
 function limpiar() {
-    $("form")[0].reset(); //para borrar todos los datos que tenga los input, textareas, select.
+    $("#idPlatoModal")[0].reset(); //para borrar todos los datos que tenga los input, textareas, select.
     $("#imagen").prop("src", "/reto3/img/logo-restaurant.png");
     $("#idPlatoModal").prop("value","");
     $("#labelPrecio").text("Precio:");
     $("#labelPrecio").css("color","black");
-    $("#precio").css("color","black");
-    $("#precio").css("border-color","black");
+    $("#precioPlato").css("color","black");
 }
 
 function habilitarBotonesEstaticos() {
@@ -49,24 +47,22 @@ function habilitarBotonesEstaticos() {
     });
     //preguntar si elimina el plato
     $("#EliminarPlato").click(function () {
-        deletePlato($("#nombre").val(), $("#idPlatoModal").val());
+        deletePlato($("#nombrePlato").val(), $("#idPlatoModal").val());
         $("#modalEliminarPlato").modal();
     });
     //Eliminar el plato
     $("#confirmarEliminarPlato").click(function () {
         confirmDeletePlato();
     });
-    $("#precio").on("focusout", function(){
-        if($("#precio").val()<1){
+    $("#precioPlato").on("focusout", function(){
+        if($("#precioPlato").val()<1){
            $("#labelPrecio").text("Precio: (Ojo, el precio de venta es inferior a 1€)");
            $("#labelPrecio").css("color","red");
-            $("#precio").css("color","red");
-            $("#precio").css("border-color","red");
+            $("#precioPlato").css("color","red");
         }else{
             $("#labelPrecio").text("Precio:");
             $("#labelPrecio").css("color","black");
-            $("#precio").css("color","black");
-            $("#precio").css("border-color","black");
+            $("#precioPlato").css("color","black");
         }
     });
 }
@@ -132,11 +128,11 @@ function cargarDatos(plato) {
     $("#idPlatoModal").prop("value", plato.idPlato);
     $("#imagen").prop("src", plato.imagen);
     $("#imagen").prop("alt", plato.nombre);
-    $("#nombre").val(plato.nombre);
-    $("#descripcion").val(plato.notas);
-    $("#precio").val(plato.precio);
-    $("#cantidad").val(plato.unidadesMinimas);
-    $("#estado").prop("checked", (plato.estado ==1)?true:false);
+    $("#nombrePlato").val(plato.nombre);
+    $("#descripcionPlato").val(plato.notas);
+    $("#precioPlato").val(plato.precio);
+    $("#cantidadPlato").val(plato.unidadesMinimas);
+    $("#estadoPlato").prop("checked", (plato.estado ==1)?true:false);
     comprobarSiEliminable(plato.idPlato);
 }
 
@@ -146,13 +142,14 @@ function rellenar(){
 // para que funcione sin recargar la página, usamos ajax y anulamos submit
 //supone unas líneas adicionales, asi como extraer los datos del form y meterlos a mano en un FormData
 function comprobarCampos(){
+    //emplear try catch en este caso, seria redundante, ya que bootstrap ya controla este error
     //try{
     //entendemos que pueden ofrecer algun producto de forma gratuita,
     //pero por si acaso hay un aviso de venta inferior a 1 euro
-        if($("#cantidad").val()>0 && $.isNumeric($("#precio").val()) && $("#nombre").val().length > 0){
+
+        if($("#cantidadPlato").val()>0 && $.isNumeric($("#precioPlato").val()) && $("#nombrePlato").val().length > 0){
             editPlato();
         }
-        // PREGUNTAR A NIEVES SI ES VIABLE----------------------------------------------------------------------------------------------------------
         /*else{
             throw "Los campos marcados en rojo, son Obligatorios.";
         }
@@ -167,29 +164,23 @@ function editPlato() {
     //mandamos el objeto
     let opcion;
     let formData = new FormData();
-    if ($("#modificarPlato").val() == "Confirmar") {
+        formData.append("nombre", $("#nombrePlato").val());
+        formData.append("notas", $("#descripcionPlato").val());
+        formData.append("precio", $("#precioPlato").val());
+        formData.append("unidadesMinimas", $("#cantidadPlato").val());
+        formData.append("idCategoria", $("#categoria").val());
+        formData.append("idTipoVenta", $("#medida").val());
+        formData.append("estado", ($("#estadoPlato").prop("checked")) ? 1 : 0);
+
+        if ($("#modificarPlato").val() == "Confirmar") {
         opcion = "edit";
         formData.append("idPlato", $("#idPlatoModal").prop("value"));
-        formData.append("nombre", $("#nombre").val());
-        formData.append("notas", $("#descripcion").val());
-        formData.append("precio", $("#precio").val());
-        formData.append("unidadesMinimas", $("#cantidad").val());
         if($("#modificarImagen")[0].files[0]!= null) {
             formData.append("file", $("#modificarImagen")[0].files[0]);
         }
-        formData.append("idCategoria", $("#categoria").val());
-        formData.append("idTipoVenta", $("#medida").val());
-        formData.append("estado", ($("#estado").prop("checked")) ? 1 : 0);
     } else {
         opcion = "insert";
-        formData.append("nombre", $("#nombre").val());
-        formData.append("notas", $("#descripcion").val());
-        formData.append("precio", $("#precio").val());
-        formData.append("unidadesMinimas", $("#cantidad").val());
         formData.append("file", $("#modificarImagen")[0].files[0]);
-        formData.append("idCategoria", $("#categoria").val());
-        formData.append("idTipoVenta", $("#medida").val());
-        formData.append("estado", ($("#estado").prop("checked")) ? 1 : 0);
     }
     $.ajax({
         type: 'POST',

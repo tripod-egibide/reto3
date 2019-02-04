@@ -2,15 +2,7 @@ $(document).ready(function(){
 
     // Ver pedidos
     $(document).on('click', '#ver-pedidos', function(){
-
-        $.ajax({
-            method: 'GET',
-            url: 'index.php',
-            data: {'c':'pedido', 'a': 'getAll'},
-            dataType: 'JSON'
-        }).done(function(data){
-            cargarPedidos(data);
-        });
+        recargarListaPedidos();
     });
 
     // Ver detalle del pedido
@@ -43,7 +35,7 @@ $(document).ready(function(){
     });
 
     //confirmar pedido
-    $(".confirmarPedido").click(function(){
+    $(document).on('click', '.confirmarPedido', function(){
         let objeto = {
         "idPedido": $(this).val(),
         "nombre": $($(this).parents("tr").find("td")[0]).text(),
@@ -54,6 +46,17 @@ $(document).ready(function(){
         confirmarPedido(objeto);
     });
 });
+
+function recargarListaPedidos(){
+    $.ajax({
+        method: 'GET',
+        url: 'index.php',
+        data: {'c':'pedido', 'a': 'getAll'},
+        dataType: 'JSON'
+    }).done(function(data){
+        cargarPedidos(data);
+    });
+}
 
 function cargarPedidos(pedidos) {
     let tabla=$('#verPedidosModalTabla');
@@ -105,7 +108,7 @@ function confirmarPedido(objeto){
         $.post("/reto3/?c=pedido&a=pedidoConfirmado", objeto, (res) => {
             console.log(res);
             if (res== "Ok") {
-                location.reload();
+                recargarListaPedidos();
             }else{
                 $("#textoError").html("Hubo un error al grabar el Confirmar el pedido.");
                 $("#modalError").modal();
