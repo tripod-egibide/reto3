@@ -150,6 +150,7 @@ class PedidoController
     }
 
     private function enviarEmailAdministrador($idPedido){
+        $categoria = Categoria::findById()
         $mensaje = "";
         $admines = Admin::getAll();
         foreach ($admines as $admin){
