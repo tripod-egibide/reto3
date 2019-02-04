@@ -16,13 +16,19 @@ class PedidoController
         require_once __DIR__ . "/../core/email/Exception.php";
         require_once __DIR__ . "/../core/email/PHPMailer.php";
         require_once __DIR__ . "/../core/email/SMTP.php";
+        require_once __DIR__ . "/../model/Categoria.php";
         require_once __DIR__ . "/../model/Pedido.php";
         require_once __DIR__ . "/../model/Plato.php";
+        require_once __DIR__ . "/../model/admin.php";
         require_once __DIR__ . "/../core/twig.php";
 
         switch ($action) {
             case 'ver':
                 $this->ver();
+                break;
+
+            case 'getAll':
+                $this->getAll();
                 break;
 
             case 'getDetallePedido':
@@ -59,6 +65,14 @@ class PedidoController
 
             echo twig()->render("pedidoView.twig", ["pedidos" => $pedidos]);
         }
+
+    }
+
+    private function getAll()
+    {
+        $pedidos = Pedido::getAll();
+        header('Content-type: application/json');
+        echo json_encode($pedidos);
 
     }
 
@@ -106,16 +120,27 @@ class PedidoController
     }
 
     private function pedidoRecibido(){
-        $email = $_POST["email"];
         $titulo = "Pedido " . $_POST["idPedido"] . " Recibido";
-        $mensaje = include_once __DIR__ . "../core/email/predefined/recibido.php";
 
-        $this->enviarEmail($email,$titulo,$mensaje);
+        $mensaje = emailRecibido();
+
+        $this->enviarEmail($_POST["email"],$titulo,$mensaje);
         // envía un mensaje a todos los administradores de que hay un pedido que deben autorizar
-        //enviarEmailAdministrador($mensaje);
+        $mensaje = "Hay un nuevo pedido<br>Puede acceder sus pedidos pulsando <a href='" . $_SERVER[‘HTTP_HOST’]."/reto3/?c=admin'>Aqu&iacute;</a>";
+        avisoAdmin("Nuevo pedido " . $_POST["idPedido"],$mensaje);
     }
 
-
+    private function avisoAdmin($titulo,$mensaje){
+        $listaAdmin = Admin::getAll();
+        $estado = "Error";
+        foreach ($listaAdmin as $admin){
+            if($admin["email"] !=null){
+                $this->enviarEmail($admin["email"],$titulo,$mensaje);
+                $estado = "Ok";
+            }
+        }
+        return $estado;
+    }
 
     private function pedidoConfirmado(){
         $idPedido = $_POST["idPedido"];
@@ -128,24 +153,42 @@ class PedidoController
         //cargamos el mensaje predefinido
         $mensaje = emailConfirmado();
         //enviamos email de confirmado al cliente
-        if($this->enviarEmail($email,$titulo,$mensaje)){
-            echo "Ok";
-        }else{
-            echo "Fallido";
-        }
+        $this->enviarEmail($email,$titulo,$mensaje);
         // envía un mensaje a todos los administradores de que hay un pedido que deben autorizar
-        $this->enviarEmailAdministrador($idPedido);
+        echo $this->enviarEmailAdministrador($idPedido);
     }
 
     private function enviarEmailAdministrador($idPedido){
-        $categoria = Categoria::findById()
-        $mensaje = "";
-        $admines = Admin::getAll();
-        foreach ($admines as $admin){
-            $this->enviarEmail($admin->email,"Aviso de pedido entrante",$mensaje);
-        }
-    }
+        //obtenemos las categorias y platos
+        $listaCategoria = Pedido::getAllDetallePedidoByIdPedido($idPedido);
 
+        //guardamos el estado del envio de los emails
+        $estados = "Estado de los emails para el pedido " . $idPedido . ":<br><br>";
+        //recorremos las categorias para enviarles un email con los platos que tienen que preparar
+        foreach ($listaCategoria as $categoria){
+            $mensaje = "El pedido " . $idPedido . " tiene los siguientes platos:<br><table>
+<tr>
+    <th>Plato</th>
+    <th>Cantidad</th>
+  </tr>";
+
+            $platos = Plato::getAllByListIdPlato($idPedido, $categoria["idCategoria"]);
+            foreach ($platos as $plato){
+                $mensaje .= "
+<tr>
+    <td>" . $plato["nombre"] . "</td>
+    <td>" . $plato["cantidad"] . "</td>
+  </tr>";
+            }
+            $mensaje .= "</table>";
+            if($this->enviarEmail($categoria["emailDepartamento"],"Pedido " . $idPedido, $mensaje)){
+                $estados .= $categoria["emailDepartamento"] . ".....Correcto<br>";
+            }else{
+                $estados .= $categoria["emailDepartamento"] . ".....Error<br>";
+            }
+        }
+        return $this->avisoAdmin("Reporte de los emails",$estados);
+    }
     private function enviarEmail($email, $titulo, $mensaje){
         //email del destinatario
         $toAddress = $email;

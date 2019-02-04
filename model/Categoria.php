@@ -3,26 +3,29 @@ require_once __DIR__ . "/../core/database.php";
 
 class Categoria
 {
-    private $idCategoria,$nombre, $emailDepartamento;
+    private $idCategoria,$nombre, $emailDepartamento, $preferencia;
 
     /**
      * Categoria constructor.
      * @param $idCategoria
      * @param $nombre
      * @param $emailDepartamento
+     * @param $preferencia
      */
-    public function __construct($idCategoria, $nombre, $emailDepartamento)
+    public function __construct($idCategoria, $nombre, $emailDepartamento, $preferencia)
     {
         $this->idCategoria = $idCategoria;
         $this->nombre = $nombre;
         $this->emailDepartamento = $emailDepartamento;
+        $this->preferencia = $preferencia;
     }
 
     public function toArray()
     {
         $data = [
             "nombre" => $this->nombre,
-            "emailDepartamento" => $this->emailDepartamento
+            "emailDepartamento" => $this->emailDepartamento,
+            "preferencia" => $this->preferencia
         ];
 
         return $data;
@@ -30,7 +33,7 @@ class Categoria
 
     public function insert()
     {
-        preparedStatement("INSERT INTO Categoria (nombre, emailDepartamento) VALUES(:nombre, :emailDepartamento)", $this->toArray());
+        preparedStatement("INSERT INTO Categoria (nombre, emailDepartamento, preferencia) VALUES(:nombre, :emailDepartamento, :preferencia)", $this->toArray());
     }
 
     public static function delete($id)
@@ -45,7 +48,8 @@ class Categoria
 
         preparedStatement("UPDATE Categoria
             SET nombre = :nombre,
-                emailDepartamento = :emailDepartamento
+                emailDepartamento = :emailDepartamento,
+                preferencia = :preferencia
             WHERE idCategoria = :idCategoria", $data);
     }
 
@@ -57,7 +61,7 @@ class Categoria
 
     public static function getAll()
     {
-        return connection()->query("SELECT * FROM Categoria")->fetchAll();
+        return connection()->query("SELECT * FROM Categoria ORDER BY preferencia")->fetchAll();
     }
 
     /**
@@ -106,6 +110,22 @@ class Categoria
     public function setNombre($nombre): void
     {
         $this->nombre = $nombre;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPreferencia()
+    {
+        return $this->preferencia;
+    }
+
+    /**
+     * @param mixed $preferencia
+     */
+    public function setPreferencia($preferencia)
+    {
+        $this->preferencia = $preferencia;
     }
     
 }

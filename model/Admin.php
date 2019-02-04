@@ -4,26 +4,29 @@ require_once __DIR__ . "/../core/database.php";
 
 class Admin
 {
-    private $idAdministrador, $usuario, $contrasenna;
+    private $idAdministrador, $usuario, $contrasenna, $email;
 
     /**
      * administrador constructor.
      * @param $idAdministrador
      * @param $usuario
      * @param $contrasenna
+     * @param $email
      */
-    public function __construct($idAdministrador, $usuario, $contrasenna)
+    public function __construct($idAdministrador, $usuario, $contrasenna, $email)
     {
         $this->idAdministrador = $idAdministrador;
         $this->usuario = $usuario;
         $this->contrasenna = $contrasenna;
+        $this->email = $email;
     }
 
     public function toArray()
     {
         $data = [
             "usuario" => $this->usuario,
-            "contrasenna" => $this->contrasenna
+            "contrasenna" => $this->contrasenna,
+            "email" => $this->email
         ];
 
         return $data;
@@ -36,8 +39,8 @@ class Admin
 
     public function insert()
     {
-        preparedStatement("INSERT INTO Administrador (usuario, contrasenna) 
-            VALUES (:usuario, :contrasenna)", $this->toArray());
+        preparedStatement("INSERT INTO Administrador (usuario, contrasenna, email) 
+            VALUES (:usuario, :contrasenna, :email)", $this->toArray());
     }
 
     public static function delete($id)
@@ -52,7 +55,8 @@ class Admin
 
         preparedStatement("UPDATE Administrador
             SET usuario = :usuario,
-                contrasenna = :contrasenna
+                contrasenna = :contrasenna,
+                email = :email
             WHERE idAdministrador = :idAdministrador", $data);
     }
 
@@ -107,6 +111,22 @@ class Admin
     public function setContrasenna($contrasenna): void
     {
         $this->contrasenna = $contrasenna;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param mixed $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
     }
 
 }

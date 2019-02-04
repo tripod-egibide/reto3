@@ -43,8 +43,9 @@ class CategoriaController{
         {
             $nombre = $_POST["nombre"];
             $emailDepartamento = $_POST["emailDepartamento"];
+            $preferencia = $_POST["preferencia"];
 
-            $categoria = new Categoria("", $nombre, $emailDepartamento);
+            $categoria = new Categoria("", $nombre, $emailDepartamento, $preferencia);
             $categoria->insert();
         }
         header("Location: /reto3/");
@@ -71,8 +72,9 @@ class CategoriaController{
             $idCategoria=$_POST["idCategoria"];
             $nombre = $_POST["nombre"];
             $emailDepartamento = $_POST["emailDepartamento"];
+            $preferencia = $_POST["preferencia"];
 
-            $categoria=new Categoria("", $nombre, $emailDepartamento);
+            $categoria=new Categoria("", $nombre, $emailDepartamento, $preferencia);
             $categoria->edit($idCategoria);
         }
         header("Location: /reto3/");

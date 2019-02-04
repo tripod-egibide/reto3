@@ -91,7 +91,7 @@ class PlatoController
 
         $data = ["administrador" => $_SESSION["administrador"] ?? 0];
         foreach ($categorias as $categoria) {
-            $data[$categoria["idCategoria"]] = [
+            $data[$categoria["preferencia"]] = [
                 "nombre" => $categoria["nombre"], 
                 "platos" => Plato::getByCategoria($categoria["idCategoria"]),
             ];            
