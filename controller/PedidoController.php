@@ -12,6 +12,7 @@ class PedidoController
 
     public function run($action = "")
     {
+        include_once __DIR__ . "/../core/email/mensajes.php";
         require_once __DIR__ . "/../core/email/Exception.php";
         require_once __DIR__ . "/../core/email/PHPMailer.php";
         require_once __DIR__ . "/../core/email/SMTP.php";
@@ -117,25 +118,43 @@ class PedidoController
     }
 
     private function pedidoRecibido(){
-        $email = "";
-        $titulo = "Hola Jon";
-        $mensaje = "Probando el cuerpo del mensaje";
+        $email = $_POST["email"];
+        $titulo = "Pedido " . $_POST["idPedido"] . " Recibido";
+        $mensaje = include_once __DIR__ . "../core/email/predefined/recibido.php";
 
         $this->enviarEmail($email,$titulo,$mensaje);
         // envía un mensaje a todos los administradores de que hay un pedido que deben autorizar
-        enviarEmailAdministrador($mensaje);
+        //enviarEmailAdministrador($mensaje);
     }
 
-    private function enviarEmailAdministrador($idPedido, $nombre){
+
+
+    private function pedidoConfirmado(){
+        $idPedido = $_POST["idPedido"];
+        //marcamos el pedido como confirmado
+        Pedido::confirmarPedido($idPedido);
+        // cargamos el email del cliente
+        $email = $_POST["email"];
+        // cargamos el titulo del email
+        $titulo = "Pedido " . $idPedido . " Confirmado";
+        //cargamos el mensaje predefinido
+        $mensaje = emailConfirmado();
+        //enviamos email de confirmado al cliente
+        if($this->enviarEmail($email,$titulo,$mensaje)){
+            echo "Ok";
+        }else{
+            echo "Fallido";
+        }
+        // envía un mensaje a todos los administradores de que hay un pedido que deben autorizar
+        $this->enviarEmailAdministrador($idPedido);
+    }
+
+    private function enviarEmailAdministrador($idPedido){
         $mensaje = "";
         $admines = Admin::getAll();
         foreach ($admines as $admin){
             $this->enviarEmail($admin->email,"Aviso de pedido entrante",$mensaje);
         }
-    }
-
-    private function pedidoConfirmado(){
-
     }
 
     private function enviarEmail($email, $titulo, $mensaje){
@@ -169,13 +188,15 @@ class PedidoController
         $mail->SetFrom("escueladehosteleriadeegibide@gmail.com");
         // titulo
         $mail->Subject = $titulo;
-        $mail->Body    = $mensaje;
+
+        $mail->AddEmbeddedImage( "img/logo-restaurant.png",'logo');
+        $mail->Body = $mensaje;
         $mail->AddAddress($toAddress);
         if (!$mail->Send()) {
-            return "fallido";
+            return false;
 
         } else {
-            return "ok";
+            return true;
         }
     }
 }

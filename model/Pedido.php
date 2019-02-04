@@ -94,6 +94,11 @@ class Pedido
         return preparedStatement("SELECT * FROM DetallePedido WHERE idPedido = :idPedido", ["idPedido" => $idPedido])->fetchAll();
     }
 
+    public static function confirmarPedido($idPedido)
+    {
+        return preparedStatement("UPDATE pedido SET confirmado = 1 WHERE idPedido = :idPedido", ["idPedido" => $idPedido]);
+    }
+
     /**
      * @return mixed
      */
