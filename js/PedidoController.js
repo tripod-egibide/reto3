@@ -36,6 +36,8 @@ $(document).ready(function(){
 
     //confirmar pedido
     $(document).on('click', '.confirmarPedido', function(){
+        $(this).text("Enviando email...");
+        $(this).prop("disabled", true);
         let objeto = {
         "idPedido": $(this).val(),
         "nombre": $($(this).parents("tr").find("td")[0]).text(),
@@ -168,9 +170,9 @@ function cargarPedidos(pedidos) {
 
 function confirmarPedido(objeto){
     try{
+
         $.post("/reto3/?c=pedido&a=pedidoConfirmado", objeto, (res) => {
-            console.log(res);
-            if (res== "Ok") {
+            if (res == "Ok") {
                 recargarListaPedidos();
             }else{
                 $("#textoError").html("Hubo un error al grabar el Confirmar el pedido.");
