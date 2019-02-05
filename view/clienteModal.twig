@@ -1,0 +1,78 @@
+
+<div id="modalCliente" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Datos del Cliente</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!--- cuerpo del modal--->
+                <form class="needs-validation" novalidate>
+                    <div class="form-row">
+                        <div class="col-12">
+                            <label for="nombreCliente">Nombre:</label>
+                            <input class="form-control" type="text" id="nombreCliente" required>
+                            <div class="invalid-feedback">
+                                Debe introducir su Nombre.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-12">
+                            <label for="apellidosCliente">Apellidos:</label>
+                            <input class="form-control" type="text" id="apellidosCliente" required>
+                            <div class="invalid-feedback">
+                                Debe introducir su Apellido.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-6">
+                            <label for="emailCliente">Email:</label>
+                            <input class="form-control" type="text" id="emailCliente" required>
+                            <div class="invalid-feedback">
+                                Debe introducir su Email.
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label for="telefonoCliente">Tel&eacute;fono:</label>
+                            <input class="form-control" type="text" id="telefonoCliente" required>
+                            <div class="invalid-feedback">
+                                Debe introducir su Tel&eacute;fono.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-6">
+                            <label for="fechaCliente">Fecha de recogida:</label>
+                            <input class="form-control" type="date" id="fechaCliente" required>
+                            <div class="invalid-feedback">
+                                Debe elegir una fecha de recogida.
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label for="fechaCliente">Recuerde que:<br>Jhdsiufb</label>
+                        </div>
+                    </div>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="estado" checked required>
+                        <label class="form-check-label" for="estado">Acepto el <a href="#" target="_blank">RGPD</a>
+                            y las <a href="#" target="_blank">Condiciones Generales de compra</a></label>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancelar">
+                        <input type="button" class="btn btn-primary" id="confirmarCliente" value="Confirmar">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
