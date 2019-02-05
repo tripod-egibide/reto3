@@ -2,7 +2,7 @@
 <div class="card border-top-0 mb-5">
     {% for categoria in categorias if categoria.platos %}
     <span class="categoria">
-        <span id="categoria-{{ categoria.nombre }}" class="categoria-anchor"></span>
+        <span id="categoria-{{ categoria.nombre|replace({" " : "-"}) }}" class="categoria-anchor"></span>
         <div class="card-body bg-light border-top">
             <h1 class="card-title text-center text-primary">{{ categoria.nombre }}</h1>
         </div>

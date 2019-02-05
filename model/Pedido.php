@@ -3,7 +3,7 @@ require_once __DIR__ . "/../core/database.php";
 
 class Pedido
 {
-    private $idPedido, $nombre, $apellidos, $email, $telefono, $fechaEntrega;
+    private $idPedido, $nombre, $apellidos, $email, $telefono, $fechaEntrega, $total, $confirmado;
 
     /**
      * Pedido constructor.
@@ -13,8 +13,10 @@ class Pedido
      * @param $email
      * @param $telefono
      * @param $fechaEntrega
+     * @param $total
+     * @param $confirmado
      */
-    public function __construct($idPedido, $nombre, $apellidos, $email, $telefono, $fechaEntrega)
+    public function __construct($idPedido, $nombre, $apellidos, $email, $telefono, $fechaEntrega, $total, $confirmado)
     {
         $this->idPedido = $idPedido;
         $this->nombre = $nombre;
@@ -22,6 +24,8 @@ class Pedido
         $this->email = $email;
         $this->telefono = $telefono;
         $this->fechaEntrega = $fechaEntrega;
+        $this->total = $total;
+        $this->confirmado= $confirmado;
     }
 
     public function toArray()
@@ -31,7 +35,9 @@ class Pedido
             "apellidos" => $this->apellidos,
             "email" => $this->email,
             "telefono" => $this->telefono,
-            "fechaEntrega" => $this->fechaEntrega
+            "fechaEntrega" => $this->fechaEntrega,
+            "total" => $this->total,
+            "confirmado" => $this->confirmado
         ];
 
         if (isset($this->idPedido)) {
@@ -43,8 +49,19 @@ class Pedido
 
     public function insert()
     {
-        preparedStatement("INSERT INTO Pedido (nombre, apellidos, email, telefono, fechaEntrega) 
-            VALUES (:nombre, :apellidos, :email, :telefono, :fechaEntrega)", $this->toArray());
+        preparedStatement("INSERT INTO Pedido (nombre, apellidos, email, telefono, fechaEntrega, total, confirmado) 
+            VALUES (:nombre, :apellidos, :email, :telefono, :fechaEntrega, :total, :confirmado)", $this->toArray());
+        return connection()->query("SELECT idPedido FROM Pedido ORDER BY idPedido desc limit 1")->fetchAll();
+    }
+
+    public function insertDetallePedido($idPedido,$carrito)
+    {
+        $sentencia = "INSERT INTO DetallePedido (idPedido, idPlato, cantidad) VALUES ";
+        foreach ($carrito as $clave => $valor){
+            $sentencia .= " ( '" . $idPedido["idPedido"] . "', '" . $clave . "', '" . $valor["cantidad"] . "' ),";
+        }
+        connection()->query(substr($sentencia,0,strlen($sentencia)-1));
+        return "Ok";
     }
 
     public static function delete($id)
@@ -62,7 +79,9 @@ class Pedido
                 apellidos = :apellidos,
                 email = :email,
                 telefono = :telefono,
-                fechaEntrega = :fechaEntrega
+                fechaEntrega = :fechaEntrega,
+                total = :total,
+                confirmado = :confirmado
             WHERE idPedido = :idPedido", $data);
     }
 
@@ -91,7 +110,7 @@ class Pedido
 
     public static function getAllDetallePedidoByIdPedido($idPedido)
     {
-        return preparedStatement("SELECT categoria.idCategoria, categoria.emailDepartamento FROM detallepedido 
+        return preparedStatement("SELECT categoria.idCategoria, categoria.nombre, categoria.emailDepartamento FROM detallepedido 
 inner join plato on plato.idPlato = detallepedido.idPlato 
 inner join categoria on categoria.idCategoria = plato.idCategoria 
 where detallepedido.idPedido = :idPedido 
