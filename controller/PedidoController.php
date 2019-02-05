@@ -12,16 +12,23 @@ class PedidoController
 
     public function run($action = "")
     {
+        include_once __DIR__ . "/../core/email/mensajes.php";
         require_once __DIR__ . "/../core/email/Exception.php";
         require_once __DIR__ . "/../core/email/PHPMailer.php";
         require_once __DIR__ . "/../core/email/SMTP.php";
+        require_once __DIR__ . "/../model/Categoria.php";
         require_once __DIR__ . "/../model/Pedido.php";
         require_once __DIR__ . "/../model/Plato.php";
+        require_once __DIR__ . "/../model/admin.php";
         require_once __DIR__ . "/../core/twig.php";
 
         switch ($action) {
             case 'ver':
                 $this->ver();
+                break;
+
+            case 'getAll':
+                $this->getAll();
                 break;
 
             case 'getDetallePedido':
@@ -58,6 +65,14 @@ class PedidoController
 
             echo twig()->render("pedidoView.twig", ["pedidos" => $pedidos]);
         }
+
+    }
+
+    private function getAll()
+    {
+        $pedidos = Pedido::getAll();
+        header('Content-type: application/json');
+        echo json_encode($pedidos);
 
     }
 
@@ -105,27 +120,75 @@ class PedidoController
     }
 
     private function pedidoRecibido(){
-        $email = "";
-        $titulo = "Hola Jon";
-        $mensaje = "Probando el cuerpo del mensaje";
+        $titulo = "Pedido " . $_POST["idPedido"] . " Recibido";
 
-        $this->enviarEmail($email,$titulo,$mensaje);
+        $mensaje = emailRecibido();
+
+        $this->enviarEmail($_POST["email"],$titulo,$mensaje);
         // envía un mensaje a todos los administradores de que hay un pedido que deben autorizar
-        enviarEmailAdministrador($mensaje);
+        $mensaje = "Hay un nuevo pedido<br>Puede acceder sus pedidos pulsando <a href='" . $_SERVER[‘HTTP_HOST’]."/reto3/?c=admin'>Aqu&iacute;</a>";
+        avisoAdmin("Nuevo pedido " . $_POST["idPedido"],$mensaje);
     }
 
-    private function enviarEmailAdministrador($idPedido, $nombre){
-        $mensaje = "";
-        $admines = Admin::getAll();
-        foreach ($admines as $admin){
-            $this->enviarEmail($admin->email,"Aviso de pedido entrante",$mensaje);
+    private function avisoAdmin($titulo,$mensaje){
+        $listaAdmin = Admin::getAll();
+        $estado = "Error";
+        foreach ($listaAdmin as $admin){
+            if($admin["email"] !=null){
+                $this->enviarEmail($admin["email"],$titulo,$mensaje);
+                $estado = "Ok";
+            }
         }
+        return $estado;
     }
 
     private function pedidoConfirmado(){
-
+        $idPedido = $_POST["idPedido"];
+        //marcamos el pedido como confirmado
+        Pedido::confirmarPedido($idPedido);
+        // cargamos el email del cliente
+        $email = $_POST["email"];
+        // cargamos el titulo del email
+        $titulo = "Pedido " . $idPedido . " Confirmado";
+        //cargamos el mensaje predefinido
+        $mensaje = emailConfirmado();
+        //enviamos email de confirmado al cliente
+        $this->enviarEmail($email,$titulo,$mensaje);
+        // envía un mensaje a todos los administradores de que hay un pedido que deben autorizar
+        echo $this->enviarEmailAdministrador($idPedido);
     }
 
+    private function enviarEmailAdministrador($idPedido){
+        //obtenemos las categorias y platos
+        $listaCategoria = Pedido::getAllDetallePedidoByIdPedido($idPedido);
+
+        //guardamos el estado del envio de los emails
+        $estados = "Estado de los emails para el pedido " . $idPedido . ":<br><br>";
+        //recorremos las categorias para enviarles un email con los platos que tienen que preparar
+        foreach ($listaCategoria as $categoria){
+            $mensaje = "El pedido " . $idPedido . " tiene los siguientes platos:<br><table>
+<tr>
+    <th>Plato</th>
+    <th>Cantidad</th>
+  </tr>";
+
+            $platos = Plato::getAllByListIdPlato($idPedido, $categoria["idCategoria"]);
+            foreach ($platos as $plato){
+                $mensaje .= "
+<tr>
+    <td>" . $plato["nombre"] . "</td>
+    <td>" . $plato["cantidad"] . "</td>
+  </tr>";
+            }
+            $mensaje .= "</table>";
+            if($this->enviarEmail($categoria["emailDepartamento"],"Pedido " . $idPedido, $mensaje)){
+                $estados .= $categoria["emailDepartamento"] . ".....Correcto<br>";
+            }else{
+                $estados .= $categoria["emailDepartamento"] . ".....Error<br>";
+            }
+        }
+        return $this->avisoAdmin("Reporte de los emails",$estados);
+    }
     private function enviarEmail($email, $titulo, $mensaje){
         //email del destinatario
         $toAddress = $email;
@@ -157,13 +220,15 @@ class PedidoController
         $mail->SetFrom("escueladehosteleriadeegibide@gmail.com");
         // titulo
         $mail->Subject = $titulo;
-        $mail->Body    = $mensaje;
+
+        $mail->AddEmbeddedImage( "img/logo-restaurant.png",'logo');
+        $mail->Body = $mensaje;
         $mail->AddAddress($toAddress);
         if (!$mail->Send()) {
-            return "fallido";
+            return false;
 
         } else {
-            return "ok";
+            return true;
         }
     }
 }

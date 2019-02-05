@@ -111,6 +111,12 @@ class Plato
         return preparedStatement("SELECT * FROM Plato WHERE idPlato = :idPlato", ["idPlato" => $idPlato])->fetch();
     }
 
+    public static function getAllByListIdPlato($idPedido, $idCategoria)
+    {
+        return preparedStatement("SELECT * FROM Plato INNER JOIN detallepedido on detallepedido.idPlato = plato.idPlato 
+               WHERE detallepedido.idPedido = :idPedido && plato.idCategoria = :idCategoria", ["idPedido" => $idPedido, "idCategoria" => $idCategoria])->fetchAll();
+    }
+
     public static function getByNombre($nombre)
     {
         return preparedStatement("SELECT * FROM Plato WHERE nombre = :nombre", ["nombre" => $nombre])->fetchAll();
