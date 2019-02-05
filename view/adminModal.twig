@@ -1,3 +1,4 @@
+{% include "errorModal.twig" %}
 <div id="modalModificarPlato" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -22,26 +23,26 @@
                     </div>
                     <div class="form-row">
                         <div class="col-12">
-                            <label for="nombre">Nombre:</label>
-                            <input class="form-control" type="text" id="nombre" required>
+                            <label for="nombrePlato">Nombre:</label>
+                            <input class="form-control" type="text" id="nombrePlato" required>
                             <div class="invalid-feedback">
                                 Debes introducir el nombre del plato.
                             </div>
                         </div>
                         <div class="col-12">
-                            <label for="descripcion">Descripci&oacute;n:</label>
-                            <input class="form-control" type="text" id="descripcion">
+                            <label for="descripcionPlato">Descripci&oacute;n:</label>
+                            <input class="form-control" type="text" id="descripcionPlato">
                         </div>
                         <div class="col-md-6">
-                            <label for="precio" id="labelPrecio">Precio:</label>
-                            <input class="form-control" type="number" id="precio" step="0.01" min="0" required>
+                            <label for="precioPlato" id="labelPrecio">Precio:</label>
+                            <input class="form-control" type="number" id="precioPlato" step="0.01" min="0" required>
                             <div class="invalid-feedback">
                                 Debes introducir el precio del plato.
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <label for="cantidad" id="labelCantidad">Pedido m&iacute;nimo:</label>
-                            <input class="form-control" type="number" id="cantidad" min="1" required>
+                            <label for="cantidadPlato" id="labelCantidad">Pedido m&iacute;nimo:</label>
+                            <input class="form-control" type="number" id="cantidadPlato" min="1" required>
                             <div class="invalid-feedback">
                                 Debes introducir el pedido m&iacute;nimo del plato.
                             </div>
@@ -63,7 +64,7 @@
                         </div>
                     </div>
                     <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" id="estado" checked>
+                        <input type="checkbox" class="form-check-input" id="estadoPlato" checked>
                         <label class="form-check-label" for="estado">Mostrar el Plato</label>
                     </div>
                     <div class="modal-footer">
@@ -122,28 +123,6 @@
     </div>
 </div>
 
-<div id="modalError" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Error de Dato</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!--- cuerpo del modal--->
-                <div class="alert alert-danger" role="alert">
-                    <label id="textoError"></label>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <input type="button" class="btn btn-danger" data-dismiss="modal" value="Ok">
-            </div>
-        </div>
-    </div>
-</div>
-
 {# Modal para el CRUD de los administradores #}
 <div class="modal fade" id="adminModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -187,6 +166,14 @@
                             Debes introducir la contrase&ntilde;a.
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="altaAdminEmail">Correo electr&oacute;nico:</label>
+                        <input type="email" class="form-control" id="altaAdminEmail" name="email"
+                               placeholder="Correo electr&oacute;nico" required>
+                        <div class="invalid-feedback">
+                            Debes introducir el correo electr&oacute;nico.
+                        </div>
+                    </div>
                     <button type="submit" class="btn btn-primary">A&ntilde;adir</button>
                 </form>
 
@@ -206,6 +193,14 @@
                                placeholder="Contrase&ntilde;a" required>
                         <div class="invalid-feedback">
                             Debes introducir la contrase&ntilde;a.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editarAdminEmail">Correo electr&oacute;nico:</label>
+                        <input type="email" class="form-control" id="editarAdminEmail" name="email"
+                               placeholder="Correo electr&oacute;nico" required>
+                        <div class="invalid-feedback">
+                            Debes introducir el correo electr&oacute;nico.
                         </div>
                     </div>
                     <input type="hidden" id="editarAdminId" name="idAdministrador"/>
@@ -259,6 +254,14 @@
                             Debes introducir el correo electr&oacute;nico del departamento.
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="altaCategoriaPreferencia">Preferencia:</label>
+                        <input type="number" class="form-control" id="altaCategoriaPreferencia" name="preferencia"
+                               placeholder="Preferencia" required>
+                        <div class="invalid-feedback">
+                            Debes introducir la preferencia.
+                        </div>
+                    </div>
                     <button type="submit" class="btn btn-primary">A&ntilde;adir</button>
                 </form>
 
@@ -278,6 +281,14 @@
                                placeholder="Correo electr&oacute;nico del departamento" required>
                         <div class="invalid-feedback">
                             Debes introducir el correo electr&oacute;nico del departamento.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editarCategoriaPreferencia">Preferencia:</label>
+                        <input type="number" class="form-control" id="editarCategoriaPreferencia" name="preferencia"
+                               placeholder="Preferencia" required>
+                        <div class="invalid-feedback">
+                            Debes introducir la preferencia.
                         </div>
                     </div>
                     <input type="hidden" id="editarCategoriaId" name="idCategoria"/>
@@ -339,6 +350,47 @@
                     <input type="hidden" id="editarTipoVentaId" name="idTipoVenta"/>
                     <button type="submit" class="btn btn-primary">Actualizar</button>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{# Modal para ver los pedidos #}
+<div class="modal fade" id="verPedidosModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ver pedidos</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body container-fluid">
+                <div class="table-responsive">
+                    <table id="verPedidosModalTabla" class="table">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{# Modal para ver los detalles del pedido #}
+<div id="verPedidoModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Detalles del pedido</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table id="verPedidoModalTabla" class="table table-bordered table-striped text-center">
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>

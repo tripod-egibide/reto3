@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS `Pedido` (
   `telefono` VARCHAR(9) NULL,
   `fechaEntrega` DATE NULL,
   `total` DOUBLE NULL,
+  `confirmado` BOOLEAN NOT NULL,
   PRIMARY KEY (`idPedido`))
 ENGINE = InnoDB;
 

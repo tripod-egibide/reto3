@@ -74,8 +74,9 @@ class AdminController
         {
             $usuario = $_POST["usuario"];
             $contrasenna = $_POST["contrasenna"];
+            $email = $_POST["email"];
 
-            $admin = new Admin("", $usuario, $contrasenna);
+            $admin = new Admin("", $usuario, $contrasenna, $email);
             $admin->insert();
         }
         header("Location: /reto3/");
@@ -96,8 +97,9 @@ class AdminController
             $idAdministrador=$_POST["idAdministrador"];
             $usuario=$_POST["usuario"];
             $contrasenna=$_POST["contrasenna"];
+            $email = $_POST["email"];
 
-            $admin=new Admin("", $usuario, $contrasenna);
+            $admin=new Admin("", $usuario, $contrasenna, $email);
             $admin->update($idAdministrador);
         }
         header("Location: /reto3/");
