@@ -52,7 +52,7 @@
 </nav>
 <div class="collapse position-fixed w-100 d-lg-none" id="categoria-collapse">
     {% for categoria in categorias %}
-        <a class="list-group-item list-group-item-action navbar-scrollspy text-center border-right-0 border-left-0" href="#categoria-{{ categoria.nombre|replace({" ": "-"}) }}">{{ categoria.nombre }}</a>        
+        <a class="list-group-item list-group-item-action navbar-scrollspy text-center border-right-0 border-left-0" href="#categoria-{{ categoria.nombre|replace({" ": "-"}) }} ">{{ categoria.nombre }}</a>        
     {% endfor %}
 </div>
 <div id="carrito-collapse" class="collapse position-fixed w-100 d-lg-none">
