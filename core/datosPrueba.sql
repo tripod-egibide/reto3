@@ -1,4 +1,4 @@
-INSERT INTO `categoria` (`idCategoria`, `nombre`, `emailDepartamento`, `preferencia`) VALUES
+INSERT INTO `Categoria` (`idCategoria`, `nombre`, `emailDepartamento`, `preferencia`) VALUES
 (1, 'Fritos', 'mygoldxp@msn.com', '1'),
 (2, 'Entrantes', 'mygoldxp@msn.com', '2'),
 (3, 'Pescados', 'mygoldxp@msn.com', '3'),
@@ -9,12 +9,12 @@ INSERT INTO `categoria` (`idCategoria`, `nombre`, `emailDepartamento`, `preferen
 (8, 'Tartas variadas', 'mygoldxp@msn.com', '8'),
 (9, 'Variedades', 'mygoldxp@msn.com','9');
 
-INSERT INTO `tipoventa` (`idTipoVenta`, `tipoVenta`) VALUES
+INSERT INTO `TipoVenta` (`idTipoVenta`, `tipoVenta`) VALUES
 (1, 'raciones'),
 (2, 'kilos'),
 (3, 'unidades');
 
-INSERT INTO `plato` (`nombre`, `precio`, `unidadesMinimas`, `notas`, `imagen`, `idCategoria`, `idTipoVenta`, `estado`) VALUES
+INSERT INTO `Plato` (`nombre`, `precio`, `unidadesMinimas`, `notas`, `imagen`, `idCategoria`, `idTipoVenta`, `estado`) VALUES
 ('Croquetas de hongos', 5, 2, 'Ración 12 unidades', 'img/plato/croquetas-de-hongos.jpg', 1, 1, 1),
 ('Croquetas de jamón ibérico', 5, 2, 'Ración 12 unidades', 'img/plato/croquetas-de-jamon-iberico.jpg', 1, 1, 1),
 ('Tigres (mejillones rellenos)', 5.3, 2, 'Ración 12 unidades', 'img/plato/tigres.jpg', 1, 1, 1),
