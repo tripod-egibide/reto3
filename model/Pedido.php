@@ -93,19 +93,39 @@ class Pedido
         return connection()->query("SELECT * FROM Pedido")->fetchAll();
     }
 
+    public static function getByNombre($nombre)
+    {
+        return preparedStatement("SELECT * FROM Pedido WHERE nombre like :nombre", ["nombre" => "%$nombre%"])->fetchAll();
+    }
+
+    public static function getByApellidos($apellidos)
+    {
+        return preparedStatement("SELECT * FROM Pedido WHERE apellidos like :apellidos", ["apellidos" => "%$apellidos%"])->fetchAll();
+    }
+
     public static function getByString($string)
     {
         return preparedStatement("SELECT * FROM Pedido WHERE nombre like :string or apellidos like :string", ["string" => $string])->fetchAll();
     }
 
+    public static function getByEmail($email)
+    {
+        return preparedStatement("SELECT * FROM Pedido WHERE email like :email", ["email" => "%$email%"])->fetchAll();
+    }
+
     public static function getByTelf($telf)
     {
-        return preparedStatement("SELECT * FROM Pedido WHERE telefono like :telf ", ["telf" => $telf])->fetchAll();
+        return preparedStatement("SELECT * FROM Pedido WHERE telefono like :telf ", ["telf" => "%$telf%"])->fetchAll();
     }
 
     public static function getByDate($fechaI, $fechaF)
     {
-        return preparedStatement("SELECT * FROM Pedido WHERE fechaEntrega between fechaI and fechaF ", ["fechaI" => $fechaI, "fechaF" => $fechaF])->fetchAll();
+        return preparedStatement("SELECT * FROM Pedido WHERE fechaEntrega between :fechaI and :fechaF ", ["fechaI" => $fechaI, "fechaF" => $fechaF])->fetchAll();
+    }
+
+    public static function getByConfirmado($confirmado)
+    {
+        return preparedStatement("SELECT * FROM Pedido WHERE confirmado = :confirmado", ["confirmado" => $confirmado])->fetchAll();
     }
 
     public static function getAllDetallePedidoByIdPedido($idPedido)
