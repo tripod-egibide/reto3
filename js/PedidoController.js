@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
     // Ver pedidos
-    $(document).on('click', '#ver-pedidos', function(){
+    $(document).on('click', '#verTodosPedidos', function(){
         recargarListaPedidos();
     });
 
@@ -30,7 +30,7 @@ $(document).ready(function(){
             url: 'index.php',
             data: {'c':'pedido', 'a': 'eliminar', 'idPedido': idPedido}
         }).done(function(){
-            location.reload();
+            recargarListaPedidos();
         });
     });
 
@@ -46,6 +46,69 @@ $(document).ready(function(){
         "fecha": $($(this).parents("tr").find("td")[4]).text()
         }
         confirmarPedido(objeto);
+    });
+
+    // Buscar pedido por nombre
+    $(document).on('click', '#buscarPedidosNombre', function(){
+        let nombre=$("#buscarPedidosNombre1").val();
+        if(nombre!=="")
+        {
+            let datos={'tipo':'nombre', 'nombre':nombre};
+            buscarPedidos(datos);
+        }
+    });
+
+    // Buscar pedido por correo electrónico
+    $(document).on('click', '#buscarPedidosEmail', function(){
+        let email=$("#buscarPedidosEmail1").val();
+        if(email!=="")
+        {
+            let datos={'tipo':'email', 'email':email};
+            buscarPedidos(datos);
+        }
+    });
+
+    // Buscar pedido por teléfono
+    $(document).on('click', '#buscarPedidosTelefono', function(){
+        let telefono=$("#buscarPedidosTelefono1").val();
+        if(telefono!==""&&telefono>=0)
+        {
+            let datos={'tipo':'telefono', 'telefono':telefono};
+            buscarPedidos(datos);
+        }
+    });
+
+    // Buscar pedido por apellidos
+    $(document).on('click', '#buscarPedidosApellido', function(){
+        let apellido=$("#buscarPedidosApellido1").val();
+        if(apellido!=="")
+        {
+            let datos={'tipo':'apellido', 'apellido':apellido};
+            buscarPedidos(datos);
+        }
+    });
+
+    // Buscar pedido por fecha
+    $(document).on('click', '#buscarPedidosFecha', function(){
+        let fecha1=$("#buscarPedidosFecha1").val();
+        let fecha2=$("#buscarPedidosFecha2").val();
+
+        if(fecha1!==""&&fecha2!=="")
+        {
+            if(Date.parse(fecha1)<=Date.parse(fecha2))
+            {
+                let datos={'tipo':'fecha', 'fecha1':fecha1, 'fecha2':fecha2};
+                buscarPedidos(datos);
+            }
+
+        }
+    });
+
+    // Buscar pedido por estado
+    $(document).on('click', '#buscarPedidosEstado', function(){
+        let estado=($("#buscarPedidosEstado1").prop("checked")) ? 1 : 0;
+        let datos={'tipo':'estado', 'estado':estado};
+        buscarPedidos(datos);
     });
 });
 
@@ -144,6 +207,20 @@ function cargarPedido(platos) {
 
         tabla.append("</tbody>");
     }
+}
+
+function buscarPedidos(datos) {
+    $.ajax({
+        method: 'GET',
+        url: 'index.php?c=pedido&a=search',
+        data: datos,
+        dataType: 'JSON'
+    }).done(function(data){
+        cargarPedidos(data);
+        $("#buscarPedidos").collapse('hide');
+        $("#buscarPedidos :checkbox").prop("checked", false);
+        $("#buscarPedidos :input").val("");
+    });
 }
 
 function formatearPrecio(precio){

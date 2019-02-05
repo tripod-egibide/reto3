@@ -51,6 +51,10 @@ class PedidoController
                 $this->pedidoConfirmado();
                 break;
 
+            case 'search':
+                $this->search();
+                break;
+
             default:
                 $this->realizar();
                 break;
@@ -70,9 +74,12 @@ class PedidoController
 
     private function getAll()
     {
-        $pedidos = Pedido::getAll();
-        header('Content-type: application/json');
-        echo json_encode($pedidos);
+        if(isset($_SESSION["administrador"]))
+        {
+            $pedidos = Pedido::getAll();
+            header('Content-type: application/json');
+            echo json_encode($pedidos);
+        }
 
     }
 
@@ -230,5 +237,36 @@ class PedidoController
         } else {
             return true;
         }
+    }
+
+    private function search()
+    {
+        if(isset($_SESSION["administrador"]))
+        {
+            $pedidos = Array();
+            switch ($_GET["tipo"]) {
+                case "nombre":
+                    $pedidos = Pedido::getByNombre($_GET["nombre"]);
+                    break;
+                case "apellido":
+                    $pedidos = Pedido::getByApellidos($_GET["apellido"]);
+                    break;
+                case "email":
+                    $pedidos = Pedido::getByEmail($_GET["email"]);
+                    break;
+                case "telefono":
+                    $pedidos = Pedido::getByTelf($_GET["telefono"]);
+                    break;
+                case "fecha":
+                    $pedidos = Pedido::getByDate($_GET["fecha1"], $_GET["fecha2"]);
+                    break;
+                case "estado":
+                    $pedidos = Pedido::getByConfirmado($_GET["estado"]);
+                    break;
+            }
+            header('Content-type: application/json');
+            echo json_encode($pedidos);
+        }
+
     }
 }
