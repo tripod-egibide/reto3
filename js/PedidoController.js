@@ -175,8 +175,7 @@ function confirmarPedido(objeto){
             if (res == "Ok") {
                 recargarListaPedidos();
             }else{
-                $("#textoError").html("Hubo un error al grabar el Confirmar el pedido.");
-                $("#modalError").modal();
+                throw "Hubo un error al grabar el Confirmar el pedido.";
             }
         });
     }catch(er){
