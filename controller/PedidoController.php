@@ -15,7 +15,7 @@ class PedidoController
         require_once __DIR__ . "/../model/Categoria.php";
         require_once __DIR__ . "/../model/Pedido.php";
         require_once __DIR__ . "/../model/Plato.php";
-        require_once __DIR__ . "/../model/admin.php";
+        require_once __DIR__ . "/../model/Admin.php";
         require_once __DIR__ . "/../core/twig.php";
 
         switch ($action) {
