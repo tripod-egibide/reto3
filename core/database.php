@@ -3,7 +3,7 @@ function connection()
 {
     $host = "192.168.2.16";
     $port = "3306";
-    $user = "reto";
+    $user = "reto3";
     $pass = "ProyectoReto3$";
     $database = "reto3";
     $con = new PDO("mysql:$host;port=$port;dbname=$database;charset=UTF8", $user, $pass);
