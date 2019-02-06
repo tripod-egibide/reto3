@@ -93,7 +93,7 @@ class Plato
 
     public static function delete($idPlato)
     {
-        return preparedStatement("DELETE FROM plato WHERE idPlato = :idPlato ", ["idPlato" => $idPlato])->fetchAll();
+        preparedStatement("DELETE FROM plato WHERE idPlato = :idPlato ", ["idPlato" => $idPlato]);
     }
 
     public static function getAll()
