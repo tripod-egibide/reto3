@@ -1,0 +1,62 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top border-bottom">
+    <a class="navbar-brand" href="#"><img src="/reto3/img/logo-restaurant.png" alt="Egibide Hostelería" height=32px></a>
+    <a id="carrito-navbar" class="d-lg-none ml-auto mr-1 btn btn-outline-primary border-0" data-toggle="collapse" href="#carrito-collapse" role="button">
+        <i class="material-icons align-middle">shopping_cart</i>
+    </a>
+    <a class="d-lg-none mr-4 btn btn-outline-primary border-0" data-toggle="collapse" href="#categoria-collapse" role="button">
+        <i class="material-icons align-middle">filter_list</i>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item text-center">
+                <a class="nav-link" href="https://www.egibide.org/campus-mendizorrotza/">Contacto</a>
+            </li>
+            <li class="nav-item text-center">
+                <a class="nav-link" href="https://www.egibide.org/">Egibide</a>
+            </li>
+            {% if administrador %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle btn btn-outline-primary" href="#" id="navbarDropdown" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Administración
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#" id="ver-pedidos" data-toggle="modal" data-target="#verPedidosModal">Ver pedidos</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#" id="nuevo-plato">Nuevo plato</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#" id="admin-modal" data-toggle="modal" data-target="#adminModal">Modificar administradores</a>
+                    <a class="dropdown-item" href="#" id="categoria-modal" data-toggle="modal" data-target="#categoriaModal">Modificar categorías</a>
+                    <a class="dropdown-item" href="#" id="tipoVenta-modal" data-toggle="modal" data-target="#tipoVentaModal">Modificar tipos de venta</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/reto3/?c=admin&a=logout" id="cerrar-sesion">Cerrar sesión</a>
+                </div>
+            </li>
+            {% endif %}
+        </ul>
+        <div class="nav-item form-inline my-2 my-lg-0 input-group w-25 mx-auto mx-lg-1">
+            <input class="form-control" type="text" placeholder="Búsqueda" aria-label="Search" id="search">
+            <div class="input-group-append">
+                <span class="input-group-text py-0"><i class="material-icons align-bottom">search</i></span>
+            </div>
+        </div>
+    </div>
+
+    
+</nav>
+<div class="collapse position-fixed w-100 d-lg-none" id="categoria-collapse">
+    {% for categoria in categorias %}
+        <a class="list-group-item list-group-item-action navbar-scrollspy text-center border-right-0 border-left-0" href="#categoria-{{ categoria.nombre|replace({" ": "-"}) }} ">{{ categoria.nombre }}</a>        
+    {% endfor %}
+</div>
+<div id="carrito-collapse" class="collapse position-fixed w-100 d-lg-none">
+    <div class="card border-top-0 border-right-0 border-left-0 rounded-0 border-primary">
+        {% include "carrito.twig" %}
+    </div>
+</div>

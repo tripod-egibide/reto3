@@ -1,0 +1,10 @@
+<nav class="col-2 d-none d-lg-block align-self-start position-fixed sticky">
+    <span id="scrollspy-hide">
+        <h4 class="text-center">Categorías</h4>
+        <nav id="scrollspy" class="list-group">
+            {% for categoria in categorias %}
+                <a class="list-group-item list-group-item-action" href="#categoria-{{ categoria.nombre|replace({" ": "-"}) }}">{{ categoria.nombre }}</a>
+            {% endfor %} 
+        </nav>
+    </span>
+</nav>

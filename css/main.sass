@@ -1,0 +1,62 @@
+$theme-colors: ("primary": #8B0066, "oldprimary": #0074d9)
+
+@import "bootstrap/scss/bootstrap";
+
+
+
+html
+  scroll-behavior: smooth
+  min-height: 100%
+
+body
+  min-height: 100vh
+  
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button
+  -webkit-appearance: none
+  margin: 0; 
+
+input[type="number"]
+  -moz-appearance: textfield
+
+.prepend-min
+  min-width: 50px
+
+.sticky
+  top: 30%;
+
+nav.sticky
+  transform: translate(0, -30%)
+
+#carrito
+  transform: translate(100%, -30%)
+
+nav.sticky, #catalogo, #carrito
+  transition: 0.3s ease
+
+.categoria-anchor
+  position: relative
+  top: -55px
+
+
+#categoria-collapse
+  z-index: 2001
+
+  .list-group-item:first-child
+    border-top: 0 none
+    border-top-left-radius: 0
+    border-top-right-radius: 0
+
+#carrito-collapse
+  z-index: 2000
+
+footer
+  bottom: 0px
+
+  .material-icons
+    font-size: 125%
+
+@include media-breakpoint-up(md)
+  .modal-xl
+    width: 90%
+    max-width: 1200px

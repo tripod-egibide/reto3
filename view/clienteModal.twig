@@ -1,0 +1,97 @@
+<div id="modalCliente" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Datos del Cliente</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!--- cuerpo del modal--->
+                <form data-toggle="validator" role="form" id="formularioCliente">
+                    <div class="form-row">
+                        <div class="col-12">
+                            <label for="nombreCliente">Nombre:</label>
+                            <input class="form-control" type="text" id="nombreCliente" required>
+                            <small class="form-text text-muted">
+                                Necesitamos su nombre, para poder dirigirle.
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-12">
+                            <label for="apellidosCliente">Apellidos:</label>
+                            <input class="form-control" type="text" id="apellidosCliente" required>
+                            <small class="form-text text-muted">
+                                Necesitamos al menos un Apellido.
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-6">
+                            <label for="emailCliente">Email:</label>
+                            <input class="form-control" type="email" id="emailCliente" required>
+                            <small class="form-text text-muted">
+                                Lo necesitamos para mandarle el email de confirmaci&oacute;n.
+                            </small>
+                        </div>
+                        <div class="col-6">
+                            <label for="telefonoCliente">Tel&eacute;fono:</label>
+                            <input class="form-control" type="tel" id="telefonoCliente">
+                            <small class="form-text text-muted">
+                                Es opcional, pero recomendamos indicarnos un tel&eacute;fono.
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-6">
+                            <label for="fechaCliente">Fecha de recogida:</label>
+                            <input class="form-control" type="date" id="fechaCliente" required/>
+                            <small class="form-text text-muted">
+                                S&oacute;lo podemos entregar los mi&eacute;rcoles a s&aacute;bado, entre las 11:30 hasta las 20:00.
+                            </small>
+                        </div>
+                        <div class="col-6">
+                            <label for="fechaCliente"><br>Recuerde que los pedidos se deben realizar con 4 d&iacute;as de antelaci&oacute;n y el pago de la misma
+                            se efectuar&aacute; en la cafeter&iacute;a del centro.</label>
+                        </div>
+                    </div>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="estado" checked required>
+                        <label class="form-check-label" for="estado">Acepto el <a href="#" target="_blank">RGPD</a>
+                            y las <a href="#" target="_blank">Condiciones Generales de compra</a></label>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancelar">
+                        <input type="submit" class="btn btn-primary" id="confirmarCliente" value="Confirmar">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="modalClienteFinalizado" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Pedido enviado</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!--- cuerpo del modal--->
+                <label>Recibir&aacute; un email con la confirmaci&oacute;n de su pedido.</label>
+            </div>
+            <div class="modal-footer">
+                <input type="button" class="btn btn-primary" id="clienteDespedida" data-dismiss="modal" value="Gracias">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
