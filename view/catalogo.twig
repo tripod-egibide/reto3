@@ -1,0 +1,57 @@
+
+<div class="card border-top-0 mb-5">
+    {% for categoria in categorias if categoria.platos %}
+    <span class="categoria">
+        <span id="categoria-{{ categoria.nombre|replace({" " : "-"}) }}" class="categoria-anchor"></span>
+        <div class="card-body bg-light border-top">
+            <h1 class="card-title text-center text-primary">{{ categoria.nombre }}</h1>
+        </div>
+        <ul class="platos list-group list-group-flush container-fluid px-0">
+            {% for plato in categoria.platos %}
+            <li class="plato list-group-item list-group-item-action row d-flex align-items-center p-0 mx-0" id="plato{{ plato.idPlato }}">
+                <img src="{{ plato.imagen }}" class="imagen-plato col-3 border-right px-0 d-none d-md-block"/>
+                <div class="col-6">
+                    <h3 class="mb-1 text-dark">{{ plato.nombre }}</h3>
+                    <p class="mb-1">{{ plato.notas }}</p>
+                    <small class="text-muted">
+                        {% if plato.unidadesMinimas > 1 %}
+                        Mínimo {{ plato.unidadesMinimas }} {{ plato.tipoVenta }}.
+                        {% else %}
+                        Vendido por {{ plato.tipoVenta }}.
+                        {% endif %}
+                    </small>
+                </div>
+                <div class="col-6 col-md-3 d-flex flex-wrap align-items-center justify-content-end">
+                    {% if administrador %}
+                    <button class="btn btn-oldprimary botonEditar" type="button" value="{{ plato.idPlato }}"><i class="material-icons align-bottom">edit</i></button>
+                    <button class="btn {% if plato.estado == 1 %} btn-success {% else %} btn-danger {% endif %} botonEliminar ml-1"
+                        type="button" value="{{ plato.idPlato }}"><i class="material-icons align-bottom">{% if
+                            plato.estado == 1 %} visibility {% else %} visibility_off {% endif %}</i></button>
+                    {% else %}
+                    <div>
+                        <span class="text-center d-block">
+                            {{ plato.precio }}€ por unidad.
+                        </span>
+                        <form class="form-plato input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text prepend-min">Cant. </span>
+                            </div>
+                            <input type="number" name="cantidad" class="form-control text-right" min="{{ plato.unidadesMinimas }}"
+                                value="{{ plato.unidadesMinimas }}" aria-describedby="inputGroup-sizing-lg"/>
+                            <input type="hidden" name="id" value="{{ plato.idPlato }}"/>
+                            <input type="hidden" name="nombre" value="{{ plato.nombre }}"/>
+                            <input type="hidden" name="precio" value="{{ plato.precio }}"/>
+                            <input type="hidden" name="unidadesMinimas" value="{{ plato.unidadesMinimas }}"/>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary py-0 px-1" type="submit"><i class="material-icons align-bottom">add_shopping_cart</i></button>
+                            </div>
+                        </form>
+                    </div>
+                    {% endif %}
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </span>
+    {% endfor %}
+</div>
