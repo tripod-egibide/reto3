@@ -1,0 +1,55 @@
+{% extends "base.twig" %}
+
+{% block titulo %}
+Catálogo
+{% endblock titulo %}
+
+{% block cuerpo %}
+{# página principal, estará compuesta de una estructura básica y muchos bloques enlazando a otras vistas #}
+{# prototipo, no funciona nada #}
+
+{% include "navbar.twig" %}
+
+
+<main class="container-fluid my-2">
+    <div class="row">
+
+        {% include "navCategoria.twig" %}
+        <!-- Se carga a través de JS, véase catalogo.js -->
+        <div class="col {{ administrador or not carrito ? "col-lg-10" : "col-lg-7" }} offset-lg-2" id="catalogo">
+        </div>
+        
+        {% if not administrador %}
+        <aside id="carrito" class="col-3 d-none d-lg-block align-self-start position-fixed offset-9 sticky">
+            <div class="card border-primary">
+                    <h3 class="card-header d-flex justify-content-between bg-light">
+                        <span class="text-dark">
+                            Cesta
+                        </span>
+                    </h3>
+                {% include "carrito.twig" %}
+            </div>
+        </aside>
+        {% endif %}
+
+    </div>
+    {% include "clienteModal.twig" %}
+    {% include "errorModal.twig" %}
+</main>
+
+<footer class="col col-lg-7 offset-lg-2 d-flex text-muted position-absolute">
+    <p class="col d-flex justify-content-center align-items-center px-0 my-auto"><i class="material-icons">copyright</i>
+        2019 Tripod, Inc.
+    </p>
+    <div class="col d-flex justify-content-center align-items-center px-0 my-auto">
+        <a href="https://github.com/tripod-egibide/reto3" target="_blank" class="text-muted"><i class="material-icons align-middle">code</i></a>
+        <a href="/Documentacion/Manual%20del%20Usuario.pdf" id="ayuda" target="_blank" class="text-muted"><i class="material-icons align-middle">help_outline</i></a>
+        <a id="email" href="mailto:tripod@tripod.com" class="text-muted"><i class="material-icons align-middle">email</i></a>
+    </div>
+</footer>
+
+{% if administrador %}
+    {% include "adminModal.twig" %}
+{% endif %}
+
+{% endblock cuerpo %}

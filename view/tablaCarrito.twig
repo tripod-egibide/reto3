@@ -1,0 +1,33 @@
+{% if carrito is not empty %}
+<table class="tabla-carrito table table-hover table-borderless mb-0 text-center">
+    <thead>
+        <tr>
+            <th class="border-top-0 border-bottom px-1 align-middle">Nombre</th>
+            <th class="border-top-0 border-bottom px-1 align-middle">Cant.</th>
+            <th class="border-top-0 border-bottom px-1 align-middle">Coste</th>
+            <th class="border-top-0 border-bottom px-1 align-middle"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for id, plato in carrito %}
+        <tr>
+            <input type="hidden" value="{{ id }}">
+            <td class="border-top-0 align-middle p1 pl-0">{{ plato.nombre }}</td>
+            <td class="border-top-0 align-middle p1 w-25"><input type="number" class="cantidad-carrito form-control text-center border-0"
+                    value={{ plato.cantidad }} min={{ plato.unidadesMinimas }}></td>
+            <td class="border-top-0 align-middle p1">
+                <span class="carrito-coste">
+                    {{ (plato.precio * plato.cantidad)|number_format(2, '.', ',') }}</span>€
+            </td>
+            <td class="carrito-eliminar border-top-0 align-middle p1">
+                <button class="carrito-eliminar btn btn-outline-danger border-0">
+                    <i class="material-icons p-0 m-0 align-bottom">cancel</i>
+                </button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<h5 class="my-5 text-muted text-center">Su carrito est&aacute; vac&iacute;o.</h5>
+{% endif %}
