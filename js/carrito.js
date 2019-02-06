@@ -144,7 +144,7 @@ function enviarPedido() {
             "apellidos": $("#apellidosCliente").val(),
             ["email"]: $("#emailCliente").val(),
             "fechaEntrega": $("#fechaCliente").val(),
-            "total": $(".carrito-total").text().substring(0, $(".carrito-total").text().length - 1)
+            "total": $(".carrito-total")[0]["innerText"].substring(0, $(".carrito-total")[0]["innerText"].length - 1)
         },
         "carrito": carrito
     };
