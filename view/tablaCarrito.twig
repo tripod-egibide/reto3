@@ -16,7 +16,8 @@
             <td class="border-top-0 align-middle p1 w-25"><input type="number" class="cantidad-carrito form-control text-center border-0"
                     value={{ plato.cantidad }} min={{ plato.unidadesMinimas }}></td>
             <td class="border-top-0 align-middle p1">
-                <span class="carrito-coste">{{ plato.precio * plato.cantidad }}</span>€
+                <span class="carrito-coste">
+                    {{ (plato.precio * plato.cantidad)|number_format(2, '.', ',') }}</span>€
             </td>
             <td class="carrito-eliminar border-top-0 align-middle p1">
                 <button class="carrito-eliminar btn btn-outline-danger border-0">

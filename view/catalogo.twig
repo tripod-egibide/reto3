@@ -1,4 +1,3 @@
-
 <div class="card border-top-0 mb-5">
     {% for categoria in categorias if categoria.platos %}
     <span class="categoria">
@@ -24,7 +23,7 @@
                 <div class="col-6 col-md-3 d-flex flex-wrap align-items-center justify-content-end">
                     {% if administrador %}
                     <button class="btn btn-oldprimary botonEditar" type="button" value="{{ plato.idPlato }}"><i class="material-icons align-bottom">edit</i></button>
-                    <button class="btn {% if plato.estado == 1 %} btn-success {% else %} btn-danger {% endif %} botonEliminar ml-1"
+                    <button class="btn {% if plato.estado == 1 %} btn-success {% else %} btn-danger {% endif %} botonOcultar ml-1"
                         type="button" value="{{ plato.idPlato }}"><i class="material-icons align-bottom">{% if
                             plato.estado == 1 %} visibility {% else %} visibility_off {% endif %}</i></button>
                     {% else %}
