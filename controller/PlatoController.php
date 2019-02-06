@@ -112,7 +112,7 @@ class PlatoController
                 }else{
                     $uploadedFile = "/reto3/img/logo-restaurant.png";
                 }
-                $plato = new Plato($_POST['idPlato'], $_POST['nombre'], $_POST['precio'], $_POST['unidadesMinimas'], $_POST['notas'], $uploadedFile,
+                $plato = new Plato('', $_POST['nombre'], $_POST['precio'], $_POST['unidadesMinimas'], $_POST['notas'], $uploadedFile,
                     $_POST['idCategoria'], $_POST['idTipoVenta'], $_POST['estado']);
                 $plato->insert();
             }
