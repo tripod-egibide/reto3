@@ -35,10 +35,6 @@ class PedidoController
                 $this->eliminar();
                 break;
 
-            case 'detalles':
-                $this->detalles();
-                break;
-
             case 'pedidoConfirmado':
                 pedidoConfirmado();
                 break;
@@ -49,10 +45,6 @@ class PedidoController
 
             case 'search':
                 $this->search();
-                break;
-
-            default:
-                $this->realizar();
                 break;
         }
     }
@@ -123,21 +115,6 @@ class PedidoController
             $estado = "Error";
         }
         echo $estado;
-    }
-
-    private function detalles()
-    {
-        // temp
-    }
-
-    private function realizar()
-    {
-        // temp
-    }
-
-    private function login()
-    {
-        // temp
     }
 
     private function search()

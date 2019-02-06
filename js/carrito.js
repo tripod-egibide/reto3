@@ -25,12 +25,14 @@ $("#carrito-navbar").popover({
 function habilitarBotonCompra() {
     $(".form-plato").submit((evento) => {
         let form = ($(evento.target)).serializeArray();
-        let plato = { "cantidad": form[0].value,
+        let plato = {
+            "cantidad": form[0].value,
             "nombre": form[2].value,
             "precio": +form[3].value,
-            "unidadesMinimas": +form[4].value };
+            "unidadesMinimas": +form[4].value
+        };
         let id = form[1].value;
-        
+
         carrito[id] = {
             "cantidad": carrito[id] ? carrito[id].cantidad + +plato.cantidad : +plato.cantidad,
             "precio": plato.precio,
@@ -51,47 +53,47 @@ function habilitarBotonCompra() {
 }
 
 function cargarCarrito() {
-    $(".tabla-carrito").html(Twig.twig({ "ref": "carrito" }).render({ "carrito": carrito }));
+    $(".tabla-carrito").html(Twig.twig({"ref": "carrito"}).render({"carrito": carrito}));
     habilitarCambiosAutomaticos();
     calcularCosteTotal();
 
     if (!administrador) {
         if (jQuery.isEmptyObject(carrito)) {
-            $('#carrito').css({ "transform": "translate(100%, -30%)" });     
+            $('#carrito').css({"transform": "translate(100%, -30%)"});
         } else {
-            $('#carrito').css({ "transform": "translate(0%, -30%)" });
+            $('#carrito').css({"transform": "translate(0%, -30%)"});
         }
     }
-    $(".finalizarPedido").click(function(){
+    $(".finalizarPedido").click(function () {
         $("#carrito-collapse").collapse("hide");
         $("#modalCliente").modal();
     });
-    $("#formularioCliente").submit(function(ev) {
+    $("#formularioCliente").submit(function (ev) {
         ev.preventDefault();
         enviarPedido();
     });
 
-    $("#clienteDespedida").click(function() {
+    $("#clienteDespedida").click(function () {
         location.reload(true);
     });
 
     let fecha = new Date();
-    fecha.setDate(fecha.getDate()+4);
-    fecha = fecha.toJSON().slice(0,10)
+    fecha.setDate(fecha.getDate() + 4);
+    fecha = fecha.toJSON().slice(0, 10)
 
     $("#fechaCliente").prop("min", fecha);
 
-    $("#fechaCliente").change(function(){
+    $("#fechaCliente").change(function () {
         var dt = new Date($("#fechaCliente").val());
-        try{
-            if(dt.getUTCDay() == 0 || dt.getUTCDay() == 1  || dt.getUTCDay() == 2){
+        try {
+            if (dt.getUTCDay() == 0 || dt.getUTCDay() == 1 || dt.getUTCDay() == 2) {
                 $("#fechaCliente").val("");
                 throw "Ahora mismo s&oacute;lo aceptamos recogidas de mi&eacute;rcoles a s&aacute;bado.";
             }
         }
-        catch(er){
-        $("#textoError").html(er.toString());
-        $("#modalError").modal();
+        catch (er) {
+            $("#textoError").html(er.toString());
+            $("#modalError").modal();
         }
     });
 }
@@ -132,40 +134,40 @@ function almacenarCarrito() {
 }
 
 
-function enviarPedido(){
+function enviarPedido() {
     let pedido = {
         "cliente": {
             "nombre": $("#nombreCliente").val(),
             "apellidos": $("#apellidosCliente").val(),
-            ["email"] : $("#emailCliente").val(),
+            ["email"]: $("#emailCliente").val(),
             "fechaEntrega": $("#fechaCliente").val(),
             "total": $(".carrito-total").text().substring(0, $(".carrito-total").text().length - 1)
         },
         "carrito": carrito
     };
     //hemos pensado en annadir algo de expresion regular
-    if(
+    if (
         /^[6789][0-9]{8}$/.test($("#telefonoCliente").val())
-    ){
+    ) {
         pedido["cliente"]["telefono"] = $("#telefonoCliente").val();
-    }else{
+    } else {
         pedido["cliente"]["telefono"] = "";
     }
-        $.post("/reto3/?c=pedido&a=addPedido", pedido, (res) => {
-            try{
-                if (res == "Ok"){
-                    $("#modalCliente").modal("hide");
-                    $("#modalClienteFinalizado").modal();
-                    localStorage.removeItem("carrito");
-                }
-                else {
-                    throw "Ha habido un fallo al grabar el pedido.<br>Int&eacute;ntelo de nuevo pasados unos minutos.<br>Disculpen las molestias.";
-                }
+    $.post("/reto3/?c=pedido&a=addPedido", pedido, (res) => {
+        try {
+            if (res == "Ok") {
+                $("#modalCliente").modal("hide");
+                $("#modalClienteFinalizado").modal();
+                localStorage.removeItem("carrito");
             }
-            catch(er){
-                $("#textoError").html(er.toString());
-                $("#modalError").modal();
+            else {
+                throw "Ha habido un fallo al grabar el pedido.<br>Int&eacute;ntelo de nuevo pasados unos minutos.<br>Disculpen las molestias.";
             }
-        });
+        }
+        catch (er) {
+            $("#textoError").html(er.toString());
+            $("#modalError").modal();
+        }
+    });
 
 }
