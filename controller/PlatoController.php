@@ -11,10 +11,6 @@ class PlatoController
         require_once __DIR__ . "/../model/Plato.php";
         require_once __DIR__ . "/../core/twig.php";
         switch ($action) {
-            case 'nuevo':
-                $this->nuevo();
-                break;
-
             case 'edit':
                 $this->edit();
                 break;
@@ -100,12 +96,6 @@ class PlatoController
         echo json_encode($data);
     }
 
-
-    private function nuevo()
-    {
-        // temp
-        // éste sería el que carga la página del formulario
-    }
 
     private function insert()
     {
