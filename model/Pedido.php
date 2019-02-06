@@ -90,42 +90,42 @@ class Pedido
         // esta función, como las otras get, seguramente tendrán que ser modificadas luego para paginar
         // si no, podríamos estar cargando cientos de platos a la vez
         // (aunque realísticamente el restaurante querría tener todos sus platos visibles, y no tendrían tantos en primer lugar)
-        return connection()->query("SELECT * FROM Pedido")->fetchAll();
+        return connection()->query("SELECT * FROM Pedido ORDER BY fechaEntrega DESC")->fetchAll();
     }
 
     public static function getByNombre($nombre)
     {
-        return preparedStatement("SELECT * FROM Pedido WHERE nombre like :nombre", ["nombre" => "%$nombre%"])->fetchAll();
+        return preparedStatement("SELECT * FROM Pedido WHERE nombre like :nombre ORDER BY fechaEntrega DESC", ["nombre" => "%$nombre%"])->fetchAll();
     }
 
     public static function getByApellidos($apellidos)
     {
-        return preparedStatement("SELECT * FROM Pedido WHERE apellidos like :apellidos", ["apellidos" => "%$apellidos%"])->fetchAll();
+        return preparedStatement("SELECT * FROM Pedido WHERE apellidos like :apellidos ORDER BY fechaEntrega DESC", ["apellidos" => "%$apellidos%"])->fetchAll();
     }
 
     public static function getByString($string)
     {
-        return preparedStatement("SELECT * FROM Pedido WHERE nombre like :string or apellidos like :string", ["string" => $string])->fetchAll();
+        return preparedStatement("SELECT * FROM Pedido WHERE nombre like :string or apellidos like :string  ORDER BY fechaEntrega DESC", ["string" => $string])->fetchAll();
     }
 
     public static function getByEmail($email)
     {
-        return preparedStatement("SELECT * FROM Pedido WHERE email like :email", ["email" => "%$email%"])->fetchAll();
+        return preparedStatement("SELECT * FROM Pedido WHERE email like :email ORDER BY fechaEntrega DESC", ["email" => "%$email%"])->fetchAll();
     }
 
     public static function getByTelf($telf)
     {
-        return preparedStatement("SELECT * FROM Pedido WHERE telefono like :telf ", ["telf" => "%$telf%"])->fetchAll();
+        return preparedStatement("SELECT * FROM Pedido WHERE telefono like :telf ORDER BY fechaEntrega DESC", ["telf" => "%$telf%"])->fetchAll();
     }
 
     public static function getByDate($fechaI, $fechaF)
     {
-        return preparedStatement("SELECT * FROM Pedido WHERE fechaEntrega between :fechaI and :fechaF ", ["fechaI" => $fechaI, "fechaF" => $fechaF])->fetchAll();
+        return preparedStatement("SELECT * FROM Pedido WHERE fechaEntrega between :fechaI and :fechaF ORDER BY fechaEntrega DESC", ["fechaI" => $fechaI, "fechaF" => $fechaF])->fetchAll();
     }
 
     public static function getByConfirmado($confirmado)
     {
-        return preparedStatement("SELECT * FROM Pedido WHERE confirmado = :confirmado", ["confirmado" => $confirmado])->fetchAll();
+        return preparedStatement("SELECT * FROM Pedido WHERE confirmado = :confirmado  ORDER BY fechaEntrega DESC", ["confirmado" => $confirmado])->fetchAll();
     }
 
     public static function getAllDetallePedidoByIdPedido($idPedido)
