@@ -57,8 +57,6 @@ class Plato
             VALUES (:nombre, :precio, :unidadesMinimas, :notas, :imagen, :idCategoria, :idTipoVenta, :estado)", $dato);
     }
 
-    // realmente no existe un delete, simplemente cambia su estado para mostrar u ocultar.
-    // por motivos de integridad de datos.
     public static function hidden($id)
     {
         preparedStatement("UPDATE plato SET estado = NOT estado WHERE idPlato = :idPlato;", ["idPlato" => $id]);
