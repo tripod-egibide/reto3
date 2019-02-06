@@ -66,8 +66,13 @@ function cargarCarrito() {
         $("#carrito-collapse").collapse("hide");
         $("#modalCliente").modal();
     });
-    $("#confirmarCliente").click(function() {
+    $("#formularioCliente").submit(function(ev) {
+        ev.preventDefault();
         enviarPedido();
+    });
+
+    $("#clienteDespedida").click(function() {
+        location.reload(true);
     });
 }
 
@@ -104,26 +109,40 @@ function almacenarCarrito() {
     determinarAncho(); //catalogo.js
 }
 
-function enviarPedido(){
-    try {
-        let pedido = {
-            "cliente" : {
-                "nombre":$("#nombreCliente").val(), "apellidos":$("#apellidosCliente").val(), "email":$("#emailCliente").val(), "telefono":$("#telefonoCliente").val(),"fechaEntrega":$("#fechaCliente").val(), "total":$("#carrito-total").text().substring(0,$("#carrito-total").text().length-1)
-            },
-            "carrito":carrito
-        };
 
-        $.post("/reto3/?c=pedido&a=addPedido", pedido, (res) => {
-            alert(res);
-            if (res == null) {
-                alert("Hola");
-            }
-            else
-                alert("Hola");
-                throw "Plato no encontrado...";
-        }, "JSON");
-    } catch (er) {
-        $("#textoError").text(er.toString());
-        $("#modalError").modal();
+function enviarPedido(){
+    let pedido = {
+        "cliente": {
+            "nombre": $("#nombreCliente").val(),
+            "apellidos": $("#apellidosCliente").val(),
+            ["email"] : $("#emailCliente").val(),
+            "fechaEntrega": $("#fechaCliente").val(),
+            "total": $("#carrito-total").text().substring(0, $("#carrito-total").text().length - 1)
+        },
+        "carrito": carrito
+    };
+    //hemos pensado en annadir algo de expresion regular
+    if(
+        /^[6789][0-9]{8}$/.test($("#telefonoCliente").val())
+    ){
+        pedido["cliente"]["telefono"] = $("#telefonoCliente").val();
+    }else{
+        pedido["cliente"]["telefono"] = "";
     }
+        $.post("/reto3/?c=pedido&a=addPedido", pedido, (res) => {
+            try{
+                if (res == "Ok"){
+                    $("#modalClienteFinalizado").modal();
+                    localStorage.removeItem("carrito");
+                }
+                else {
+                    throw "Ha habido un fallo al grabar el pedido.<br>Int&eacute;ntelo de nuevo pasados unos minutos.<br>Disculpen las molestias.";
+                }
+            }
+            catch(er){
+                $("#textoError").html(er.toString());
+                $("#modalError").modal();
+            }
+        });
+
 }
