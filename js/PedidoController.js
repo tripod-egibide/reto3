@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
     // Ver pedidos
-    $(document).on('click', '#verTodosPedidos', function(){
+    $(document).on('click', '#ver-pedidos', function(){
         recargarListaPedidos();
     });
 
