@@ -64,38 +64,7 @@ function cargarCarrito() {
             $('#carrito').css({"transform": "translate(0%, -30%)"});
         }
     }
-    $(".finalizarPedido").click(function () {
-        $("#carrito-collapse").collapse("hide");
-        $("#modalCliente").modal();
-    });
-    $("#formularioCliente").submit(function (ev) {
-        ev.preventDefault();
-        enviarPedido();
-    });
 
-    $("#clienteDespedida").click(function () {
-        location.reload(true);
-    });
-
-    let fecha = new Date();
-    fecha.setDate(fecha.getDate() + 4);
-    fecha = fecha.toJSON().slice(0, 10)
-
-    $("#fechaCliente").prop("min", fecha);
-
-    $("#fechaCliente").change(function () {
-        var dt = new Date($("#fechaCliente").val());
-        try {
-            if (dt.getUTCDay() == 0 || dt.getUTCDay() == 1 || dt.getUTCDay() == 2) {
-                $("#fechaCliente").val("");
-                throw "Ahora mismo s&oacute;lo aceptamos recogidas de mi&eacute;rcoles a s&aacute;bado.";
-            }
-        }
-        catch (er) {
-            $("#textoError").html(er.toString());
-            $("#modalError").modal();
-        }
-    });
 }
 
 function habilitarCambiosAutomaticos() {
@@ -133,6 +102,40 @@ function almacenarCarrito() {
     determinarAncho(); //catalogo.js
 }
 
+$(document).ready(function(){
+    $(".finalizarPedido").click(function () {
+        $("#carrito-collapse").collapse("hide");
+        $("#modalCliente").modal();
+    });
+    $("#formularioCliente").submit(function (ev) {
+        ev.preventDefault();
+        enviarPedido();
+    });
+
+    $("#clienteDespedida").click(function () {
+        location.reload(true);
+    });
+
+    let fecha = new Date();
+    fecha.setDate(fecha.getDate() + 4);
+    fecha = fecha.toJSON().slice(0, 10)
+
+    $("#fechaCliente").prop("min", fecha);
+
+    $("#fechaCliente").change(function () {
+        var dt = new Date($("#fechaCliente").val());
+        try{
+            if (dt.getUTCDay() == 0 || dt.getUTCDay() == 1 || dt.getUTCDay() == 2) {
+                $("#fechaCliente").val("");
+                throw "Ahora mismo s&oacute;lo aceptamos recogidas de mi&eacute;rcoles a s&aacute;bado.";
+            }
+        }catch(er){
+            $("#textoError").html(er.toString());
+            $("#modalError").modal();
+        }
+
+    });
+});
 
 function enviarPedido() {
     let pedido = {
