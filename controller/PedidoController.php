@@ -83,7 +83,7 @@ class PedidoController
     {
         if(isset($_SESSION["administrador"]))
         {
-            $platos=Pedido::getAllDetallePedidoByIdPedido($_GET["idPedido"]);
+            $platos=Pedido::getDetallePedidoByIdPedido($_GET["idPedido"]);
             $data=Array();
             foreach ($platos as $plato) {
                 $platosSeleccionado=Plato::getAllById($plato["idPlato"]);

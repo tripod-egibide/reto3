@@ -137,6 +137,11 @@ where detallepedido.idPedido = :idPedido
 group by plato.idCategoria", ["idPedido" => $idPedido])->fetchAll();
     }
 
+    public static function getDetallePedidoByIdPedido($idPedido)
+    {
+        return preparedStatement("SELECT * FROM DetallePedido WHERE idPedido = :idPedido", ["idPedido" => $idPedido])->fetchAll();
+    }
+
     public static function confirmarPedido($idPedido)
     {
         return preparedStatement("UPDATE pedido SET confirmado = 1 WHERE idPedido = :idPedido", ["idPedido" => $idPedido]);
