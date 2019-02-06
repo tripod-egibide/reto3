@@ -68,11 +68,11 @@ function emailConfirmado(){
     return $mensaje;
 }
 
-function emailRecibido(){
+function emailRecibido($idPedido,$cliente){
     $mensaje = "
 <div>
-    <p>Estimado se&ntilde;or/a <b>" . $_POST["nombre"] . ", " . $_POST["apellidos"] . " </b></p>
-    <p>Hemos recibido su pedido con n&uacute;mero <b>". $_POST["idPedido"] . "</b>, recibir&aacute; un email con la confirmaci&oacute;n de su pedido.</p>
+    <p>Estimado se&ntilde;or/a <b>" . $cliente["nombre"] . ", " . $cliente["apellidos"] . " </b></p>
+    <p>Hemos recibido su pedido con n&uacute;mero <b>". $idPedido . ", con importe de " .$cliente["total"] ."&euro;</b>, recibir&aacute; un email con la confirmaci&oacute;n de su pedido.</p>
     <p>Gracias por su confianza.</p>
     <p><img src='cid:logo' alt='Escuela de Hostelería de Egibide Mendizorrotza'> </p>
     </div>
@@ -80,15 +80,15 @@ function emailRecibido(){
     return $mensaje;
 }
 
-function pedidoRecibido(){
-    $titulo = "Pedido " . $_POST["idPedido"] . " Recibido";
+function pedidoRecibido($idPedido, $cliente){
+    $titulo = "Pedido " . $idPedido . " Recibido";
 
-    $mensaje = emailRecibido();
+    $mensaje = emailRecibido($idPedido, $cliente);
 
-    enviarEmail($_POST["email"],$titulo,$mensaje);
+    enviarEmail($cliente["email"],$titulo,$mensaje);
     // envía un mensaje a todos los administradores de que hay un pedido que deben autorizar
-    $mensaje = "Hay un nuevo pedido<br>Puede acceder sus pedidos pulsando <a href='" . $_SERVER["HTTP_HOST"]."/reto3/?c=admin'>Aqu&iacute;</a>";
-    avisoAdmin("Nuevo pedido " . $_POST["idPedido"],$mensaje);
+    $mensaje = "Hay un nuevo pedido<br>Puede acceder a sus pedidos pulsando <a href='local/reto3/?c=admin'>Aqu&iacute;</a>";
+    avisoAdmin("Nuevo pedido " . $idPedido,$mensaje);
 }
 
 function avisoAdmin($titulo,$mensaje){

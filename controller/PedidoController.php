@@ -39,10 +39,6 @@ class PedidoController
                 $this->detalles();
                 break;
 
-            case 'pedidoRecibido':
-                pedidoRecibido();
-                break;
-
             case 'pedidoConfirmado':
                 pedidoConfirmado();
                 break;
@@ -118,6 +114,7 @@ class PedidoController
         if($clave !=null){
             if($pedido->insertDetallePedido($clave[0],$_POST["carrito"]) == "Ok"){
                 $estado = "Ok";
+                pedidoRecibido($clave[0]["idPedido"], $cliente);
             }else{
                 $estado = "Error";
             }
@@ -126,7 +123,6 @@ class PedidoController
             $estado = "Error";
         }
         echo $estado;
-        return $estado;
     }
 
     private function detalles()
