@@ -33,19 +33,19 @@ class Admin
     }
 
     public static function validar($usuario, $contrasenna) {
-        return preparedStatement("SELECT idAdministrador FROM Administrador WHERE usuario = :usuario AND contrasenna = :contrasenna", 
+        return preparedStatement("SELECT idAdministrador FROM administrador WHERE usuario = :usuario AND contrasenna = :contrasenna",
             ["usuario" => $usuario, "contrasenna" => $contrasenna])->fetch(0);
     }
 
     public function insert()
     {
-        preparedStatement("INSERT INTO Administrador (usuario, contrasenna, email) 
+        preparedStatement("INSERT INTO administrador (usuario, contrasenna, email) 
             VALUES (:usuario, :contrasenna, :email)", $this->toArray());
     }
 
     public static function delete($id)
     {
-        preparedStatement("DELETE FROM Administrador WHERE idAdministrador = :idAdministrador", ["idAdministrador" => $id]);
+        preparedStatement("DELETE FROM administrador WHERE idAdministrador = :idAdministrador", ["idAdministrador" => $id]);
     }
 
     public function update($id)
@@ -53,7 +53,7 @@ class Admin
         $data = $this->toArray();
         $data['idAdministrador'] = $id;
 
-        preparedStatement("UPDATE Administrador
+        preparedStatement("UPDATE administrador
             SET usuario = :usuario,
                 contrasenna = :contrasenna,
                 email = :email
@@ -62,7 +62,7 @@ class Admin
 
     public static function getAll()
     {
-        return connection()->query("SELECT * FROM Administrador")->fetchAll();
+        return connection()->query("SELECT * FROM administrador")->fetchAll();
     }
 
     /**

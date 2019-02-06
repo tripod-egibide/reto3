@@ -30,12 +30,12 @@ function enviarEmail($email, $titulo, $mensaje){
         // estructuras html
         $mail->IsHTML(true);
         // usuario del correo
-        $mail->Username = "escueladehosteleriadeegibide@gmail.com";
+        $mail->Username = "xxx@gmail.com";
         //contrasenna del correo
         // por seguridad, empleamos clase de aplicaciones
-        $mail->Password = "xtojutxwusyxoidm";
+        $mail->Password = "contrase";
         // desde la direccion
-        $mail->SetFrom("escueladehosteleriadeegibide@gmail.com");
+        $mail->SetFrom("xxx@gmail.com");
         // titulo
         $mail->Subject = $titulo;
 

@@ -33,12 +33,12 @@ class Categoria
 
     public function insert()
     {
-        preparedStatement("INSERT INTO Categoria (nombre, emailDepartamento, preferencia) VALUES(:nombre, :emailDepartamento, :preferencia)", $this->toArray());
+        preparedStatement("INSERT INTO categoria (nombre, emailDepartamento, preferencia) VALUES(:nombre, :emailDepartamento, :preferencia)", $this->toArray());
     }
 
     public static function delete($id)
     {
-        preparedStatement("DELETE FROM Categoria WHERE idCategoria = :idCategoria", ["idCategoria" => $id]);
+        preparedStatement("DELETE FROM categoria WHERE idCategoria = :idCategoria", ["idCategoria" => $id]);
     }
 
     public function edit($id)
@@ -46,7 +46,7 @@ class Categoria
         $data = $this->toArray();
         $data['idCategoria'] = $id;
 
-        preparedStatement("UPDATE Categoria
+        preparedStatement("UPDATE categoria
             SET nombre = :nombre,
                 emailDepartamento = :emailDepartamento,
                 preferencia = :preferencia
@@ -56,12 +56,12 @@ class Categoria
     public static function findById($id)
     {
         $data = ["idCategoria" => $id];
-        return connection()->query("SELECT * FROM Categoria WHERE idCategoria = :idCategoria", $data)->fetchAll();
+        return connection()->query("SELECT * FROM categoria WHERE idCategoria = :idCategoria", $data)->fetchAll();
     }
 
     public static function getAll()
     {
-        return connection()->query("SELECT * FROM Categoria ORDER BY preferencia")->fetchAll();
+        return connection()->query("SELECT * FROM categoria ORDER BY preferencia")->fetchAll();
     }
 
     /**
