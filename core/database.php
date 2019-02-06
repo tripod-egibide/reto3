@@ -11,6 +11,7 @@ function connection()
     $con->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     return $con;
 }
+
 function preparedStatement($query, $data)
 {
     $con = connection();

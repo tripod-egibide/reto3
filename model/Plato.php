@@ -53,7 +53,7 @@ class Plato
         $dato = $this->toArray();
         unset($dato["idPlato"]);
         var_dump($dato);
-        preparedStatement("INSERT INTO Plato (nombre, precio, unidadesMinimas, notas, imagen, idCategoria, idTipoventa, estado) 
+        preparedStatement("INSERT INTO plato (nombre, precio, unidadesMinimas, notas, imagen, idCategoria, idTipoventa, estado) 
             VALUES (:nombre, :precio, :unidadesMinimas, :notas, :imagen, :idCategoria, :idTipoVenta, :estado)", $dato);
     }
 
@@ -67,7 +67,7 @@ class Plato
         $data = $this->toArray();
         if($data["imagen"]==null){
             unset($data["imagen"]);
-            preparedStatement("UPDATE Plato
+            preparedStatement("UPDATE plato
             SET nombre = :nombre,
                 precio = :precio,
                 unidadesMinimas = :unidadesMinimas,
@@ -77,7 +77,7 @@ class Plato
                 estado = :estado
             WHERE idPlato = :idPlato", $data);
         }else{
-            preparedStatement("UPDATE Plato
+            preparedStatement("UPDATE plato
             SET nombre = :nombre,
                 precio = :precio,
                 unidadesMinimas = :unidadesMinimas,
@@ -93,7 +93,7 @@ class Plato
 
     public static function delete($idPlato)
     {
-        return preparedStatement("DELETE FROM Plato WHERE idPlato = :idPlato ", ["idPlato" => $idPlato])->fetchAll();
+        return preparedStatement("DELETE FROM plato WHERE idPlato = :idPlato ", ["idPlato" => $idPlato])->fetchAll();
     }
 
     public static function getAll()
@@ -101,60 +101,60 @@ class Plato
         // esta función, como las otras get, seguramente tendrán que ser modificadas luego para paginar
         // si no, podríamos estar cargando cientos de platos a la vez
         // (aunque realísticamente el restaurante querría tener todos sus platos visibles, y no tendrían tantos en primer lugar)
-        return connection()->query("SELECT * FROM Plato as p " . ((isset($_SESSION["administrador"]) ? " WHERE estado = 1" : "")))->fetchAll();
+        return connection()->query("SELECT * FROM plato as p " . ((isset($_SESSION["administrador"]) ? " WHERE estado = 1" : "")))->fetchAll();
     }
 
     public static function getAllById($idPlato)
     {
-        return preparedStatement("SELECT * FROM Plato WHERE idPlato = :idPlato", ["idPlato" => $idPlato])->fetch();
+        return preparedStatement("SELECT * FROM plato WHERE idPlato = :idPlato", ["idPlato" => $idPlato])->fetch();
     }
 
     public static function getAllByListIdPlato($idPedido, $idCategoria)
     {
-        return preparedStatement("SELECT * FROM Plato INNER JOIN detallepedido on detallepedido.idPlato = plato.idPlato 
+        return preparedStatement("SELECT * FROM plato INNER JOIN detallepedido on detallepedido.idPlato = plato.idPlato 
                WHERE detallepedido.idPedido = :idPedido && plato.idCategoria = :idCategoria", ["idPedido" => $idPedido, "idCategoria" => $idCategoria])->fetchAll();
     }
 
     public static function getByNombre($nombre)
     {
-        return preparedStatement("SELECT * FROM Plato WHERE nombre = :nombre", ["nombre" => $nombre])->fetchAll();
+        return preparedStatement("SELECT * FROM plato WHERE nombre = :nombre", ["nombre" => $nombre])->fetchAll();
     }
 
     public static function getByString($string)
     {
-        return preparedStatement("SELECT * FROM Plato WHERE nombre like :string or notas like :string", ["string" => $string])->fetchAll();
+        return preparedStatement("SELECT * FROM plato WHERE nombre like :string or notas like :string", ["string" => $string])->fetchAll();
     }
 
     public static function getByCategoria($idCategoria)
     {
-        return preparedStatement("SELECT *, (SELECT tipoVenta from TipoVenta where idTipoVenta = p.idTipoVenta) as 'tipoVenta' 
-            FROM Plato as p WHERE idCategoria = :idCategoria " . (isset($_SESSION["administrador"]) ? "" : " and estado = 1 ") , ["idCategoria" => $idCategoria])->fetchAll();
+        return preparedStatement("SELECT *, (SELECT tipoVenta from tipoventa where idTipoVenta = p.idTipoVenta) as 'tipoVenta' 
+            FROM plato as p WHERE idCategoria = :idCategoria " . (isset($_SESSION["administrador"]) ? "" : " and estado = 1 ") , ["idCategoria" => $idCategoria])->fetchAll();
     }
 
     public static function findQty($idPlato)
     {
         return preparedStatement("SELECT sum(idPedido) as pedidos
-            FROM detallePedido WHERE idPlato = :idPlato", ["idPlato" => $idPlato])->fetchAll();
+            FROM detallepedido WHERE idPlato = :idPlato", ["idPlato" => $idPlato])->fetchAll();
     }
 
     public static function getById($idPlato)
     {
         return preparedStatement("SELECT *, 
-            (SELECT tipoVenta from TipoVenta where idTipoVenta = p.idTipoVenta) as 'tipoVenta', 
-            (SELECT nombre from Categoria where idCategoria = p.idCategoria) as 'categoria' 
-            FROM Plato as p WHERE idPlato = :idPlato", ["idPlato" => $idPlato])->fetchAll();
+            (SELECT tipoVenta from tipoventa where idTipoVenta = p.idTipoVenta) as 'tipoVenta', 
+            (SELECT nombre from categoria where idCategoria = p.idCategoria) as 'categoria' 
+            FROM plato as p WHERE idPlato = :idPlato", ["idPlato" => $idPlato])->fetchAll();
     }
 
     public static function getByIdCategoria($idCategoria)
     {
         return preparedStatement("SELECT idPlato
-            FROM Plato WHERE idCategoria = :idCategoria", ["idCategoria" => $idCategoria])->fetchAll();
+            FROM plato WHERE idCategoria = :idCategoria", ["idCategoria" => $idCategoria])->fetchAll();
     }
 
     public static function getByIdTipoVenta($idTipoVenta)
     {
         return preparedStatement("SELECT idPlato
-            FROM Plato WHERE idTipoVenta = :idTipoVenta", ["idTipoVenta" => $idTipoVenta])->fetchAll();
+            FROM plato WHERE idTipoVenta = :idTipoVenta", ["idTipoVenta" => $idTipoVenta])->fetchAll();
     }
 
     /**
