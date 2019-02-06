@@ -87,7 +87,7 @@ function pedidoRecibido($idPedido, $cliente){
 
     enviarEmail($cliente["email"],$titulo,$mensaje);
     // envía un mensaje a todos los administradores de que hay un pedido que deben autorizar
-    $mensaje = "Hay un nuevo pedido<br>Puede acceder a sus pedidos pulsando <a href='local/reto3/?c=admin'>Aqu&iacute;</a>";
+    $mensaje = "Hay un nuevo pedido<br>Puede acceder a sus pedidos pulsando <a href='https://" . $_SERVER["HTTP_HOST"] . "/reto3/?c=admin'>este enlace.</a>";
     avisoAdmin("Nuevo pedido " . $idPedido,$mensaje);
 }
 
