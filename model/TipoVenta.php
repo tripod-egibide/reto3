@@ -27,31 +27,31 @@ class TipoVenta
 
     public function insert()
     {
-        preparedStatement("INSERT INTO TipoVenta (tipoVenta) 
+        preparedStatement("INSERT INTO tipoventa (tipoVenta) 
             VALUES (:tipoVenta)", $this->toArray());
     }
 
     public static function delete($id)
     {
-        preparedStatement("DELETE FROM TipoVenta WHERE idTipoVenta = :idTipoVenta", ["idTipoVenta" => $id]);
+        preparedStatement("DELETE FROM tipoventa WHERE idTipoVenta = :idTipoVenta", ["idTipoVenta" => $id]);
     }
 
     public function update($id)
     {
         $data = $this->toArray();
         $data['idTipoVenta'] = $id;
-        preparedStatement("UPDATE TipoVenta SET tipoVenta = :tipoVenta WHERE idTipoVenta = :idTipoVenta", $data);
+        preparedStatement("UPDATE tipoventa SET tipoVenta = :tipoVenta WHERE idTipoVenta = :idTipoVenta", $data);
     }
 
     public static function findById($id)
     {
         $data = ["idTipoVenta" => $id];
-        return connection()->query("SELECT * FROM TipoVenta WHERE idTipoVenta = :idTipoVenta", $data)->fetchAll();
+        return connection()->query("SELECT * FROM tipoventa WHERE idTipoVenta = :idTipoVenta", $data)->fetchAll();
     }
 
     public static function getAll()
     {
-        return connection()->query("SELECT * FROM TipoVenta ")->fetchAll();
+        return connection()->query("SELECT * FROM tipoventa ")->fetchAll();
     }
 
     /**

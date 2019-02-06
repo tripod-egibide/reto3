@@ -49,14 +49,14 @@ class Pedido
 
     public function insert()
     {
-        preparedStatement("INSERT INTO Pedido (nombre, apellidos, email, telefono, fechaEntrega, total, confirmado) 
+        preparedStatement("INSERT INTO pedido (nombre, apellidos, email, telefono, fechaEntrega, total, confirmado) 
             VALUES (:nombre, :apellidos, :email, :telefono, :fechaEntrega, :total, :confirmado)", $this->toArray());
-        return connection()->query("SELECT idPedido FROM Pedido ORDER BY idPedido desc limit 1")->fetchAll();
+        return connection()->query("SELECT idPedido FROM pedido ORDER BY idPedido desc limit 1")->fetchAll();
     }
 
     public function insertDetallePedido($idPedido,$carrito)
     {
-        $sentencia = "INSERT INTO DetallePedido (idPedido, idPlato, cantidad) VALUES ";
+        $sentencia = "INSERT INTO detallepedido (idPedido, idPlato, cantidad) VALUES ";
         foreach ($carrito as $clave => $valor){
             $sentencia .= " ( '" . $idPedido["idPedido"] . "', '" . $clave . "', '" . $valor["cantidad"] . "' ),";
         }
@@ -66,7 +66,7 @@ class Pedido
 
     public static function delete($id)
     {
-        preparedStatement("DELETE FROM Pedido WHERE idPedido = :idPedido", ["idPedido" => $id]);
+        preparedStatement("DELETE FROM pedido WHERE idPedido = :idPedido", ["idPedido" => $id]);
     }
 
     public function update($id)
@@ -74,7 +74,7 @@ class Pedido
         $data = $this->toArray();
         $data['idPedido'] = $id;
 
-        preparedStatement("UPDATE Pedido
+        preparedStatement("UPDATE pedido
             SET nombre = :nombre,
                 apellidos = :apellidos,
                 email = :email,
@@ -90,42 +90,42 @@ class Pedido
         // esta función, como las otras get, seguramente tendrán que ser modificadas luego para paginar
         // si no, podríamos estar cargando cientos de platos a la vez
         // (aunque realísticamente el restaurante querría tener todos sus platos visibles, y no tendrían tantos en primer lugar)
-        return connection()->query("SELECT * FROM Pedido ORDER BY fechaEntrega DESC")->fetchAll();
+        return connection()->query("SELECT * FROM pedido ORDER BY fechaEntrega DESC")->fetchAll();
     }
 
     public static function getByNombre($nombre)
     {
-        return preparedStatement("SELECT * FROM Pedido WHERE nombre like :nombre ORDER BY fechaEntrega DESC", ["nombre" => "%$nombre%"])->fetchAll();
+        return preparedStatement("SELECT * FROM pedido WHERE nombre like :nombre ORDER BY fechaEntrega DESC", ["nombre" => "%$nombre%"])->fetchAll();
     }
 
     public static function getByApellidos($apellidos)
     {
-        return preparedStatement("SELECT * FROM Pedido WHERE apellidos like :apellidos ORDER BY fechaEntrega DESC", ["apellidos" => "%$apellidos%"])->fetchAll();
+        return preparedStatement("SELECT * FROM pedido WHERE apellidos like :apellidos ORDER BY fechaEntrega DESC", ["apellidos" => "%$apellidos%"])->fetchAll();
     }
 
     public static function getByString($string)
     {
-        return preparedStatement("SELECT * FROM Pedido WHERE nombre like :string or apellidos like :string  ORDER BY fechaEntrega DESC", ["string" => $string])->fetchAll();
+        return preparedStatement("SELECT * FROM pedido WHERE nombre like :string or apellidos like :string  ORDER BY fechaEntrega DESC", ["string" => $string])->fetchAll();
     }
 
     public static function getByEmail($email)
     {
-        return preparedStatement("SELECT * FROM Pedido WHERE email like :email ORDER BY fechaEntrega DESC", ["email" => "%$email%"])->fetchAll();
+        return preparedStatement("SELECT * FROM pedido WHERE email like :email ORDER BY fechaEntrega DESC", ["email" => "%$email%"])->fetchAll();
     }
 
     public static function getByTelf($telf)
     {
-        return preparedStatement("SELECT * FROM Pedido WHERE telefono like :telf ORDER BY fechaEntrega DESC", ["telf" => "%$telf%"])->fetchAll();
+        return preparedStatement("SELECT * FROM pedido WHERE telefono like :telf ORDER BY fechaEntrega DESC", ["telf" => "%$telf%"])->fetchAll();
     }
 
     public static function getByDate($fechaI, $fechaF)
     {
-        return preparedStatement("SELECT * FROM Pedido WHERE fechaEntrega between :fechaI and :fechaF ORDER BY fechaEntrega DESC", ["fechaI" => $fechaI, "fechaF" => $fechaF])->fetchAll();
+        return preparedStatement("SELECT * FROM pedido WHERE fechaEntrega between :fechaI and :fechaF ORDER BY fechaEntrega DESC", ["fechaI" => $fechaI, "fechaF" => $fechaF])->fetchAll();
     }
 
     public static function getByConfirmado($confirmado)
     {
-        return preparedStatement("SELECT * FROM Pedido WHERE confirmado = :confirmado  ORDER BY fechaEntrega DESC", ["confirmado" => $confirmado])->fetchAll();
+        return preparedStatement("SELECT * FROM pedido WHERE confirmado = :confirmado  ORDER BY fechaEntrega DESC", ["confirmado" => $confirmado])->fetchAll();
     }
 
     public static function getAllDetallePedidoByIdPedido($idPedido)
@@ -139,7 +139,7 @@ group by plato.idCategoria", ["idPedido" => $idPedido])->fetchAll();
 
     public static function getDetallePedidoByIdPedido($idPedido)
     {
-        return preparedStatement("SELECT * FROM DetallePedido WHERE idPedido = :idPedido", ["idPedido" => $idPedido])->fetchAll();
+        return preparedStatement("SELECT * FROM detallepedido WHERE idPedido = :idPedido", ["idPedido" => $idPedido])->fetchAll();
     }
 
     public static function confirmarPedido($idPedido)
