@@ -62,6 +62,13 @@ function cargarCarrito() {
             $('#carrito').css({ "transform": "translate(0%, -30%)" });
         }
     }
+    $(".finalizarPedido").click(function(){
+        $("#carrito-collapse").collapse("hide");
+        $("#modalCliente").modal();
+    });
+    $("#confirmarCliente").click(function() {
+        enviarPedido();
+    });
 }
 
 function habilitarCambiosAutomaticos() {
@@ -97,3 +104,26 @@ function almacenarCarrito() {
     determinarAncho(); //catalogo.js
 }
 
+function enviarPedido(){
+    try {
+        let pedido = {
+            "cliente" : {
+                "nombre":$("#nombreCliente").val(), "apellidos":$("#apellidosCliente").val(), "email":$("#emailCliente").val(), "telefono":$("#telefonoCliente").val(),"fechaEntrega":$("#fechaCliente").val(), "total":$("#carrito-total").text().substring(0,$("#carrito-total").text().length-1)
+            },
+            "carrito":carrito
+        };
+
+        $.post("/reto3/?c=pedido&a=addPedido", pedido, (res) => {
+            alert(res);
+            if (res == null) {
+                alert("Hola");
+            }
+            else
+                alert("Hola");
+                throw "Plato no encontrado...";
+        }, "JSON");
+    } catch (er) {
+        $("#textoError").text(er.toString());
+        $("#modalError").modal();
+    }
+}

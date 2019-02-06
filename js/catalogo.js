@@ -24,7 +24,6 @@ function cargarPaginaPlato(){
 }
 
 
-
 $("#search").keyup(delay((evento)=> {
     let input = $("#search").val();
     if (input) {
@@ -82,7 +81,7 @@ function determinarAncho() {
     // el scrollspy es redundante al hacer una búsqueda, así que escondemos
     // como ocupa 2 cols, estas las sumamos al ancho del catalogo
     ancho += 2 * !!$("#search").val();
-    // si el carrito está vacío, lo escondemos y hacemos que el catalogo ocupe sus 3 cols
+    // si el carrito está vacío, querrémos que el catalogo ocupe sus 3 cols
     ancho += 3 * (jQuery.isEmptyObject(carrito));
     
     $('#catalogo').removeClass(["col-lg-7", "col-lg-9", "col-lg-10", "col-lg-12"]);
