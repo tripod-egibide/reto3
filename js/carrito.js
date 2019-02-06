@@ -74,13 +74,34 @@ function cargarCarrito() {
     $("#clienteDespedida").click(function() {
         location.reload(true);
     });
+
+    let fecha = new Date();
+    fecha.setDate(fecha.getDate()+4);
+    fecha = fecha.toJSON().slice(0,10)
+
+    $("#fechaCliente").prop("min", fecha);
+
+    $("#fechaCliente").change(function(){
+        var dt = new Date($("#fechaCliente").val());
+        try{
+            if(dt.getUTCDay() == 0 || dt.getUTCDay() == 1  || dt.getUTCDay() == 2){
+                $("#fechaCliente").val("");
+                throw "Ahora mismo s&oacute;lo aceptamos recogidas de mi&eacute;rcoles a s&aacute;bado.";
+            }
+        }
+        catch(er){
+        $("#textoError").html(er.toString());
+        $("#modalError").modal();
+        }
+    });
 }
 
 function habilitarCambiosAutomaticos() {
     $(".cantidad-carrito").change((evento) => {
         let target = $(evento.target);
         let id = (target.parent().prevAll("input").val());
-        target.parent().next().children(".carrito-coste").html(carrito[id].precio * target.val());
+        let linea = parseFloat((carrito[id].precio * target.val())).toFixed(2);
+        target.parent().next().children(".carrito-coste").html(linea);
 
         carrito[id].cantidad = +target.val();
         almacenarCarrito();
@@ -101,7 +122,8 @@ function calcularCosteTotal() {
     $('.carrito-coste').each(function () {
         total += +($(this).text());
     });
-    $("#carrito-total").html(total + "€");
+    total = parseFloat(Math.round(total)).toFixed(2);
+    $(".carrito-total").html(total + "€");
 }
 
 function almacenarCarrito() {
@@ -117,7 +139,7 @@ function enviarPedido(){
             "apellidos": $("#apellidosCliente").val(),
             ["email"] : $("#emailCliente").val(),
             "fechaEntrega": $("#fechaCliente").val(),
-            "total": $("#carrito-total").text().substring(0, $("#carrito-total").text().length - 1)
+            "total": $(".carrito-total").text().substring(0, $(".carrito-total").text().length - 1)
         },
         "carrito": carrito
     };
@@ -132,6 +154,7 @@ function enviarPedido(){
         $.post("/reto3/?c=pedido&a=addPedido", pedido, (res) => {
             try{
                 if (res == "Ok"){
+                    $("#modalCliente").modal("hide");
                     $("#modalClienteFinalizado").modal();
                     localStorage.removeItem("carrito");
                 }
