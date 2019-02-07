@@ -71,12 +71,12 @@ function habilitarCambiosAutomaticos() {
     $(".cantidad-carrito").change((evento) => {
         let target = $(evento.target);
         let id = (target.parent().prevAll("input").val());
-        let linea = parseFloat((carrito[id].precio * target.val())).toFixed(2);
+        let linea = parseFloat(carrito[id].precio * target.val()).toFixed(2);
         target.parent().next().children(".carrito-coste").html(linea);
 
         carrito[id].cantidad = +target.val();
         almacenarCarrito();
-        calcularCosteTotal();
+        cargarCarrito();
     });
 
     $(".carrito-eliminar").click((evento) => {
@@ -93,7 +93,7 @@ function calcularCosteTotal() {
     $('.carrito-coste').each(function () {
         total += +($(this).text());
     });
-    total = parseFloat(Math.round(total/2)).toFixed(2);
+    total = parseFloat((total/2)).toFixed(2);
     $(".carrito-total").html(total + "€");
 }
 
