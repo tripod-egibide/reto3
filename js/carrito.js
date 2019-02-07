@@ -93,7 +93,7 @@ function calcularCosteTotal() {
     $('.carrito-coste').each(function () {
         total += +($(this).text());
     });
-    total = parseFloat(Math.round(total)).toFixed(2);
+    total = parseFloat(Math.round(total/2)).toFixed(2);
     $(".carrito-total").html(total + "€");
 }
 
